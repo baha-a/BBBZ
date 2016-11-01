@@ -157,4 +157,6 @@ $RECYCLE.BIN/
 
 
 
-packages*/
+packages/*
+!packages/repositories.config
+!packages/build/
