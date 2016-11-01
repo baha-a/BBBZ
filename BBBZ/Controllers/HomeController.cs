@@ -8,7 +8,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BBBZ.Controllers
 {
-    
     public class HomeController: Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
@@ -33,3 +32,8 @@ namespace BBBZ.Controllers
         }
     }
 }
+
+
+
+
+// how to user github with VS13 : http://michaelcrump.net/setting-up-github-to-work-with-visual-studio-2013-step-by-step/
