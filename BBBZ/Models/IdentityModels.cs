@@ -22,6 +22,9 @@ namespace BBBZ.Models
         public DbSet<Lecture> Lectures{ get; set; }
         public DbSet<Exam> Exams { get; set; }
         public DbSet<Question> Questions { get; set; }
+        
+        public DbSet<News> News { get; set; }
+        public DbSet<PublicData> PublicData { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection")

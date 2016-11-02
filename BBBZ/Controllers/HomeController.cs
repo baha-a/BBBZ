@@ -19,9 +19,7 @@ namespace BBBZ.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            return View(db.PublicData.ToList());
         }
 
         public ActionResult Contact()

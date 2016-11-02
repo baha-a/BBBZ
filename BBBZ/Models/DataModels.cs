@@ -11,6 +11,8 @@ namespace BBBZ.Models
         public string Name { get; set; }
 
         public List<Class> Classes { get; set; }
+
+        public string UserName { get; set; }
     }
 
     public class Student
@@ -19,6 +21,8 @@ namespace BBBZ.Models
         public string Name { get; set; }
 
         public List<Enrollment> Enrollments { get; set; }
+
+        public string UserName { get; set; }
     }
 
 
@@ -128,5 +132,22 @@ namespace BBBZ.Models
         public string option4 { get; set; }
 
         public Course Course { get; set; }
+    }
+
+    
+    public class PublicData
+    {
+        public int ID { get; set; }
+        public string Title { get; set; }
+        public string Text { get; set; }
+    }
+
+    public class News 
+    {
+        public int ID { get; set; }
+        public string Title { get; set; }
+        public string Text { get; set; }
+        public string Photo { get; set; }
+        public DateTime Date { get; set; }
     }
 }

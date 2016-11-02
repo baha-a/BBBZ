@@ -1,0 +1,47 @@
+﻿@model BBBZ.Models.AdminViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div>
+    <h2> new users </h2>
+    <ul>
+        @foreach (var i in Model.NewUsersToAccept)
+        {
+            <li> @i.UserName </li>
+        }
+    </ul>
+</div>
+
+<div>
+    <h2> teachers </h2>
+    <ul>
+        @foreach (var i in Model.Teachers)
+        {
+            <li> @i.UserName </li>
+        }
+    </ul>
+</div>
+
+<div>
+    <h2> Public Data </h2>
+    <ul>
+        @foreach (var i in Model.PublicData)
+        {
+            <li> @i.Title: @i.Text </li> 
+        }
+    </ul>
+</div>
+
+
+<div>
+    <h2> News </h2>
+    <ul>
+        @foreach (var i in Model.News)
+        {
+            <li> @i.Date - @i.Title: @i.Text </li>
+        }
+    </ul>
+</div>
