@@ -1,0 +1,31 @@
+﻿@langSelector()
+
+@helper langSelector()
+{
+    string curLang = "en";
+    if (this.ViewContext.RouteData.Values["lang"] != null)
+    {
+        curLang = this.ViewContext.RouteData.Values["lang"].ToString();
+    }
+
+    var enabledLangsList = LocalizationHelper.GetSupportedLocales();
+
+    var targetPath = string.Format("{0}/{1}{2}",
+        ViewContext.RouteData.Values["controller"].ToString(),
+        ViewContext.RouteData.Values["action"].ToString(),
+        Request.Url.Query);
+    var hostRoot = string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Authority);
+    var targetUrlMask = string.Format("{0}/{{0}}/{1}", hostRoot, targetPath);
+
+    <li class="dropdown special">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+           @(LocalizationHelper.GetDisplayName(curLang))
+        </a>
+        <ul class="dropdown-menu lang-selector">
+            @foreach (var lang in enabledLangsList)
+            {
+                <li><a href="@(string.Format(targetUrlMask, lang))">@LocalizationHelper.GetDisplayName(lang)</a></li>
+            }
+        </ul>
+    </li>
+}

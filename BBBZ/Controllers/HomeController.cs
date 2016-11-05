@@ -5,9 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using BBBZ.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Threading;
 
 namespace BBBZ.Controllers
 {
+    [InternationalizationAttribute]
     public class HomeController: Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
@@ -19,13 +21,12 @@ namespace BBBZ.Controllers
 
         public ActionResult About()
         {
-            return View(db.PublicData.ToList());
+            //db.PublicData.ToList()
+            return View(new List<PublicData>());
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

@@ -1,12 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@{
+    string diraction  = LocalizationHelper.IsRightToLeft() ? "navbar-left" : "navbar-right";
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
 
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css" + LocalizationHelper.getRightToLeft())
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
     <div class="navbar navbar-default navbar-fixed-top">
@@ -17,15 +21,20 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("BBBZ", "Index", "Home", null, new { @class = "navbar-brand" })
+                @Html.ActionLink(Resources.R.MainTitle, "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
+
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("الرئيسة", "Index", "Home")</li>
-                    <li>@Html.ActionLink("من نحن", "About", "Home")</li>
-                    <li>@Html.ActionLink("اتصل بنا", "Contact", "Home")</li>
+                    <li>@Html.ActionLink(Resources.R.Home, "Index", "Home")</li>
+                    <li>@Html.ActionLink(Resources.R.About, "About", "Home")</li>
+                    <li>@Html.ActionLink(Resources.R.Contact, "Contact", "Home")</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+
+                <ul class="nav navbar-nav @diraction">
+                    <li>@Html.Partial("_LoginPartial")</li>
+                    <li>@Html.Partial("_LanguagesPartial")</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -39,6 +48,6 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    @RenderSection("scripts", required : false)
 </body>
 </html>

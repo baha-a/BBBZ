@@ -49,6 +49,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -166,6 +167,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\R.ar.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>R.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\R.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>R.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -177,6 +188,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\LocalizationHelper.cs" />
+    <Compile Include="Helper\InternationalizationAttribute.cs" />
     <Compile Include="Migrations\201610311426280_InitalDB.cs" />
     <Compile Include="Migrations\201610311426280_InitalDB.Designer.cs">
       <DependentUpon>201610311426280_InitalDB.cs</DependentUpon>
@@ -198,6 +211,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-rtl.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -244,9 +258,11 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Shared\_LanguagesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -256,6 +272,16 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="App_GlobalResources\R.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>R.designer.cs</LastGenOutput>
+      <CustomToolNamespace>R</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_GlobalResources\R.ar.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>R.ar.designer.cs</LastGenOutput>
+      <CustomToolNamespace>R</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610311426280_InitalDB.resx">
       <DependentUpon>201610311426280_InitalDB.cs</DependentUpon>
     </EmbeddedResource>
