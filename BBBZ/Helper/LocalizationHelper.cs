@@ -21,7 +21,7 @@ public static class LocalizationHelper
             case "en":
                 return "English";
             case "ar":
-                return "عربي";
+                return "عربي (غير مكتملة بعد)";
         }
         return "";
     }

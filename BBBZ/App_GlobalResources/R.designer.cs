@@ -122,5 +122,14 @@ namespace Resources {
                 return ResourceManager.GetString("Register", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This site under construction.
+        /// </summary>
+        internal static string Underconstruction {
+            get {
+                return ResourceManager.GetString("Underconstruction", resourceCulture);
+            }
+        }
     }
 }

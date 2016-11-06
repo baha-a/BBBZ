@@ -33,9 +33,7 @@ namespace BBBZ
                       "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/css-rtl").Include(
-                        "~/Content/bootstrap.css", 
-                        "~/Content/bootstrap-rtl.css",
-                        "~/Content/site.css"));
+                        "~/Content/bootstrap-rtl.css"));
         }
     }
 }

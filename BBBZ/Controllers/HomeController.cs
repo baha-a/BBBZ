@@ -9,20 +9,18 @@ using System.Threading;
 
 namespace BBBZ.Controllers
 {
-    [InternationalizationAttribute]
-    public class HomeController: Controller
+    public class HomeController: BaseController
     {
         ApplicationDbContext db = new ApplicationDbContext();
 
         public ActionResult Index()
         {
-            return View();
+            return View(db.PublicData.ToList());
         }
 
         public ActionResult About()
         {
-            //db.PublicData.ToList()
-            return View(new List<PublicData>());
+            return View();
         }
 
         public ActionResult Contact()

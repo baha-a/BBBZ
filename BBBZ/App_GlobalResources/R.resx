@@ -138,4 +138,7 @@
   <data name="Register" xml:space="preserve">
     <value>Register</value>
   </data>
+  <data name="Underconstruction" xml:space="preserve">
+    <value>This site under construction</value>
+  </data>
 </root>

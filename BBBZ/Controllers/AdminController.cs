@@ -10,7 +10,7 @@ using System.Web.Security;
 
 namespace BBBZ.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController: BaseController
     {
         ApplicationDbContext db;
 
@@ -18,7 +18,6 @@ namespace BBBZ.Controllers
         {
             db = new ApplicationDbContext();
         }
-
 
         //
         // GET: /Admin/
@@ -33,7 +32,6 @@ namespace BBBZ.Controllers
                 PublicData = db.PublicData.ToList(),
                 News = db.News.ToList()
             };
-
             return View(v);
         }
 

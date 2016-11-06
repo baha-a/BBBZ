@@ -1,15 +1,15 @@
-﻿@{
-    string diraction  = LocalizationHelper.IsRightToLeft() ? "navbar-left" : "navbar-right";
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css" + LocalizationHelper.getRightToLeft())
+    @Styles.Render("~/Content/css")
+    @if(LocalizationHelper.IsRightToLeft())
+    {
+        @Styles.Render("~/Content/css-rtl");
+    }
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
@@ -31,7 +31,7 @@
                     <li>@Html.ActionLink(Resources.R.Contact, "Contact", "Home")</li>
                 </ul>
 
-                <ul class="nav navbar-nav @diraction">
+                <ul class="nav navbar-nav @(LocalizationHelper.IsRightToLeft() ? "navbar-left" : "navbar-right")">
                     <li>@Html.Partial("_LoginPartial")</li>
                     <li>@Html.Partial("_LanguagesPartial")</li>
                 </ul>
@@ -42,7 +42,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year</p>
+            <p>&copy; @DateTime.Now.Year | @Resources.R.Underconstruction </p>
         </footer>
     </div>
 
