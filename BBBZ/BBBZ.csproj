@@ -167,12 +167,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_GlobalResources\R.ar.designer.cs">
+    <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>R.ar.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_GlobalResources\R.designer.cs">
+    <Compile Include="Resources\R.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>R.resx</DependentUpon>
@@ -242,6 +242,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\smarterAsp.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -293,15 +294,15 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="App_GlobalResources\R.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+    <EmbeddedResource Include="Resources\R.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>R.designer.cs</LastGenOutput>
-      <CustomToolNamespace>R</CustomToolNamespace>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
-    <EmbeddedResource Include="App_GlobalResources\R.ar.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
+    <EmbeddedResource Include="Resources\R.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>R.ar.designer.cs</LastGenOutput>
-      <CustomToolNamespace>R</CustomToolNamespace>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610311426280_InitalDB.resx">
       <DependentUpon>201610311426280_InitalDB.cs</DependentUpon>

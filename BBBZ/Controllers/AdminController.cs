@@ -32,6 +32,7 @@ namespace BBBZ.Controllers
                 PublicData = db.PublicData.ToList(),
                 News = db.News.ToList()
             };
+
             return View(v);
         }
 
