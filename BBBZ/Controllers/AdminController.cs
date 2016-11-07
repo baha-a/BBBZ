@@ -19,8 +19,6 @@ namespace BBBZ.Controllers
             db = new ApplicationDbContext();
         }
 
-        //
-        // GET: /Admin/
         public ActionResult Index()
         {
             var v = new AdminViewModel() {
@@ -34,6 +32,17 @@ namespace BBBZ.Controllers
             };
 
             return View(v);
+        }
+
+        [HttpPost]
+        public ActionResult AddNews(AdminViewModel a)
+        {
+            if (ModelState.IsValid)
+            {
+                db.News.Add(a.addNews);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
 
         public List<ApplicationUser> GetAllUserInRole(string role)

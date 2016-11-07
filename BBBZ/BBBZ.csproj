@@ -167,6 +167,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201611070812076_add_duration_to_News.cs" />
+    <Compile Include="Migrations\201611070812076_add_duration_to_News.Designer.cs">
+      <DependentUpon>201611070812076_add_duration_to_News.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -216,6 +220,13 @@
     <Content Include="App_Data\aspnet-BBBZ-20161027062314_log.ldf">
       <DependentUpon>aspnet-BBBZ-20161027062314.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\bootstrap-Cerulean.css" />
     <Content Include="Content\bootstrap-Cosmo.css" />
     <Content Include="Content\bootstrap-Cyborg.css" />
@@ -242,16 +253,19 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\smarterAsp.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\MyScript.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -294,6 +308,9 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611070812076_add_duration_to_News.resx">
+      <DependentUpon>201611070812076_add_duration_to_News.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>R.designer.cs</LastGenOutput>

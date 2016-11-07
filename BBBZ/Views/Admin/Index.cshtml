@@ -7,12 +7,12 @@
     <h2> New users </h2>
     @if (Model.NewUsersToAccept.Count > 0)
     {
-    <ul>
-        @foreach (var i in Model.NewUsersToAccept)
-        {
-            <li> @Html.ActionLink(@i.UserName, @i.UserName, "User") - <input type="button" class="btn btn-xs btn-success" value="accept"/> <input type="button" class="btn btn-xs btn-danger" value="cancel" /> </li>
-        }
-    </ul>
+        <ul>
+            @foreach (var i in Model.NewUsersToAccept)
+            {
+                <li> @Html.ActionLink(@i.UserName, @i.UserName, "User") - <input type="button" class="btn btn-xs btn-success" value="accept" /> <input type="button" class="btn btn-xs btn-danger" value="cancel" /> </li>
+            }
+        </ul>
     }
     else
     {
@@ -41,12 +41,12 @@
 
 <div>
     <h2> Public Data </h2>
-    @if(Model.PublicData.Count > 0)
-    { 
+    @if (Model.PublicData.Count > 0)
+    {
         <ul>
             @foreach (var i in Model.PublicData)
             {
-                <li> @i.Title: @i.Text  - <input type="button" class="btn btn-xs btn-danger" value="detele" /></li> 
+                <li> @i.Title: @i.Text  - <input type="button" class="btn btn-xs btn-danger" value="detele" /></li>
             }
         </ul>
     }
@@ -59,26 +59,61 @@
 
 <div>
     <h2> News </h2>
-    <ul>
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Duration</th>
+            <th>Title</th>
+            <th>Text</th>
+            <th>Delete</th>
+        </tr>
         @foreach (var i in Model.News)
         {
-            <li> @i.Date - @i.Title: @i.Text  <input type="button" class="btn btn-xs btn-danger" value="delete" /> </li>
+            <tr>
+                <td>@i.ID</td>
+                <td>@i.Date</td>
+                <td>@i.Duration</td>
+                <td>@i.Title</td>
+                <td>@i.Text</td>
+                <td> <a class="btn btn-xs btn-danger" href="#">delete</a> </td>
+            </tr>
         }
-    </ul>
+    </table>
 
-    <div class="form-group">
-        <input type="text" class="input-sm form-control" placeholder="Date" value="@DateTime.Now.ToString()">
+    <div class="container">
+        @using (Html.BeginForm("AddNews", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.TextBoxFor(x => x.addNews.Date, new { id = "datetimepicker1", @class = "input-sm form-control", placeholder = "Start Date", value = @DateTime.Now.ToString() })
+                @Html.ValidationMessageFor(x => x.addNews.Date)
+            </div>
+
+            <div class="form-group">
+                @Html.TextBoxFor(x => x.addNews.Duration, new { @class = "input-sm form-control", placeholder = "Duraction" })
+                @Html.ValidationMessageFor(x => x.addNews.Duration)
+            </div>
+
+            <div class="form-group">
+                @Html.TextBoxFor(x => x.addNews.Title, new { @class = "input-sm form-control", placeholder = "Title" })
+                @Html.ValidationMessageFor(x => x.addNews.Title)
+            </div>
+
+            <div class="form-group">
+                @Html.TextBoxFor(x => x.addNews.Text, new { @class = "input-sm form-control", placeholder = "Text" })
+                @Html.ValidationMessageFor(x => x.addNews.Text)
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-xs btn-primary" value="add new News" />
+            </div>
+        }
     </div>
 
-    <div class="form-group">
-        <input type="text" class="input-sm form-control" placeholder="Title">
-    </div>
-
-    <div class="form-group">
-        <input type="text" class="input-sm form-control" placeholder="Text">
-    </div>
-
-    <div class="form-group">
-        <input type="button" class="btn btn-xs btn-primary" value="add new News" />
-    </div>
 </div>
+
+@section scripts
+{
+    @Scripts.Render("~/scripts/MyScript.js")
+}

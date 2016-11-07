@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -148,6 +149,9 @@ namespace BBBZ.Models
         public string Title { get; set; }
         public string Text { get; set; }
         public string Photo { get; set; }
+        
+        [Required]
         public DateTime Date { get; set; }
+        public int Duration { get; set; }
     }
 }
