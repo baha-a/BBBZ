@@ -120,6 +120,9 @@
   <data name="About" xml:space="preserve">
     <value>حولنا</value>
   </data>
+  <data name="AboutMessage" xml:space="preserve">
+    <value>هذا الموقع هو مشروع مادة تطبيقات الانترنت للعام 2016 - 2017</value>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>اتصل بنا</value>
   </data>

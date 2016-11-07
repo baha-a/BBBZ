@@ -3,25 +3,38 @@
     ViewBag.Title = "Admin";
 }
 
-<div>
+<br />
+
+<div class="jumbotron">
     <h2> New users </h2>
     @if (Model.NewUsersToAccept.Count > 0)
     {
-        <ul>
+        <table class="table table-bordered">
+            <tr>
+                <th>username</th>
+                <th>Type</th>
+                <th>Accept</th>
+                <th>cancel</th>
+            </tr>
             @foreach (var i in Model.NewUsersToAccept)
             {
-                <li> @Html.ActionLink(@i.UserName, @i.UserName, "User") - <input type="button" class="btn btn-xs btn-success" value="accept" /> <input type="button" class="btn btn-xs btn-danger" value="cancel" /> </li>
+                <tr>
+                    <td>@Html.ActionLink(@i.UserName, @i.UserName, "User")</td>
+                    <td></td>
+                    <td><input type="button" class="btn btn-xs btn-success" value="accept" /></td>
+                    <td><input type="button" class="btn btn-xs btn-danger" value="cancel" /> </td>
+                </tr>
             }
-        </ul>
+        </table>
     }
     else
     {
         <p>nothing found </p>
     }
 </div>
-<hr />
+<br />
 
-<div>
+<div class="jumbotron">
     <h2> Teachers </h2>
     @if (Model.Teachers.Count > 0)
     {
@@ -37,29 +50,66 @@
         <p> nothing found </p>
     }
 </div>
-<hr />
+<br />
 
-<div>
+<div class="jumbotron">
     <h2> Public Data </h2>
     @if (Model.PublicData.Count > 0)
     {
-        <ul>
+        <table class="table">
+            <tr>
+                <th>Language</th>
+                <th>Title</th>
+                <th>Text</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
             @foreach (var i in Model.PublicData)
             {
-                <li> @i.Title: @i.Text  - <input type="button" class="btn btn-xs btn-danger" value="detele" /></li>
+                <tr>
+                    <td>@i.Language</td>
+                    <td>@i.Title</td>
+                    <td>@i.Text</td>
+                    <td><input type="button" class="btn btn-xs btn-warning" value="edite" /></td>
+                    <td><input type="button" class="btn btn-xs btn-danger" value="detele" /></td>
+                </tr>
             }
-        </ul>
+        </table>
     }
     else
     {
         <p> nothing found </p>
     }
-</div>
-<hr />
 
-<div>
+    @using (Html.BeginForm("AddPublicData", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <div class="container">
+            <div class="row">
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.addPublicData.Title, new { @class = "input-sm form-control", placeholder = "Title" })
+                    @Html.ValidationMessageFor(x => x.addPublicData.Title)
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    @Html.TextBoxFor(x => x.addPublicData.Text, new { @class = "input-sm form-control", placeholder = "Text" })
+                    @Html.ValidationMessageFor(x => x.addPublicData.Text)
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    @Html.DropDownListFor(x => x.addPublicData.Language, new SelectList(LocalizationHelper.GetSupportedLocales()), new { @class = "input-sm form-control" })
+                </div>
+            </div>
+            <input type="submit" class="btn btn-success btn-xs" value=" add " />
+        </div>
+    }
+</div>
+<br />
+
+<div class="jumbotron">
     <h2> News </h2>
-    <table class="table">
+    <table class="table table-bordered">
         <tr>
             <th>#</th>
             <th>Date</th>
@@ -86,7 +136,7 @@
         {
             @Html.AntiForgeryToken()
             <div class="form-group">
-                @Html.TextBoxFor(x => x.addNews.Date, new { id = "datetimepicker1", @class = "input-sm form-control", placeholder = "Start Date", value = @DateTime.Now.ToString() })
+                @Html.TextBoxFor(x => x.addNews.Date, new { id = "datetimepicker1", @class = "input-sm form-control", placeholder = "Start Date", value = DateTime.Now.ToString() })
                 @Html.ValidationMessageFor(x => x.addNews.Date)
             </div>
 

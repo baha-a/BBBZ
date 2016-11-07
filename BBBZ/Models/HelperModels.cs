@@ -17,6 +17,7 @@ namespace BBBZ.Models
 
 
         public News addNews { get; set; }
+        public PublicData addPublicData { get; set; }
     }
 
 }

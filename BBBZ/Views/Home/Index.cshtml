@@ -1,38 +1,16 @@
 ﻿@model List<BBBZ.Models.PublicData>
 
 <br />
-<div class="alert alert-danger" role="alert"> @Resources.R.Underconstruction </div>
-
-<div class="jumbotron">
-    <h1>Title</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-</div>
-
-
+<div class="alert alert-warning" role="alert"> @Resources.R.Underconstruction </div>
 
 @foreach (var x in Model)
 {
-    <div class="row">
-        <div class="col-xs-offset-1">
-            <h2>@x.Title</h2>
-            <p>@x.Text</p>
-        </div>    
+    <div class="jumbotron">
+            <h1>@x.Title</h1>
+            <p class="lead">@x.Text</p>
     </div>
 }
 
-
-<div class="row">
-    <div class="col-xs-offset-1">
-        <h2>title</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-xs-offset-1" >
-        <h2>title</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-    </div>
-</div>
-
-@Html.ActionLink("click here to Admin Control Panel", "Index", "Admin",null, new { @class = "btn btn-xs btn-default" }) 
+<br />
+<br />
+@Html.ActionLink("click here to Admin Control Panel", "Index", "Admin",null, new { @class = "btn btn-sm btn-danger" }) 

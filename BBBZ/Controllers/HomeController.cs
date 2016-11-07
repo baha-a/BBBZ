@@ -15,7 +15,7 @@ namespace BBBZ.Controllers
 
         public ActionResult Index()
         {
-            return View(db.PublicData.ToList());
+            return View(db.PublicData.Where(x => x.Language == Language).ToList());
         }
 
         public ActionResult About()

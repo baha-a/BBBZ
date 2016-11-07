@@ -11,7 +11,7 @@ public abstract class BaseController: Controller
     private readonly IList<string> _supportedLocales;
     private readonly string _defaultLang;
 
-    protected string Language { get; private set; }
+    public string Language { get; private set; }
 
     public BaseController()
     {
@@ -22,10 +22,7 @@ public abstract class BaseController: Controller
         _defaultLang = _supportedLocales[0];
     }
 
-    /// <summary>
     /// Apply locale to current thread
-    /// </summary>
-    /// <param name="lang">locale name</param>
     private void SetLang(string lang)
     {
         Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(lang);
@@ -34,7 +31,7 @@ public abstract class BaseController: Controller
         Language = lang;
     }
 
-    protected override void OnActionExecuted(ActionExecutedContext filterContext)
+    protected override void OnActionExecuting(ActionExecutingContext filterContext)
     {
         // Get locale from route values
         string lang = (string)filterContext.RouteData.Values["lang"] ?? _defaultLang;
@@ -44,7 +41,7 @@ public abstract class BaseController: Controller
             lang = _defaultLang;
 
         SetLang(lang);
-
-        base.OnActionExecuted(filterContext);
+        
+        base.OnActionExecuting(filterContext);
     }
 }

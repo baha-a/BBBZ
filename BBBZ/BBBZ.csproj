@@ -171,6 +171,10 @@
     <Compile Include="Migrations\201611070812076_add_duration_to_News.Designer.cs">
       <DependentUpon>201611070812076_add_duration_to_News.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611071009327_add_language_to_publicdata.cs" />
+    <Compile Include="Migrations\201611071009327_add_language_to_publicdata.Designer.cs">
+      <DependentUpon>201611071009327_add_language_to_publicdata.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -310,6 +314,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611070812076_add_duration_to_News.resx">
       <DependentUpon>201611070812076_add_duration_to_News.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611071009327_add_language_to_publicdata.resx">
+      <DependentUpon>201611071009327_add_language_to_publicdata.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

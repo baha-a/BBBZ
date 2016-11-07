@@ -45,6 +45,17 @@ namespace BBBZ.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public ActionResult AddPublicData(AdminViewModel a)
+        {
+            if(ModelState.IsValid)
+            {
+                db.PublicData.Add(a.addPublicData);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
         public List<ApplicationUser> GetAllUserInRole(string role)
         {
             string id = db.Roles.Single(x => x.Name == role).Id;
