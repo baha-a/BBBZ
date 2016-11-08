@@ -43,7 +43,7 @@
             @foreach (var i in Model.NewTeachersToAccept)
             {
                 <tr>
-                    <td>@Html.ActionLink(@i.UserName, @i.UserName, "User")</td>
+                    <td>@Html.ActionLink(@i.UserName, "Index", "Users", new { user = @i.UserName }, null)</td>
                     <td><input type="button" class="btn btn-xs btn-success" value="accept" /></td>
                     <td><input type="button" class="btn btn-xs btn-danger" value="cancel" /> </td>
                 </tr>
@@ -69,7 +69,7 @@
             @foreach (var i in Model.NewAdminsToAccept)
             {
                 <tr>
-                    <td>@Html.ActionLink(@i.UserName, @i.UserName, "User")</td>
+                    <td>@Html.ActionLink(@i.UserName, "Index", "Users", new { user = @i.UserName }, null)</td>
                     <td><input type="button" class="btn btn-xs btn-success" value="accept" /></td>
                     <td><input type="button" class="btn btn-xs btn-danger" value="cancel" /> </td>
                 </tr>
@@ -216,6 +216,6 @@
 
 @section scripts
 {
-    @Scripts.Render("~/scripts/MyScript.js")
+    @Scripts.Render("~/bundles/myscript")
     @Scripts.Render("~/bundles/jqueryval")
 }

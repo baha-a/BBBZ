@@ -28,6 +28,9 @@ namespace BBBZ
                       "~/Scripts/bootstrap-rtl.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/myscript").Include(
+                        "~/Scripts/myscript.js"));
+
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

@@ -10,6 +10,7 @@ using System.Web.Security;
 
 namespace BBBZ.Controllers
 {
+    [Authorize(Roles = "admin,superadmin")]
     public class AdminController: BaseController
     {
         ApplicationDbContext db;
