@@ -36,6 +36,7 @@ public abstract class BaseController: Controller
         // Get locale from route values
         string lang = (string)filterContext.RouteData.Values["lang"] ?? _defaultLang;
 
+        lang = lang.ToLower();
         // If we haven't found appropriate culture - seet default locale then
         if (!_supportedLocales.Contains(lang))
             lang = _defaultLang;

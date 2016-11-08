@@ -23,7 +23,9 @@ namespace BBBZ.Controllers
         {
             var v = new AdminViewModel() {
                 
-                NewUsersToAccept = GetAllUserInRole("user"),
+                NewUsersToAccept = GetAllUserInRole("user_temp"),
+                NewTeachersToAccept = GetAllUserInRole("teacher_temp"),
+                NewAdminsToAccept = GetAllUserInRole("admin_temp"),
                 Teachers = db.Teachers.ToList(),
                 Students = db.Students.ToList(),
 

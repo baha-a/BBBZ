@@ -138,21 +138,30 @@ namespace BBBZ.Models
     
     public class PublicData
     {
+        [Key]
         public int ID { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
         public string Text { get; set; }
+        [Required]
+        [RegularExpression("[A-Za-z]{2}")]
         public string Language { get; set; }
     }
 
     public class News 
     {
+        [Key]
         public int ID { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
         public string Text { get; set; }
         public string Photo { get; set; }
         
-        [Required]
+        
         public DateTime Date { get; set; }
+        [Range(1,360)]
         public int Duration { get; set; }
     }
 }

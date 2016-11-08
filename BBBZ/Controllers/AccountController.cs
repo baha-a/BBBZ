@@ -78,18 +78,25 @@ namespace BBBZ.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.UserName };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await UserManager.AddToRoleAsync(user.Id, "user");
-
-                    await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
-                }
+                if (!RegisterViewModel.UserTypes.Contains(model.UserType, StringComparer.OrdinalIgnoreCase))
+                    ModelState.AddModelError("500", "Incorrent UserType");
                 else
                 {
-                    AddErrors(result);
+                    var user = new ApplicationUser() { UserName = model.UserName };
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        model.UserType += "_temp";
+                        model.UserType = model.UserType.ToLower();
+                        await UserManager.AddToRoleAsync(user.Id, model.UserType);
+
+                        await SignInAsync(user, isPersistent : false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        AddErrors(result);
+                    }
                 }
             }
 

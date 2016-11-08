@@ -7,20 +7,19 @@
 
 <div class="jumbotron">
     <h2> New users </h2>
+    <h3> Students: </h3>
     @if (Model.NewUsersToAccept.Count > 0)
     {
         <table class="table table-bordered">
             <tr>
                 <th>username</th>
-                <th>Type</th>
                 <th>Accept</th>
                 <th>cancel</th>
             </tr>
             @foreach (var i in Model.NewUsersToAccept)
             {
                 <tr>
-                    <td>@Html.ActionLink(@i.UserName, @i.UserName, "User")</td>
-                    <td></td>
+                    <td>@Html.ActionLink(@i.UserName, "Index", "Users", new { user = @i.UserName },null)</td>
                     <td><input type="button" class="btn btn-xs btn-success" value="accept" /></td>
                     <td><input type="button" class="btn btn-xs btn-danger" value="cancel" /> </td>
                 </tr>
@@ -31,6 +30,58 @@
     {
         <p>nothing found </p>
     }
+    <hr />
+    <h3> Teachers:</h3>
+    @if (Model.NewTeachersToAccept.Count > 0)
+    {
+        <table class="table table-bordered">
+            <tr>
+                <th>username</th>
+                <th>accept</th>
+                <th>cancel</th>
+            </tr>
+            @foreach (var i in Model.NewTeachersToAccept)
+            {
+                <tr>
+                    <td>@Html.ActionLink(@i.UserName, @i.UserName, "User")</td>
+                    <td><input type="button" class="btn btn-xs btn-success" value="accept" /></td>
+                    <td><input type="button" class="btn btn-xs btn-danger" value="cancel" /> </td>
+                </tr>
+            }
+        </table>
+
+    }
+    else
+    {
+        <p>nothing found </p>
+    }
+
+    <hr />
+    <h3> Admins:</h3>
+    @if (Model.NewAdminsToAccept.Count > 0)
+    {
+        <table class="table table-bordered">
+            <tr>
+                <th>username</th>
+                <th>accept</th>
+                <th>cancel</th>
+            </tr>
+            @foreach (var i in Model.NewAdminsToAccept)
+            {
+                <tr>
+                    <td>@Html.ActionLink(@i.UserName, @i.UserName, "User")</td>
+                    <td><input type="button" class="btn btn-xs btn-success" value="accept" /></td>
+                    <td><input type="button" class="btn btn-xs btn-danger" value="cancel" /> </td>
+                </tr>
+            }
+        </table>
+
+    }
+    else
+    {
+        <p>nothing found </p>
+    }
+
 </div>
 <br />
 
@@ -56,7 +107,7 @@
     <h2> Public Data </h2>
     @if (Model.PublicData.Count > 0)
     {
-        <table class="table">
+        <table class="table table-bordered">
             <tr>
                 <th>Language</th>
                 <th>Title</th>
@@ -126,7 +177,7 @@
                 <td>@i.Duration</td>
                 <td>@i.Title</td>
                 <td>@i.Text</td>
-                <td> <a class="btn btn-xs btn-danger" href="#">delete</a> </td>
+                <td> <input type="button" class="btn btn-xs btn-danger" value="delete" /> </td>
             </tr>
         }
     </table>
@@ -166,4 +217,5 @@
 @section scripts
 {
     @Scripts.Render("~/scripts/MyScript.js")
+    @Scripts.Render("~/bundles/jqueryval")
 }

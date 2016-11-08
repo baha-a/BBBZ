@@ -167,6 +167,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Migrations\201611070812076_add_duration_to_News.cs" />
     <Compile Include="Migrations\201611070812076_add_duration_to_News.Designer.cs">
       <DependentUpon>201611070812076_add_duration_to_News.cs</DependentUpon>
@@ -174,6 +175,10 @@
     <Compile Include="Migrations\201611071009327_add_language_to_publicdata.cs" />
     <Compile Include="Migrations\201611071009327_add_language_to_publicdata.Designer.cs">
       <DependentUpon>201611071009327_add_language_to_publicdata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611080817059_add_some_annotation_to_Datamodel.cs" />
+    <Compile Include="Migrations\201611080817059_add_some_annotation_to_Datamodel.Designer.cs">
+      <DependentUpon>201611080817059_add_some_annotation_to_Datamodel.cs</DependentUpon>
     </Compile>
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
@@ -300,6 +305,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\_LanguagesPartial.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
@@ -317,6 +323,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611071009327_add_language_to_publicdata.resx">
       <DependentUpon>201611071009327_add_language_to_publicdata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611080817059_add_some_annotation_to_Datamodel.resx">
+      <DependentUpon>201611080817059_add_some_annotation_to_Datamodel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

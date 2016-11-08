@@ -1,0 +1,29 @@
+﻿@model BBBZ.Models.ApplicationUser
+@{
+    ViewBag.Title = "Index";
+}
+
+<br />
+<br />
+<div>
+    @if (Model == null)
+    {
+        <p> can't found the user </p>
+    }
+    else
+    {
+        <p> This page for user: @Model.UserName </p>
+        <p>
+            Who has following Roles:
+            <ol>
+                @foreach (var u in Model.Roles)
+                {
+                    <li>@u.Role.Name</li>
+                }
+            </ol>
+
+        </p>
+
+        <p> more Info will be added soon </p>
+    }
+</div>

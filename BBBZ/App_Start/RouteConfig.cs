@@ -15,12 +15,14 @@ namespace BBBZ
 
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapMvcAttributeRoutes();
+
             // Localization route
             routes.MapRoute(
                 name : "DefaultLocalized",
                 url : "{lang}/{controller}/{action}/{id}",
                 defaults : new { controller = "Home", action = "Index", id = UrlParameter.Optional, lang = "en" },
-                constraints : new { lang = "[a-z]{2}" }
+                constraints : new { lang = "[A-Za-z]{2}" }
                 );
 
             routes.MapRoute(

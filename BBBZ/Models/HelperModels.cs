@@ -8,7 +8,9 @@ namespace BBBZ.Models
     public class AdminViewModel
     {
         public List<ApplicationUser> NewUsersToAccept { get; set; }
-        
+        public List<ApplicationUser> NewTeachersToAccept { get; set; }
+        public List<ApplicationUser> NewAdminsToAccept { get; set; }
+
         public List<Student> Students { get; set; }
         public List<Teacher> Teachers { get; set; }
 
