@@ -167,6 +167,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Migrations\201611070812076_add_duration_to_News.cs" />
     <Compile Include="Migrations\201611070812076_add_duration_to_News.Designer.cs">
@@ -255,6 +256,7 @@
     <Content Include="Content\bootstrap-Yeti.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\trumbowyg.min.css" />
     <Content Include="Content\‫bootstrap-Superhero.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -277,6 +279,7 @@
     <Content Include="Scripts\MyScript.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\trumbowyg.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -309,6 +312,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Course\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
