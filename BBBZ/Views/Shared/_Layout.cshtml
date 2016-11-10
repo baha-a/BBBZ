@@ -29,6 +29,23 @@
                     <li>@Html.ActionLink(Resources.R.Home, "Index", "Home")</li>
                     <li>@Html.ActionLink(Resources.R.About, "About", "Home")</li>
                     <li>@Html.ActionLink(Resources.R.Contact, "Contact", "Home")</li>
+                    
+                    @if(User.IsInRole("superadmin") || User.IsInRole("admin"))
+                    {
+                        <li>@Html.ActionLink("ControlPanel", "Index", "Admin")</li>
+                    }
+                    else if(User.IsInRole("teacher"))
+                    {
+                        <li>@Html.ActionLink("TeaacherPanel", "Index", "Teacher")</li>
+                    }
+                    else if(User.IsInRole("user"))
+                    {
+                        <li>@Html.ActionLink("Students", "Index", "Users", new { user = User.Identity.Name},null)</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("State", "Index", "Users", new { user = User.Identity.Name},null)</li>
+                    }
                 </ul>
 
                 <ul class="nav navbar-nav @(LocalizationHelper.IsRightToLeft() ? "navbar-left" : "navbar-right")">
