@@ -41,12 +41,24 @@ namespace BBBZ.Models
         public int ID { get; set; }
         public string Name { get; set; }
 
+        public Language Language { get; set; }
+
         public Semester Semester { get; set; }
         public List<Class> Classes { get; set; }
 
         public List<Question> QuestionsBank { get; set; }
     }
-    
+
+    public class Language
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string FullName { get; set; }
+
+        public List<Course> Course { get; set; }
+    }
+
+
     public class Enrollment
     {
         public int ID { get; set; }
@@ -164,4 +176,37 @@ namespace BBBZ.Models
         [Range(1,360)]
         public int Duration { get; set; }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public class Category
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+
+        public Language Language { get; set; }
+
+        public List<Category> SubCategories { get; set; }
+        public List<Item> Items { get; set; }
+    }
+
+    public class Item
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+
+        public Category Parent { get; set; }
+    }
+
 }

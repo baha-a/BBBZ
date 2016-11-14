@@ -181,6 +181,10 @@
     <Compile Include="Migrations\201611080817059_add_some_annotation_to_Datamodel.Designer.cs">
       <DependentUpon>201611080817059_add_some_annotation_to_Datamodel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611141747178_add_table_Language.cs" />
+    <Compile Include="Migrations\201611141747178_add_table_Language.Designer.cs">
+      <DependentUpon>201611141747178_add_table_Language.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -279,7 +283,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -328,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611080817059_add_some_annotation_to_Datamodel.resx">
       <DependentUpon>201611080817059_add_some_annotation_to_Datamodel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611141747178_add_table_Language.resx">
+      <DependentUpon>201611141747178_add_table_Language.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
