@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace BBBZ.Controllers
 {
-    public class CourseController : Controller
+    public class TeacherController : Controller
     {
         //
-        // GET: /Course/
+        // GET: /Teacher/
         public ActionResult Index()
         {
             return View();

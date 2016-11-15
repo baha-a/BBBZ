@@ -1,0 +1,63 @@
+﻿@model List<BBBZ.Models.Category>
+@{
+    ViewBag.Title = "Courses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@helper allSubCategories(List<BBBZ.Models.Category> cat)
+{
+    if(cat != null)
+    {
+        @:<ul>
+            foreach (var cor in cat)
+            {
+                @:<li>
+                    @:<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        @cor.Name
+                    @:</a>
+                @:</li>
+                @allSubCategories(cor.SubCategories);
+            }
+        @:</ul>
+    }
+}
+
+<h2>Courses</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 jumbotron" style="padding-left:6px;">
+             @allSubCategories(Model)
+        </div>
+        <div class="col-md-9">
+
+        </div>
+        <div class="row">
+
+        </div>
+    </div>
+</div>
+
+
+
+@*<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display: block; position: static; margin-bottom: 5px; *width: 180px;">
+    <li><a href="#">Action</a></li>
+    <li><a href="#">Another action</a></li>
+    <li><a href="#">Something else here</a></li>
+    <li class="divider"></li>
+    <li class="dropdown-submenu">
+        <a tabindex="-1" href="#">More options</a>
+        <ul class="dropdown-menu">
+            <li><a tabindex="-1" href="#">Second level</a></li>
+            <li class="dropdown-submenu">
+                <a href="#">More..</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">3rd level</a></li>
+                    <li><a href="#">3rd level</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Second level</a></li>
+            <li><a href="#">Second level</a></li>
+        </ul>
+    </li>
+</ul>*@

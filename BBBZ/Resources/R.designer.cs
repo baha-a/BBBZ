@@ -115,7 +115,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BBBZ.
+        ///   Looks up a localized string similar to VirtualSchool.
         /// </summary>
         public static string MainTitle {
             get {

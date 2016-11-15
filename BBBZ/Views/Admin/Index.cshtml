@@ -160,9 +160,9 @@
 
 
 <div class="jumbotron">
-    <h2> Semesters and Courses </h2>
+    <h2> Categories and Courses </h2>
     <div class="form-group">
-        @Html.Label("", "Semesters", new { @class = "col-md-2 control-label" })
+        @Html.Label("", "Category", new { @class = "col-md-2 control-label" })
         @Html.DropDownList("1", new SelectList(new string[] { "year1", "year2", "year3", "year4", "year5" }), new { @class = "input-sm form-control" })
         <input type="button" class="btn btn-info btn-sm" value=" add new semester " />
     </div>
@@ -170,8 +170,15 @@
     <hr />
     <div class="form-group">
         @Html.Label("", "Courses", new { @class = "col-md-2 control-label" })
-        @Html.DropDownList("2", new SelectList(new string[] { "Course1", "Course2", "Course3", "Course4", "Course5", "..." }), new { @class = "input-sm form-control" })
+        @Html.DropDownList("2", new SelectList(new string[] { "Course1", "Course2", "Course3", "Course4", "Course5"}), new { @class = "input-sm form-control" })
         <input type="button" class="btn btn-info btn-sm" value=" add new course " />
+    </div>
+
+    <hr />
+    <div class="form-group">
+        @Html.Label("", "Classes", new { @class = "col-md-2 control-label" })
+        @Html.DropDownList("3", new SelectList(new string[] { "class2014", "class2015", "class2016"}), new { @class = "input-sm form-control" })
+        <input type="button" class="btn btn-info btn-sm" value=" open new class " />
     </div>
 </div>
 

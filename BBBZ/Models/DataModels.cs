@@ -27,13 +27,29 @@ namespace BBBZ.Models
     }
 
 
-    public class Semester
+    public class Language
     {
-        public int Id { get; set; }
-        public string Name{ get; set; }
-        public int Year { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string FullName { get; set; }
 
-        public List<Course> Courses { get; set; }
+        public List<Category> Category { get; set; }
+    }
+
+    public class Category
+    {
+        public Category()
+        {
+            SubCategories = new List<Category>();
+            Course = new List<Course>();
+        }
+        public int ID { get; set; }
+        public string Name { get; set; }
+
+        public Language Language { get; set; }
+
+        public List<Category> SubCategories { get; set; }
+        public List<Course> Course { get; set; }
     }
 
     public class Course
@@ -41,23 +57,11 @@ namespace BBBZ.Models
         public int ID { get; set; }
         public string Name { get; set; }
 
-        public Language Language { get; set; }
-
-        public Semester Semester { get; set; }
+        public Category Category{ get; set; }
         public List<Class> Classes { get; set; }
 
         public List<Question> QuestionsBank { get; set; }
     }
-
-    public class Language
-    {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string FullName { get; set; }
-
-        public List<Course> Course { get; set; }
-    }
-
 
     public class Enrollment
     {
@@ -175,38 +179,6 @@ namespace BBBZ.Models
         public DateTime Date { get; set; }
         [Range(1,360)]
         public int Duration { get; set; }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public class Category
-    {
-        public int ID { get; set; }
-        public string Name { get; set; }
-
-        public Language Language { get; set; }
-
-        public List<Category> SubCategories { get; set; }
-        public List<Item> Items { get; set; }
-    }
-
-    public class Item
-    {
-        public int ID { get; set; }
-        public string Name { get; set; }
-
-        public Category Parent { get; set; }
     }
 
 }

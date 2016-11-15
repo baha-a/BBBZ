@@ -167,7 +167,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Migrations\201611070812076_add_duration_to_News.cs" />
     <Compile Include="Migrations\201611070812076_add_duration_to_News.Designer.cs">
@@ -184,6 +184,10 @@
     <Compile Include="Migrations\201611141747178_add_table_Language.cs" />
     <Compile Include="Migrations\201611141747178_add_table_Language.Designer.cs">
       <DependentUpon>201611141747178_add_table_Language.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611150440400_add_Category.cs" />
+    <Compile Include="Migrations\201611150440400_add_Category.Designer.cs">
+      <DependentUpon>201611150440400_add_Category.cs</DependentUpon>
     </Compile>
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
@@ -282,6 +286,7 @@
     <Content Include="Scripts\MyScript.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\tinymce.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -313,10 +318,11 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\_LanguagesPartial.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Teacher\Index.cshtml" />
+    <Content Include="Views\Home\Courses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Course\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -337,6 +343,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611141747178_add_table_Language.resx">
       <DependentUpon>201611141747178_add_table_Language.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611150440400_add_Category.resx">
+      <DependentUpon>201611150440400_add_Category.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

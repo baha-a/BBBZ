@@ -40,11 +40,12 @@
                     }
                     else if(User.IsInRole("user"))
                     {
+                        <li>@Html.ActionLink("Courses", "Courses", "Home")</li>
                         <li>@Html.ActionLink("Students", "Index", "Users", new { user = User.Identity.Name},null)</li>
                     }
                     else
                     {
-                        <li>@Html.ActionLink("State", "Index", "Users", new { user = User.Identity.Name},null)</li>
+                        
                     }
                 </ul>
 

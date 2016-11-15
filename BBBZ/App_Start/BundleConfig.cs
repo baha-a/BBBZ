@@ -31,6 +31,8 @@ namespace BBBZ
             bundles.Add(new ScriptBundle("~/bundles/myscript").Include(
                         "~/Scripts/myscript.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/tinymce").Include(
+                        "~/Scripts/tinymce.js"));
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
