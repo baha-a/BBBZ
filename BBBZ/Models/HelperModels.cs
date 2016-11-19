@@ -15,6 +15,11 @@ namespace BBBZ.Models
         public List<News> News { get; set; }
 
 
+        public List<Menu> Menus { get; set; }
+
+        public List<Category> Categories { get; set; }
+
+
         public News addNews { get; set; }
         public PublicData addPublicData { get; set; }
     }

@@ -77,8 +77,7 @@ input[type="checkbox"].input-validation-error {
 
 
 /* The side navigation menu */
-.sidenav {
-    
+.sidenav {   
     height: 100%;
     position: fixed;
     z-index: 1;

@@ -3,8 +3,24 @@
     ViewBag.Title = "Admin";
 }
 
+@helper addCancelButtonForUser(string username)
+{
+    using (Html.BeginForm("CancelUser", "Admin", new { username = username }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @:<input type="submit" class="btn btn-xs btn-danger" value="cancel" />
+    }
+}
+
+@helper addAcceptButtonForUser(string username,string type)
+{
+    using (Html.BeginForm("AcceptUser", "Admin", new { username = username, type = type }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @:<input type="submit" class="btn btn-xs btn-success" value="accept" />
+    }
+}
+
 <div class="sidenav">
-    <div class="row"> <a href="#" onclick="showThis(0);"> Categories </a> </div>
+    <div class="row"> <a href="#" onclick="showThis(0);"> Menus </a> </div>
     <div class="row"> <a href="#" onclick="showThis(1);"> New users </a> </div>
     <div class="row"> <a href="#" onclick="showThis(2);"> Public Data </a> </div>
     <div class="row"> <a href="#" onclick="showThis(3);"> News </a> </div>
@@ -12,16 +28,16 @@
 
 <div class="main">
 
-    <div class="jumbotron" id="div0" style="display:none;">
-        <h2> Categories and Menus </h2>
+    <div class="jumbotron" id="div0">
+        <h2> Menus and Categories </h2>
         <div class="form-group">
-            @Html.Label("", "Category", new { @class = "col-md-2 control-label" })
-            @Html.DropDownList("1", new SelectList(new string[] { "year1", "year2", "year3", "year4", "year5" }), new { @class = "input-sm form-control" })
-            <input type="button" class="btn btn-info btn-sm" value=" add new semester " />
+            @Html.Label("", "Menus", new { @class = "col-md-2 control-label" })
+            @Html.DropDownList("1", new SelectList(Model.Menus), new { @class = "input-sm form-control" })
+            <input type="button" class="btn btn-info btn-sm" value=" add new menu " />
         </div>
     </div>
     
-    <div class="jumbotron" id="div1">
+    <div class="jumbotron" id="div1" style="display:none;">
         <h2> New users </h2>
         <h3> Students: </h3>
         @if (Model.NewUsersToAccept.Count > 0)
@@ -36,15 +52,16 @@
                 {
                     <tr>
                         <td>@Html.ActionLink(@i.UserName, "Index", "Users", new { user = @i.UserName }, null)</td>
-                        <td><input type="button" class="btn btn-xs btn-success" value="accept" /></td>
-                        <td><input type="button" class="btn btn-xs btn-danger" value="cancel" /> </td>
+
+                        <td> @addAcceptButtonForUser(i.UserName, "user") </td>
+                        <td> @addCancelButtonForUser(i.UserName) </td>
                     </tr>
                 }
             </table>
         }
         else
         {
-            <p>nothing found </p>
+            <p> no new students request </p>
         }
         <hr />
         <h3> Teachers:</h3>
@@ -60,8 +77,8 @@
                 {
                     <tr>
                         <td>@Html.ActionLink(@i.UserName, "Index", "Users", new { user = @i.UserName }, null)</td>
-                        <td><input type="button" class="btn btn-xs btn-success" value="accept" /></td>
-                        <td><input type="button" class="btn btn-xs btn-danger" value="cancel" /> </td>
+                        <td> @addAcceptButtonForUser(i.UserName, "teacher") </td>
+                        <td> @addCancelButtonForUser(i.UserName) </td>
                     </tr>
                 }
             </table>
@@ -69,7 +86,7 @@
         }
         else
         {
-            <p>nothing found </p>
+            <p> no new teachers request </p>
         }
 
         <hr />
@@ -86,8 +103,8 @@
                 {
                     <tr>
                         <td>@Html.ActionLink(@i.UserName, "Index", "Users", new { user = @i.UserName }, null)</td>
-                        <td><input type="button" class="btn btn-xs btn-success" value="accept" /></td>
-                        <td><input type="button" class="btn btn-xs btn-danger" value="cancel" /> </td>
+                        <td> @addAcceptButtonForUser(i.UserName, "admin") </td>
+                        <td> @addCancelButtonForUser(i.UserName) </td>
                     </tr>
                 }
             </table>
@@ -95,7 +112,7 @@
         }
         else
         {
-            <p>nothing found </p>
+            <p>  no new admins request </p>
         }
 
     </div>
