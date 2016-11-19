@@ -3,238 +3,243 @@
     ViewBag.Title = "Admin";
 }
 
-<br />
-
-<div class="jumbotron">
-    <h2> New users </h2>
-    <h3> Students: </h3>
-    @if (Model.NewUsersToAccept.Count > 0)
-    {
-        <table class="table table-bordered">
-            <tr>
-                <th>username</th>
-                <th>Accept</th>
-                <th>cancel</th>
-            </tr>
-            @foreach (var i in Model.NewUsersToAccept)
-            {
-                <tr>
-                    <td>@Html.ActionLink(@i.UserName, "Index", "Users", new { user = @i.UserName },null)</td>
-                    <td><input type="button" class="btn btn-xs btn-success" value="accept" /></td>
-                    <td><input type="button" class="btn btn-xs btn-danger" value="cancel" /> </td>
-                </tr>
-            }
-        </table>
-    }
-    else
-    {
-        <p>nothing found </p>
-    }
-    <hr />
-    <h3> Teachers:</h3>
-    @if (Model.NewTeachersToAccept.Count > 0)
-    {
-        <table class="table table-bordered">
-            <tr>
-                <th>username</th>
-                <th>accept</th>
-                <th>cancel</th>
-            </tr>
-            @foreach (var i in Model.NewTeachersToAccept)
-            {
-                <tr>
-                    <td>@Html.ActionLink(@i.UserName, "Index", "Users", new { user = @i.UserName }, null)</td>
-                    <td><input type="button" class="btn btn-xs btn-success" value="accept" /></td>
-                    <td><input type="button" class="btn btn-xs btn-danger" value="cancel" /> </td>
-                </tr>
-            }
-        </table>
-
-    }
-    else
-    {
-        <p>nothing found </p>
-    }
-
-    <hr />
-    <h3> Admins:</h3>
-    @if (Model.NewAdminsToAccept.Count > 0)
-    {
-        <table class="table table-bordered">
-            <tr>
-                <th>username</th>
-                <th>accept</th>
-                <th>cancel</th>
-            </tr>
-            @foreach (var i in Model.NewAdminsToAccept)
-            {
-                <tr>
-                    <td>@Html.ActionLink(@i.UserName, "Index", "Users", new { user = @i.UserName }, null)</td>
-                    <td><input type="button" class="btn btn-xs btn-success" value="accept" /></td>
-                    <td><input type="button" class="btn btn-xs btn-danger" value="cancel" /> </td>
-                </tr>
-            }
-        </table>
-
-    }
-    else
-    {
-        <p>nothing found </p>
-    }
-
+<div class="sidenav">
+    <div class="row"> <a href="#" onclick="showThis(0);"> Categories </a> </div>
+    <div class="row"> <a href="#" onclick="showThis(1);"> New users </a> </div>
+    <div class="row"> <a href="#" onclick="showThis(2);"> Public Data </a> </div>
+    <div class="row"> <a href="#" onclick="showThis(3);"> News </a> </div>
 </div>
-<br />
 
-<div class="jumbotron">
-    <h2> Teachers </h2>
-    @if (Model.Teachers.Count > 0)
-    {
-        <ul>
-            @foreach (var i in Model.Teachers)
-            {
-                <li> @Html.ActionLink(@i.UserName, @i.UserName, "Teacher") - <input type="button" class="btn btn-xs btn-warning" value="suspend" /> </li>
-            }
-        </ul>
-    }
-    else
-    {
-        <p> nothing found </p>
-    }
-</div>
-<br />
+<div class="main">
 
-<div class="jumbotron">
-    <h2> Public Data </h2>
-    @if (Model.PublicData.Count > 0)
-    {
+    <div class="jumbotron" id="div0" style="display:none;">
+        <h2> Categories and Menus </h2>
+        <div class="form-group">
+            @Html.Label("", "Category", new { @class = "col-md-2 control-label" })
+            @Html.DropDownList("1", new SelectList(new string[] { "year1", "year2", "year3", "year4", "year5" }), new { @class = "input-sm form-control" })
+            <input type="button" class="btn btn-info btn-sm" value=" add new semester " />
+        </div>
+    </div>
+    
+    <div class="jumbotron" id="div1">
+        <h2> New users </h2>
+        <h3> Students: </h3>
+        @if (Model.NewUsersToAccept.Count > 0)
+        {
+            <table class="table table-bordered">
+                <tr>
+                    <th>username</th>
+                    <th>Accept</th>
+                    <th>cancel</th>
+                </tr>
+                @foreach (var i in Model.NewUsersToAccept)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(@i.UserName, "Index", "Users", new { user = @i.UserName }, null)</td>
+                        <td><input type="button" class="btn btn-xs btn-success" value="accept" /></td>
+                        <td><input type="button" class="btn btn-xs btn-danger" value="cancel" /> </td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p>nothing found </p>
+        }
+        <hr />
+        <h3> Teachers:</h3>
+        @if (Model.NewTeachersToAccept.Count > 0)
+        {
+            <table class="table table-bordered">
+                <tr>
+                    <th>username</th>
+                    <th>accept</th>
+                    <th>cancel</th>
+                </tr>
+                @foreach (var i in Model.NewTeachersToAccept)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(@i.UserName, "Index", "Users", new { user = @i.UserName }, null)</td>
+                        <td><input type="button" class="btn btn-xs btn-success" value="accept" /></td>
+                        <td><input type="button" class="btn btn-xs btn-danger" value="cancel" /> </td>
+                    </tr>
+                }
+            </table>
+
+        }
+        else
+        {
+            <p>nothing found </p>
+        }
+
+        <hr />
+        <h3> Admins:</h3>
+        @if (Model.NewAdminsToAccept.Count > 0)
+        {
+            <table class="table table-bordered">
+                <tr>
+                    <th>username</th>
+                    <th>accept</th>
+                    <th>cancel</th>
+                </tr>
+                @foreach (var i in Model.NewAdminsToAccept)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(@i.UserName, "Index", "Users", new { user = @i.UserName }, null)</td>
+                        <td><input type="button" class="btn btn-xs btn-success" value="accept" /></td>
+                        <td><input type="button" class="btn btn-xs btn-danger" value="cancel" /> </td>
+                    </tr>
+                }
+            </table>
+
+        }
+        else
+        {
+            <p>nothing found </p>
+        }
+
+    </div>
+
+
+    <div class="jumbotron" id="div2" style="display:none;">
+        <h2> Public Data </h2>
+        @if (Model.PublicData.Count > 0)
+        {
+            <table class="table table-bordered">
+                <tr>
+                    <th>Language</th>
+                    <th>Title</th>
+                    <th>Text</th>
+                    <th>Delete</th>
+                </tr>
+                @foreach (var i in Model.PublicData)
+                {
+                    <tr>
+                        <td>@i.Language</td>
+                        <td>@i.Title</td>
+                        <td>@i.Text</td>
+
+                        @using (Html.BeginForm("DeletePublicData", "Admin", new { id = @i.ID }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            <td><input type="submit" class="btn btn-xs btn-danger" value="detele" /></td>
+                        }
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p> nothing found </p>
+        }
+
+        @using (Html.BeginForm("AddPublicData", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.addPublicData.Title, new { @class = "input-sm form-control", placeholder = "Title" })
+                            @Html.ValidationMessageFor(x => x.addPublicData.Title)
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.addPublicData.Text, new { @class = "input-sm form-control", placeholder = "Text" })
+                            @Html.ValidationMessageFor(x => x.addPublicData.Text)
+                        </div>
+                    </div>
+
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            @Html.DropDownListFor(x => x.addPublicData.Language, new SelectList(LocalizationHelper.GetSupportedLocales()), new { @class = "input-sm form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-1">
+                        <input type="submit" class="btn btn-success btn-sm" value="add" />
+                    </div>
+                    </div>
+            </div>
+        }
+    </div>
+
+    <div class="jumbotron" id="div3" style="display:none;">
+        <h2> News </h2>
         <table class="table table-bordered">
             <tr>
-                <th>Language</th>
+                <th>#</th>
+                <th>Lang</th>
+                <th>Date</th>
+                <th>Duration</th>
                 <th>Title</th>
                 <th>Text</th>
-                <th>Edit</th>
                 <th>Delete</th>
             </tr>
-            @foreach (var i in Model.PublicData)
+            @foreach (var i in Model.News)
             {
                 <tr>
+                    <td>@i.ID</td>
                     <td>@i.Language</td>
+                    <td>@i.Date</td>
+                    <td>@i.Duration</td>
                     <td>@i.Title</td>
                     <td>@i.Text</td>
-                    <td><input type="button" class="btn btn-xs btn-warning" value="edite" /></td>
-                    <td><input type="button" class="btn btn-xs btn-danger" value="detele" /></td>
+                    <td>
+                        @using (Html.BeginForm("DeleteNews", "Admin", new { id = @i.ID }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            <input type="submit" class="btn btn-xs btn-danger" value="detele" />
+                        }
+                    </td>
                 </tr>
             }
         </table>
-    }
-    else
-    {
-        <p> nothing found </p>
-    }
 
-    @using (Html.BeginForm("AddPublicData", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        <div class="container">
-            <div class="row">
-                <div class="form-group">
-                    @Html.TextBoxFor(x => x.addPublicData.Title, new { @class = "input-sm form-control", placeholder = "Title" })
-                    @Html.ValidationMessageFor(x => x.addPublicData.Title)
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group">
-                    @Html.TextBoxFor(x => x.addPublicData.Text, new { @class = "input-sm form-control", placeholder = "Text" })
-                    @Html.ValidationMessageFor(x => x.addPublicData.Text)
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group">
-                    @Html.DropDownListFor(x => x.addPublicData.Language, new SelectList(LocalizationHelper.GetSupportedLocales()), new { @class = "input-sm form-control" })
-                </div>
-            </div>
-            <input type="submit" class="btn btn-success btn-xs" value=" add " />
-        </div>
-    }
-</div>
-<br />
-
-
-<div class="jumbotron">
-    <h2> Categories and Courses </h2>
-    <div class="form-group">
-        @Html.Label("", "Category", new { @class = "col-md-2 control-label" })
-        @Html.DropDownList("1", new SelectList(new string[] { "year1", "year2", "year3", "year4", "year5" }), new { @class = "input-sm form-control" })
-        <input type="button" class="btn btn-info btn-sm" value=" add new semester " />
-    </div>
-
-    <hr />
-    <div class="form-group">
-        @Html.Label("", "Courses", new { @class = "col-md-2 control-label" })
-        @Html.DropDownList("2", new SelectList(new string[] { "Course1", "Course2", "Course3", "Course4", "Course5"}), new { @class = "input-sm form-control" })
-        <input type="button" class="btn btn-info btn-sm" value=" add new course " />
-    </div>
-
-    <hr />
-    <div class="form-group">
-        @Html.Label("", "Classes", new { @class = "col-md-2 control-label" })
-        @Html.DropDownList("3", new SelectList(new string[] { "class2014", "class2015", "class2016"}), new { @class = "input-sm form-control" })
-        <input type="button" class="btn btn-info btn-sm" value=" open new class " />
-    </div>
-</div>
-
-<div class="jumbotron">
-    <h2> News </h2>
-    <table class="table table-bordered">
-        <tr>
-            <th>#</th>
-            <th>Date</th>
-            <th>Duration</th>
-            <th>Title</th>
-            <th>Text</th>
-            <th>Delete</th>
-        </tr>
-        @foreach (var i in Model.News)
-        {
-            <tr>
-                <td>@i.ID</td>
-                <td>@i.Date</td>
-                <td>@i.Duration</td>
-                <td>@i.Title</td>
-                <td>@i.Text</td>
-                <td> <input type="button" class="btn btn-xs btn-danger" value="delete" /> </td>
-            </tr>
-        }
-    </table>
-
-    <div class="container">
         @using (Html.BeginForm("AddNews", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {
-            @Html.AntiForgeryToken()
-            <div class="form-group">
-                @Html.TextBoxFor(x => x.addNews.Date, new { id = "datetimepicker1", @class = "input-sm form-control", placeholder = "Start Date", value = DateTime.Now.ToString() })
-                @Html.ValidationMessageFor(x => x.addNews.Date)
-            </div>
+            <div class="container">
+                <div class="row">
+                    @Html.AntiForgeryToken()
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.addNews.Date, new { id = "datetimepicker1", @class = "input-sm form-control", placeholder = "Start Date", value = DateTime.Now.ToString() })
+                            @Html.ValidationMessageFor(x => x.addNews.Date)
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.addNews.Duration, new { @class = "input-sm form-control", placeholder = "Duraction" })
+                            @Html.ValidationMessageFor(x => x.addNews.Duration)
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.addNews.Title, new { @class = "input-sm form-control", placeholder = "Title" })
+                            @Html.ValidationMessageFor(x => x.addNews.Title)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.addNews.Text, new { @class = "input-sm form-control", placeholder = "Text" })
+                            @Html.ValidationMessageFor(x => x.addNews.Text)
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                @Html.TextBoxFor(x => x.addNews.Duration, new { @class = "input-sm form-control", placeholder = "Duraction" })
-                @Html.ValidationMessageFor(x => x.addNews.Duration)
-            </div>
-
-            <div class="form-group">
-                @Html.TextBoxFor(x => x.addNews.Title, new { @class = "input-sm form-control", placeholder = "Title" })
-                @Html.ValidationMessageFor(x => x.addNews.Title)
-            </div>
-
-            <div class="form-group">
-                @Html.TextBoxFor(x => x.addNews.Text, new { @class = "input-sm form-control", placeholder = "Text" })
-                @Html.ValidationMessageFor(x => x.addNews.Text)
-            </div>
-
-            <div class="form-group">
-                <input type="submit" class="btn btn-xs btn-primary" value="add new News" />
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            @Html.DropDownListFor(x => x.addNews.Language, new SelectList(LocalizationHelper.GetSupportedLocales()), new { @class = "input-sm form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-sm btn-success" value="add" />
+                        </div>
+                    </div>
+                </div>
             </div>
         }
+
     </div>
+
 
 </div>
 

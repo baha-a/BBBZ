@@ -189,6 +189,14 @@
     <Compile Include="Migrations\201611150440400_add_Category.Designer.cs">
       <DependentUpon>201611150440400_add_Category.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611181543525_majors_changes_for_db_stracture.cs" />
+    <Compile Include="Migrations\201611181543525_majors_changes_for_db_stracture.Designer.cs">
+      <DependentUpon>201611181543525_majors_changes_for_db_stracture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611191033454_fix_db_after_the_big_changes.cs" />
+    <Compile Include="Migrations\201611191033454_fix_db_after_the_big_changes.Designer.cs">
+      <DependentUpon>201611191033454_fix_db_after_the_big_changes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -309,6 +317,7 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
     <Content Include="Views\Home\Courses.cshtml" />
+    <Content Include="Views\Admin\Index2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
@@ -335,6 +344,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611150440400_add_Category.resx">
       <DependentUpon>201611150440400_add_Category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611181543525_majors_changes_for_db_stracture.resx">
+      <DependentUpon>201611181543525_majors_changes_for_db_stracture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611191033454_fix_db_after_the_big_changes.resx">
+      <DependentUpon>201611191033454_fix_db_after_the_big_changes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -27,8 +27,6 @@ namespace BBBZ.Controllers
                 NewUsersToAccept = GetAllUserInRole("user_temp"),
                 NewTeachersToAccept = GetAllUserInRole("teacher_temp"),
                 NewAdminsToAccept = GetAllUserInRole("admin_temp"),
-                Teachers = db.Teachers.ToList(),
-                Students = db.Students.ToList(),
 
                 PublicData = db.PublicData.ToList(),
                 News = db.News.ToList()
@@ -37,14 +35,23 @@ namespace BBBZ.Controllers
             return View(v);
         }
 
+
+
         [HttpPost]
         public ActionResult AddNews(AdminViewModel a)
         {
-            if (ModelState.IsValid)
-            {
-                db.News.Add(a.addNews);
-                db.SaveChanges();
-            }
+            db.News.Add(a.addNews);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteNews(int id)
+        {
+            db.News.Remove(db.News.Single(x => x.ID == id));
+            db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -56,6 +63,15 @@ namespace BBBZ.Controllers
                 db.PublicData.Add(a.addPublicData);
                 db.SaveChanges();
             }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult DeletePublicData(int id)
+        {
+            db.PublicData.Remove(db.PublicData.Single(x => x.ID == id));
+            db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 

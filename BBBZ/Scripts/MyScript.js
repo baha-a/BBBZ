@@ -60,3 +60,15 @@ $(document).ready(function () {
         // Display a friendly "sorry" message to the user.
     }
 });
+
+
+
+
+function showThis(x)
+{
+    var divs = ['div0', 'div1', 'div2', 'div3'];
+    for (var i = 0; i < divs.length; i++) {
+        document.getElementById(divs[i]).style.display = "none";
+    }
+    document.getElementById(divs[x]).style.display = "block";
+}

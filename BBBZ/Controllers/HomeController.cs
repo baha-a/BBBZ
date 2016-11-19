@@ -31,35 +31,38 @@ namespace BBBZ.Controllers
 
         public ActionResult Courses()
         {
-            var d = new List<Category>();
-            var v = new Category() { Name = "Cat1" };
+            //var d = new List<Category>();
+            //var v = new Category() { Name = "first year" };
             
-            v.SubCategories.Add(new Category() { Name = "SubCat1" });
+            //v.SubCategories.Add(new Category() { Name = "first semester" });
+
+            //var v2 = new Category() { Name = "second semester" };
+            //v2.SubCategories.Add(new Category() { Name = "programming" });
+            //v2.SubCategories.Add(new Category() { Name = "database" });
+            //v2.SubCategories[0].SubCategories.Add(new Category() { Name = "beginner programming" });
+            //v2.SubCategories[0].SubCategories.Add(new Category() { Name = "Advance programming" });
+            //v2.Items.Add(new Item() { Name = "Course1" });
+            //v2.Items.Add(new Item() { Name = "Course2" });
+            //v.SubCategories.Add(v2);
             
-            var v2 = new Category() { Name = "SubCat2" };
-            v2.SubCategories.Add(new Category() { Name = "SubSubCat1" });
-            v2.SubCategories.Add(new Category() { Name = "SubSubCat2" });
-            v2.SubCategories[0].SubCategories.Add(new Category() { Name = "SubSubSubCat1" });
-            v2.Course.Add(new Course() { Name = "Course1" });
-            v2.Course.Add(new Course() { Name = "Course2" });
-            v.SubCategories.Add(v2);
-            
-            v.SubCategories.Add(new Category() { Name = "SubCat3" });
-            v.SubCategories.Add(new Category() { Name = "SubCat4" });
-            d.Add(v);
+            //v.SubCategories.Add(new Category() { Name = "SubCat3" });
+            //v.SubCategories.Add(new Category() { Name = "SubCat4" });
+            //d.Add(v);
             
 
-            d.Add(new Category() { Name = "Cat2" });
-            d.Add(new Category() { Name = "Cat3" });
-            v = new Category() { Name = "Cat4" };
-            v.SubCategories.Add(new Category() { Name = "SubCat1" });
-            v.SubCategories.Add(new Category() { Name = "SubCat2" });
-            v.Course.Add(new Course() { Name = "Course3" });
-            v.Course.Add(new Course() { Name = "Course4" });
-            d.Add(v);
+            //d.Add(new Category() { Name = "second year" });
+            //d.Add(new Category() { Name = "thired year" });
+            //v = new Category() { Name = "fourth year" };
+            //v.SubCategories.Add(new Category() { Name = "SubCat1" });
+            //v.SubCategories.Add(new Category() { Name = "SubCat2" });
+            //v.Items.Add(new Item() { Name = "Course3" });
+            //v.Items.Add(new Item() { Name = "Course4" });
+            //d.Add(v);
+
+            
 
 
-            return View(d);
+            return View();
         }
     }
 }
