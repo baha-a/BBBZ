@@ -24,10 +24,16 @@ var nestableList = $("#nestable > .dd-list");
 /*************** Delete ***************/
 
 var deleteFromMenuHelper = function (target) {
-    target.fadeOut(function () {
-        target.remove();
-        updateOutput($('#nestable').data('output', $('#json-output')));
-    });
+    if (target.data('new') == 1) { // if it's not yet saved in the database, just remove it from DOM
+        target.fadeOut(function () {
+            target.remove();
+            updateOutput($('#nestable').data('output', $('#json-output')));
+        });
+    } else { // otherwise hide and mark it for deletion
+        target.appendTo(nestableList); // if children, move to the top level
+        target.data('delete', 1);
+        target.fadeOut();
+    }
 };
 
 var deleteFromMenu = function () {
@@ -43,6 +49,7 @@ var deleteFromMenu = function () {
   target.find("li").each(function () {
     deleteFromMenuHelper($(this));
   });
+
 
   // Remove parent
   deleteFromMenuHelper(target);
@@ -116,8 +123,7 @@ var addToMenu = function () {
     'data-id="' + newId + '" ' +
     'data-name="' + newName + '" ' +
     'data-url="' + newUrl + '" ' +
-    'data-new="1" ' +
-    'data-edit="0">' +
+    'data-new="1" data-edit="0" data-delete="0">' +
     '<div class="dd-handle">' + newName + '</div> ' +
     '<span class="button-delete btn btn-default btn-xs pull-right" ' +
     'data-owner-id="' + newId + '"> ' +
@@ -147,7 +153,7 @@ var addToMenu = function () {
 /*************** Load json to menu *****/
 
 function buildItem(item) {
-    var html = '<li class="dd-item" data-id="' + item.id + '" data-name="' + item.name + '" data-url="' + item.url + '" data-new="0" data-edit="0">';
+    var html = '<li class="dd-item" data-id="' + item.id + '" data-name="' + item.name + '" data-url="' + item.url + '" data-new="0" data-edit="0" data-delete="0">';
     if (item.children) {
         html += '<button data-action="collapse" type="button">"collapse"</button>' + '<button data-action="expand" type="button" style="display: none;">Expand</button>'
     }

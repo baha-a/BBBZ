@@ -166,26 +166,74 @@ namespace BBBZ.Controllers
             db.MenuCategories.RemoveRange(db.MenuCategories.Where(x => x.Menu.ID == id).ToList());
 
             int order = 1;
+            Category c;
             foreach (var i in r)
             {
-                Category c = new Category() { Key = i.name, Url = i.url };
-                c.SubCategories = generateSubCategories(c, i);
-                db.MenuCategories.Add(new MenuCategory() { Menu = m, Category = c, Order = order++ });
+                if (i.New)
+                {
+                    c = new Category() { Key = i.name, Url = i.url };
+                    c.SubCategories = generateSubCategories(c, i);
+                    db.MenuCategories.Add(new MenuCategory() { Menu = m, Category = c, Order = order++ });
+                }
+                else if(i.edit)
+                {
+                    c = db.Categories.Single(x => x.ID == i.id);
+                    c.Key = i.name;
+                    c.Url = i.url;
+                    c.SubCategories = generateSubCategories(c, i);
+                    //db.MenuCategories.Single(x => x.Menu.ID == m.ID && x.Category.ID == c.ID).Order = order++;
+                    db.MenuCategories.Add(new MenuCategory() { Menu = m, Category = c, Order = order++ });
+                }
+                else if (i.delete)
+                {
+                    //db.MenuCategories.Remove(db.MenuCategories.Single(x => x.Menu.ID == id && x.Category.ID == i.id));
+                }
+                else
+                {
+                    c = db.Categories.Single(x => x.ID == i.id);
+                    c.SubCategories = generateSubCategories(c, i);
+                    db.MenuCategories.Add(new MenuCategory() { Menu = m, Category = c, Order = order++ });
+                }
             }
 
+            ///// remove remined categories later
 
             db.SaveChanges();
             return Json("ok");
         }
 
-        private List<Category> generateSubCategories(Category parent, CateogriesJsonItem i)
+        private List<Category> generateSubCategories(Category parent, CateogriesJsonItem t)
         {
             List<Category> ans = new List<Category>();
-            foreach (var t in i.children)
+            Category c = null;
+            foreach (var i in t.children)
             {
-                Category c = new Category() { Parent = parent, Key = t.name, Url = t.url };
-                c.SubCategories = generateSubCategories(c, t);
-                ans.Add(c);
+                if (i.New)
+                {
+                    c = new Category() { Parent = parent, Key = i.name, Url = i.url };
+                    c.SubCategories = generateSubCategories(c, i);
+                    ans.Add(c);
+                }
+                else if(i.edit)
+                {
+                    c = db.Categories.Single(x => x.ID == i.id);
+                    c.Key = i.name;
+                    c.Url = i.url;
+                    c.SubCategories = generateSubCategories(c, i);
+                    ans.Add(c);
+                }
+                else if(i.delete)
+                {
+                    parent.SubCategories.Remove(db.Categories.Single(x => x.ID == i.id));
+                }
+                else
+                {
+                    if (parent.ID == i.id)
+                        continue;
+                    c = db.Categories.Single(x => x.ID == i.id);
+                    c.SubCategories = generateSubCategories(c, i);
+                    ans.Add(c);
+                }
             }
             return ans;
         }
