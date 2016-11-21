@@ -9,21 +9,28 @@ using System.Data.Entity;
 using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 
 namespace BBBZ.Controllers
 {
     [Authorize(Roles = "admin,superadmin")]
     public class AdminController: BaseController
-    {
-        ApplicationDbContext db;
-
-        public AdminController()
+    {   
+        private void deleteallCategories(Category[] cat)
         {
-            db = new ApplicationDbContext();
+            foreach (var c in cat)
+            {
+                if (c.SubCategories.Count >= 0)
+                    deleteallCategories(c.SubCategories.ToArray());
+                db.Categories.Remove(c);
+            }
         }
 
         public ActionResult Index()
         {
+            //deleteallCategories(getCategoriesTree(db.Categories.ToList()).ToArray());
+            //db.SaveChanges();
+
             var v = new AdminViewModel()
             {
                 NewUsersToAccept = GetAllUserInRole("user_temp"),
@@ -33,10 +40,49 @@ namespace BBBZ.Controllers
                 PublicData = db.PublicData.ToList(),
                 News = db.News.ToList(),
 
-                Menus = db.Menus.Include(x=>x.MenuForRole).Include(x=>x.MenuCategories).ToList(),
+                Menus = db.Menus.Include(x=>x.MenuForRole).ToList(),
+
+                JsonOBJ = generateJsonArrayFromMenus(),
             };
 
             return View(v);
+        }
+
+        private List<string> generateJsonArrayFromMenus()
+        {
+            List<Menu> menus = db.Menus.ToList();
+            
+            List<string> ans = new List<string>();
+
+            foreach (var m in menus)
+                ans.Add(generateJsonArrayFromMenusHelper(getCategoriesTree(db.MenuCategories.Where(x => x.Menu.ID == m.ID).Select(x => x.Category).ToList())));
+
+            return ans;
+        }
+
+        public List<Category> getCategoriesTree(List<Category> cat)
+        {
+            foreach (var c in cat)
+            {
+                c.SubCategories = db.Categories.Where(x => x.Parent != null && x.Parent.ID == c.ID).ToList();
+                getCategoriesTree(c.SubCategories);
+            }
+            return cat;
+        }
+
+        private string generateJsonArrayFromMenusHelper(List<Category> cat)
+        {
+            string ans = "[";
+            foreach (var c in cat)
+            {
+                ans += "{\"id\":" + c.ID + ",\"name\":\"" + c.Key + "\", \"url\":\"" + c.Url + "\"";
+                if (c.SubCategories.Count > 0)
+                    ans += ", \"children\":" + generateJsonArrayFromMenusHelper(c.SubCategories);
+                ans += "},";
+            }
+            if(ans.EndsWith(","))ans = ans.Remove(ans.Length - 1, 1);
+            ans += "]";
+            return ans;
         }
 
         [HttpPost]
@@ -101,6 +147,48 @@ namespace BBBZ.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public JsonResult AddMenu(string name)
+        {
+            db.Menus.Add(new Menu() { Name = name });
+            db.SaveChanges();
+
+            return Json("ok");
+        }
+
+        [HttpPost]
+        public JsonResult SaveMenu(int id, string json)
+        {
+            // [{"id":1, "name":"wewe", "url":"http://google.com", "new":0, "edit":0, "children":[{},{},{},....]}]
+            var r = JsonConvert.DeserializeObject<List<CateogriesJsonItem>>(json);
+
+            var m = db.Menus.Single(x => x.ID == id);
+            db.MenuCategories.RemoveRange(db.MenuCategories.Where(x => x.Menu.ID == id).ToList());
+
+            int order = 1;
+            foreach (var i in r)
+            {
+                Category c = new Category() { Key = i.name, Url = i.url };
+                c.SubCategories = generateSubCategories(c, i);
+                db.MenuCategories.Add(new MenuCategory() { Menu = m, Category = c, Order = order++ });
+            }
+
+
+            db.SaveChanges();
+            return Json("ok");
+        }
+
+        private List<Category> generateSubCategories(Category parent, CateogriesJsonItem i)
+        {
+            List<Category> ans = new List<Category>();
+            foreach (var t in i.children)
+            {
+                Category c = new Category() { Parent = parent, Key = t.name, Url = t.url };
+                c.SubCategories = generateSubCategories(c, t);
+                ans.Add(c);
+            }
+            return ans;
+        }
 
         public List<ApplicationUser> GetAllUserInRole(string role)
         {

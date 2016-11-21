@@ -1,0 +1,35 @@
+﻿@helper allSubCategories(List<BBBZ.Models.Category> cat)
+{
+    if (cat != null)
+    {
+        foreach (var cor in cat)
+        {
+            if (cor.SubCategories.Count > 0)
+            {
+                @:<li class="dropdown-submenu">
+            }
+            else
+            {
+                @:<li>
+            }
+                @:<a tabindex="-1" href="#">
+                    @cor.Key
+                @:</a>
+                @:<ul class="dropdown-menu">
+                    @allSubCategories(cor.SubCategories);
+                foreach (var i in cor.Items)
+                {
+                    @:<li><a tabindex="-1" href="#">@i.Key</a></li>
+                }
+                @:</ul>
+             @:</li>
+         }
+    }
+}
+
+<ul class="nav navbar-nav">
+    @foreach (var category in ((List<BBBZ.Models.Category>)ViewBag.Menu))
+    {
+         <li> <a href="@category.Url">@category.Key</a></li>
+    }
+</ul>

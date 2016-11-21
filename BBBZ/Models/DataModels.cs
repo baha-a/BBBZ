@@ -48,6 +48,8 @@ namespace BBBZ.Models
         }
 
         public int ID { get; set; }
+        public string Name { get; set; }
+
 
         public List<MenuForRole> MenuForRole { get; set; }
         public List<MenuCategory> MenuCategories { get; set; }

@@ -34,6 +34,11 @@ namespace BBBZ
             bundles.Add(new ScriptBundle("~/bundles/tinymce").Include(
                         "~/Scripts/tinymce.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/nestable").Include(
+                        "~/Scripts/jquery.nestable.js",
+                        "~/Scripts/jquery.nestablePlus.js"));
+
+
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -42,6 +47,10 @@ namespace BBBZ
 
             bundles.Add(new StyleBundle("~/Content/css-rtl").Include(
                         "~/Content/bootstrap-rtl.css"));
+
+            bundles.Add(new StyleBundle("~/Content/fontawesome").Include(
+                        "~/Content/fontawesome/font-awesome.min.css"));
+
         }
     }
 }

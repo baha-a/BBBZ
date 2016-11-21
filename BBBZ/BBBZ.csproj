@@ -197,6 +197,10 @@
     <Compile Include="Migrations\201611191033454_fix_db_after_the_big_changes.Designer.cs">
       <DependentUpon>201611191033454_fix_db_after_the_big_changes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611191916494_add_name_prop_to_MenuTable.cs" />
+    <Compile Include="Migrations\201611191916494_add_name_prop_to_MenuTable.Designer.cs">
+      <DependentUpon>201611191916494_add_name_prop_to_MenuTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -246,6 +250,8 @@
     <Content Include="App_Data\aspnet-BBBZ-20161027062314_log.ldf">
       <DependentUpon>aspnet-BBBZ-20161027062314.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\images\ui-icons_555555_256x240.png" />
     <Content Include="Content\images\ui-icons_777620_256x240.png" />
@@ -269,12 +275,19 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\smarterAsp.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.nestablePlus.js" />
+    <Content Include="Scripts\jquery.nestable.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -317,7 +330,7 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
     <Content Include="Views\Home\Courses.cshtml" />
-    <Content Include="Views\Admin\Index2.cshtml" />
+    <Content Include="Views\Shared\_MenuPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
@@ -350,6 +363,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611191033454_fix_db_after_the_big_changes.resx">
       <DependentUpon>201611191033454_fix_db_after_the_big_changes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611191916494_add_name_prop_to_MenuTable.resx">
+      <DependentUpon>201611191916494_add_name_prop_to_MenuTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -37,5 +37,7 @@ namespace BBBZ.Models
             : base("DefaultConnection")
         {
         }
+
+        
     }
 }

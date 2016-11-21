@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/fontawesome")
     @Styles.Render("~/Content/css")
+
     @if(LocalizationHelper.IsRightToLeft())
     {
         @Styles.Render("~/Content/css-rtl");
@@ -30,6 +32,7 @@
                     <li>@Html.ActionLink(Resources.R.About, "About", "Home")</li>
                     <li>@Html.ActionLink(Resources.R.Contact, "Contact", "Home")</li>
                     
+
                     @if(User.IsInRole("superadmin") || User.IsInRole("admin"))
                     {
                         <li>@Html.ActionLink("ControlPanel", "Index", "Admin")</li>
@@ -43,11 +46,9 @@
                         <li>@Html.ActionLink("Courses", "Courses", "Home")</li>
                         <li>@Html.ActionLink("Students", "Index", "Users", new { user = User.Identity.Name},null)</li>
                     }
-                    else
-                    {
-                        
-                    }
                 </ul>
+
+                @Html.Partial("_MenuPartial")
 
                 <ul class="nav navbar-nav @(LocalizationHelper.IsRightToLeft() ? "navbar-left" : "navbar-right")">
                     <li>@Html.Partial("_LoginPartial")</li>
@@ -67,5 +68,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required : false)
+
+    <div id="snackbar">Some text some message..</div>
 </body>
 </html>

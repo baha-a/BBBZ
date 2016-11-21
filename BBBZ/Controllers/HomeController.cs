@@ -11,8 +11,6 @@ namespace BBBZ.Controllers
 {
     public class HomeController: BaseController
     {
-        ApplicationDbContext db = new ApplicationDbContext();
-
         public ActionResult Index()
         {
             return View(db.PublicData.Where(x => x.Language == Language).ToList());
