@@ -28,9 +28,11 @@ namespace BBBZ.Controllers
 
         public ActionResult Index()
         {
-            //deleteallCategories(getCategoriesTree(db.Categories.ToList()).ToArray());
-            //db.SaveChanges();
+            return View("Menus", NewMethod());
+        }
 
+        private AdminViewModel NewMethod()
+        {
             var v = new AdminViewModel()
             {
                 NewUsersToAccept = GetAllUserInRole("user_temp"),
@@ -40,49 +42,31 @@ namespace BBBZ.Controllers
                 PublicData = db.PublicData.ToList(),
                 News = db.News.ToList(),
 
-                Menus = db.Menus.Include(x=>x.MenuForRole).ToList(),
+                Menus = db.Menus.Include(x => x.MenuForRole).ToList(),
 
                 JsonOBJ = generateJsonArrayFromMenus(),
             };
-
-            return View(v);
+            return v;
         }
 
-        private List<string> generateJsonArrayFromMenus()
+        public ActionResult Users()
         {
-            List<Menu> menus = db.Menus.ToList();
-            
-            List<string> ans = new List<string>();
-
-            foreach (var m in menus)
-                ans.Add(generateJsonArrayFromMenusHelper(getCategoriesTree(db.MenuCategories.Where(x => x.Menu.ID == m.ID).Select(x => x.Category).ToList())));
-
-            return ans;
+            return View(NewMethod());
         }
 
-        public List<Category> getCategoriesTree(List<Category> cat)
+        public ActionResult PublicData()
         {
-            foreach (var c in cat)
-            {
-                c.SubCategories = db.Categories.Where(x => x.Parent != null && x.Parent.ID == c.ID).ToList();
-                getCategoriesTree(c.SubCategories);
-            }
-            return cat;
+            return View(NewMethod());
         }
 
-        private string generateJsonArrayFromMenusHelper(List<Category> cat)
+        public ActionResult Menus()
         {
-            string ans = "[";
-            foreach (var c in cat)
-            {
-                ans += "{\"id\":" + c.ID + ",\"name\":\"" + c.Key + "\", \"url\":\"" + c.Url + "\"";
-                if (c.SubCategories.Count > 0)
-                    ans += ", \"children\":" + generateJsonArrayFromMenusHelper(c.SubCategories);
-                ans += "},";
-            }
-            if(ans.EndsWith(","))ans = ans.Remove(ans.Length - 1, 1);
-            ans += "]";
-            return ans;
+            return View(NewMethod());
+        }
+
+        public ActionResult Teachers()
+        {
+            return View();
         }
 
         [HttpPost]
@@ -200,6 +184,50 @@ namespace BBBZ.Controllers
 
             db.SaveChanges();
             return Json("ok");
+        }
+
+
+
+
+
+
+
+
+        private List<string> generateJsonArrayFromMenus()
+        {
+            List<Menu> menus = db.Menus.ToList();
+
+            List<string> ans = new List<string>();
+
+            foreach (var m in menus)
+                ans.Add(generateJsonArrayFromMenusHelper(getCategoriesTree(db.MenuCategories.Where(x => x.Menu.ID == m.ID).Select(x => x.Category).ToList())));
+
+            return ans;
+        }
+
+        public List<Category> getCategoriesTree(List<Category> cat)
+        {
+            foreach (var c in cat)
+            {
+                c.SubCategories = db.Categories.Where(x => x.Parent != null && x.Parent.ID == c.ID).ToList();
+                getCategoriesTree(c.SubCategories);
+            }
+            return cat;
+        }
+
+        private string generateJsonArrayFromMenusHelper(List<Category> cat)
+        {
+            string ans = "[";
+            foreach (var c in cat)
+            {
+                ans += "{\"id\":" + c.ID + ",\"name\":\"" + c.Key + "\", \"url\":\"" + c.Url + "\"";
+                if (c.SubCategories.Count > 0)
+                    ans += ", \"children\":" + generateJsonArrayFromMenusHelper(c.SubCategories);
+                ans += "},";
+            }
+            if (ans.EndsWith(",")) ans = ans.Remove(ans.Length - 1, 1);
+            ans += "]";
+            return ans;
         }
 
         private List<Category> generateSubCategories(Category parent, CateogriesJsonItem t)

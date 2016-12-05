@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace BBBZ.Controllers
 {
-    public class TeacherController : Controller
+    public class TeacherController : BaseController
     {
         //
         // GET: /Teacher/

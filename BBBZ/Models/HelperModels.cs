@@ -5,6 +5,11 @@ using System.Web;
 
 namespace BBBZ.Models
 {
+    public class HomeViewModel
+    {
+        public List<PublicData> PublicData { get; set; }
+        public List<News> News { get; set; }
+    }
     public class AdminViewModel
     {
         public List<ApplicationUser> NewUsersToAccept { get; set; }

@@ -1,9 +1,12 @@
-﻿@model List<BBBZ.Models.PublicData>
+﻿@model BBBZ.Models.HomeViewModel
 
 <br />
 <div class="alert alert-warning" role="alert"> @Resources.R.Underconstruction </div>
 
-@foreach (var x in Model)
+<br />
+
+
+@foreach (var x in Model.PublicData)
 {
     <div class="jumbotron">
             <h1>@x.Title</h1>

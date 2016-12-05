@@ -1,0 +1,116 @@
+﻿@model BBBZ.Models.AdminViewModel
+@{
+    ViewBag.Title = "Menus";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    string jsonMenus="[";
+    for (int i = 0 ; i < Model.JsonOBJ.Count ; i++)
+    {
+        jsonMenus += "'" + Model.JsonOBJ[i] + (i + 1 == Model.JsonOBJ.Count ? "']" : "',\r\n ");
+    }
+}
+
+
+@Html.Partial("_AdminMenuPartial")
+
+<div class="main">
+    <div class="jumbotron">
+        <h2> Menus and Categories </h2>
+        <hr />
+        <div class="form-group">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <input class="form-control" placeholder="Menu Name" id="txtNewMenuName" type="text" />
+                    </div>
+                    <div class="col-md-4">
+                        <input type="button" class="btn btn-info btn-sm" value="add" id="addMenuBtn" />
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-1">
+                        @Html.Label("", "Menus:", new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-7">
+                        <select class="form-control" id="menuDropList">
+                            @{int index=0;}
+                            @foreach (var m in Model.Menus)
+                            {
+                                <option value="@(index++)" data-id="@m.ID">@m.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="button" class="btn btn-danger btn-sm" value="Delete" />
+                    </div>
+                    <div class="col-md-2">
+                        <input type="button" class="btn btn-danger btn-sm" value="Make primery" />
+                    </div>
+                </div>
+                <hr />
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="dd nestable" id="nestable" style="min-height:200px;">
+                                <ol class="dd-list" id="nestableContainer"></ol>
+                            </div>
+                            <input type="button" value="Save" class="btn btn-success" id="saveMenuButton">
+                        </div>
+                        <div class="col-md-6">
+                            <form class="" id="menu-add">
+                                <h3>Add new item</h3>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="addInputName" placeholder="Item name" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="addInputUrl" placeholder="URL" required>
+                                </div>
+                                <button class="btn btn-info" id="addButton">Add</button>
+                            </form>
+                            <form class="" id="menu-editor" style="display: none;">
+                                <h3>Editing <span id="currentEditName"></span></h3>
+                                <div class="form-group">
+                                    <label for="addInputName">Name</label>
+                                    <input type="text" class="form-control" id="editInputName" placeholder="Item name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="addInputUrl">URL</label>
+                                    <input type="text" class="form-control" id="editInputUrl" placeholder="Url">
+                                </div>
+                                <button class="btn btn-info" id="editButton">Edit</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row output-container hidden">
+                        <div class="col-md-offset-1 col-md-10">
+                            <form class="form">
+                                <textarea class="form-control" id="json-output" rows="5"></textarea>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts
+{
+        @Scripts.Render("~/bundles/myscript")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/nestable")
+
+        <script>
+            $('#nestable').nestable().on('change', updateOutput);
+            var menuArray = @Html.Raw(jsonMenus)
+            LoadJSONtoMenu(menuArray[0]);
+            $('#menuDropList').on('change', function () { LoadJSONtoMenu(menuArray[$(this).val()]); });
+        </script>
+    }

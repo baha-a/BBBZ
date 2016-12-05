@@ -1,0 +1,112 @@
+﻿@model BBBZ.Models.AdminViewModel
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@helper addCancelButtonForUser(string username)
+{
+    using (Html.BeginForm("CancelUser", "Admin", new { username = username }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @:<input type="submit" class="btn btn-xs btn-danger" value="cancel" />
+    }
+}
+
+@helper addAcceptButtonForUser(string username, string type)
+{
+    using (Html.BeginForm("AcceptUser", "Admin", new { username = username, type = type }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @:<input type="submit" class="btn btn-xs btn-success" value="accept" />
+    }
+}
+
+
+@Html.Partial("_AdminMenuPartial")
+
+<div class="main">
+    <div class="jumbotron">
+        <h2> New users </h2>
+        <h3> Students: </h3>
+        @if (Model.NewUsersToAccept.Count > 0)
+        {
+            <table class="table table-bordered">
+                <tr>
+                    <th>username</th>
+                    <th>Accept</th>
+                    <th>cancel</th>
+                </tr>
+                @foreach (var i in Model.NewUsersToAccept)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(@i.UserName, "Index", "Users", new { user = @i.UserName }, null)</td>
+
+                        <td> @addAcceptButtonForUser(i.UserName, "user") </td>
+                        <td> @addCancelButtonForUser(i.UserName) </td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p> no new students request </p>
+        }
+        <hr />
+        <h3> Teachers:</h3>
+        @if (Model.NewTeachersToAccept.Count > 0)
+        {
+            <table class="table table-bordered">
+                <tr>
+                    <th>username</th>
+                    <th>accept</th>
+                    <th>cancel</th>
+                </tr>
+                @foreach (var i in Model.NewTeachersToAccept)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(@i.UserName, "Index", "Users", new { user = @i.UserName }, null)</td>
+                        <td> @addAcceptButtonForUser(i.UserName, "teacher") </td>
+                        <td> @addCancelButtonForUser(i.UserName) </td>
+                    </tr>
+                }
+            </table>
+
+        }
+        else
+        {
+            <p> no new teachers request </p>
+        }
+
+        <hr />
+        <h3> Admins:</h3>
+        @if (Model.NewAdminsToAccept.Count > 0)
+        {
+            <table class="table table-bordered">
+                <tr>
+                    <th>username</th>
+                    <th>accept</th>
+                    <th>cancel</th>
+                </tr>
+                @foreach (var i in Model.NewAdminsToAccept)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(@i.UserName, "Index", "Users", new { user = @i.UserName }, null)</td>
+                        <td> @addAcceptButtonForUser(i.UserName, "admin") </td>
+                        <td> @addCancelButtonForUser(i.UserName) </td>
+                    </tr>
+                }
+            </table>
+
+        }
+        else
+        {
+            <p>  no new admins request </p>
+        }
+    </div>
+</div>
+
+@section scripts
+{
+        @Scripts.Render("~/bundles/myscript")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/jquery")
+    }
