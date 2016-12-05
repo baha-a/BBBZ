@@ -49,6 +49,10 @@ namespace BBBZ.Controllers
             return v;
         }
 
+        public ActionResult UsersRequests()
+        {
+            return View(NewMethod());
+        }
         public ActionResult Users()
         {
             return View(NewMethod());

@@ -167,8 +167,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Helper\HasPermission.cs" />
     <Compile Include="Migrations\201611070812076_add_duration_to_News.cs" />
     <Compile Include="Migrations\201611070812076_add_duration_to_News.Designer.cs">
       <DependentUpon>201611070812076_add_duration_to_News.cs</DependentUpon>
@@ -200,6 +203,10 @@
     <Compile Include="Migrations\201611191916494_add_name_prop_to_MenuTable.cs" />
     <Compile Include="Migrations\201611191916494_add_name_prop_to_MenuTable.Designer.cs">
       <DependentUpon>201611191916494_add_name_prop_to_MenuTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612051944306_change_Item_table.cs" />
+    <Compile Include="Migrations\201612051944306_change_Item_table.Designer.cs">
+      <DependentUpon>201612051944306_change_Item_table.cs</DependentUpon>
     </Compile>
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
@@ -328,13 +335,24 @@
     <Content Include="Views\Shared\_LanguagesPartial.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
-    <Content Include="Views\Home\Courses.cshtml" />
+    <Content Include="Views\Category\Preview.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\Admin\Menus.cshtml" />
     <Content Include="Views\Admin\PublicData.cshtml" />
-    <Content Include="Views\Admin\Users.cshtml" />
-    <Content Include="Views\Admin\_AdminMenuPartial.cshtml" />
+    <Content Include="Views\Admin\UsersRequests.cshtml" />
+    <Content Include="Views\Shared\_AdminMenuPartial.cshtml" />
     <Content Include="Views\Admin\Teachers.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Category\Details.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Items\Create.cshtml" />
+    <Content Include="Views\Items\Delete.cshtml" />
+    <Content Include="Views\Items\Details.cshtml" />
+    <Content Include="Views\Items\Edit.cshtml" />
+    <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\Admin\Users.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
@@ -370,6 +388,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611191916494_add_name_prop_to_MenuTable.resx">
       <DependentUpon>201611191916494_add_name_prop_to_MenuTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612051944306_change_Item_table.resx">
+      <DependentUpon>201612051944306_change_Item_table.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

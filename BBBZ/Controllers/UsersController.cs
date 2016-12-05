@@ -10,7 +10,7 @@ namespace BBBZ.Controllers
 {
     public class UsersController : BaseController
     {
-        ApplicationDbContext db=new ApplicationDbContext();
+        ApplicationDbContext db = new ApplicationDbContext();
         
         public ActionResult Index(string user)
         {

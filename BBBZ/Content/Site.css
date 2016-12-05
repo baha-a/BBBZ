@@ -97,18 +97,20 @@ input[type="checkbox"].input-validation-error {
 .sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    font-size: 25px;
     color: #818181;
     display: block;
     transition: 0.3s;
     border-bottom:1px dashed #282828; 
-    
+
+    font-size: 15px;
+    font-weight:bold;
 }
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover, .offcanvas a:focus{
-    color: #f1f1f1;
+    color: white;
 }
+
 .main {
     margin-left:200px;
 }

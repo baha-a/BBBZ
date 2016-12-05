@@ -18,7 +18,7 @@ namespace BBBZ.Models
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<MenuForRole> MenuForRoles { get; set; }
-        public DbSet<Item> Courses { get; set; }
+        public DbSet<Item> Items { get; set; }
 
         public DbSet<News> News { get; set; }
         public DbSet<PublicData> PublicData { get; set; }

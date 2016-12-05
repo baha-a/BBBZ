@@ -84,25 +84,19 @@ namespace BBBZ.Models
 
     public class Item
     {
-        public Item()
-        {
-            Categories = new List<Category>();
-        }
-
         public int ID { get; set; }
-        public string Key { get; set; }
-        public string Url { get; set; }
 
-        public List<Category> Categories { get; set; }
+        public string Title { get; set; }
+        public string ImgURl { get; set; }
+        public string Descrption { get; set; }
+        public Category Category { get; set; }
+        public DateTime ActivationTime { get; set; }
 
-        public string HtmlCode { get; set; }
+        public Language Language { get; set; }
 
-        //public List<Class> Classes { get; set; }
-        //public List<Question> QuestionsBank { get; set; }
+        public string Creator { get; set; }
+        public DateTime CreationTime { get; set; }
     }
-
-
-
 
 
     public class PublicData
@@ -252,4 +246,7 @@ namespace BBBZ.Models
 
     //    public Item Course { get; set; }
     //}    
+
+
+
 }

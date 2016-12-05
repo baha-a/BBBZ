@@ -29,12 +29,6 @@ namespace BBBZ.Controllers
         {
             return View();
         }
-
-
-        public ActionResult Courses()
-        {
-            return View();
-        }
     }
 }
 
