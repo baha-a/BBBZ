@@ -1,0 +1,145 @@
+﻿@model IEnumerable<BBBZ.Models.Category>
+@{
+    ViewBag.Title = "Courses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string Title = "";
+    if(Model.Count() == 1)
+    {
+        Title =  Model.ElementAt(0).Key;
+    }
+}
+
+@helper DrawTheMenu(IEnumerable<BBBZ.Models.Category> cat)
+{
+    if (cat != null)
+    {
+            foreach (var cor in cat)
+            {
+                if(cor.SubCategories.Count > 0)
+                {
+                    @:<li><a href="/Category/Index/@cor.ID">
+                        @cor.Key
+                        @:</a>
+                    @:<ul>
+                        @DrawTheMenu(cor.SubCategories);
+                    @:</ul>
+                }
+                else
+                {
+                    @:<li><a href="/Category/Index/@cor.ID">
+                        @cor.Key
+                    @:</a>
+                }
+                    @:<ul>
+                    foreach (var i in cor.Items)
+                    {
+                        @:<li><a href="#">@i.Title</a></li>
+                    }
+                    @:</ul>
+                @:</li>
+            }
+        
+    }
+}
+
+
+<h2> @Title </h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 jumbotron" style="padding-left:6px;">
+            <div class="container">
+                <div class="row">
+                    @if(Model.ElementAt(0).SubCategories.Count() == 0)
+                    {
+                            <p> No SubCategory </p>
+                    }
+                    else
+                    {
+                        <ul>
+                            @if(Model.Count() == 1)
+                            {
+                                @DrawTheMenu(Model.ElementAt(0).SubCategories)
+                            }
+                            else
+                            {
+                                @DrawTheMenu(Model)
+                            }
+                        </ul>
+                    }
+                </div>
+                <div class="row">
+                    @if(@Model.ElementAt(0).Parent != null)
+                    {
+                        <hr />
+                        <a href="/Category/Index/@Model.ElementAt(0).Parent.ID"> Back to (@Model.ElementAt(0).Parent.Key)</a>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <h3>Items: </h3>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Items.First().Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Items.First().ImgURl)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Items.First().Descrption)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Items.First().ActivationTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Items.First().Creator)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Items.First().CreationTime)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.ElementAt(0).Items)
+                 {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ImgURl)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descrption)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActivationTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Creator)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreationTime)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit","Items", new { id=item.ID },null) |
+                            @Html.ActionLink("Details", "Details","Items", new { id=item.ID },null) |
+                            @Html.ActionLink("Delete", "Delete","Items", new { id=item.ID },null)
+                        </td>
+                    </tr>
+                 }
+            </table>
+
+            <p>
+                @Html.ActionLink("Create New", "Create","Items", new {id = Model.ElementAt(0).ID},null)
+            </p>  
+            
+        </div>
+        <div class="row">
+
+        </div>
+    </div>
+</div>
