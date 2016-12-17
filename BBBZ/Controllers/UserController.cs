@@ -8,7 +8,7 @@ using System.Data.Entity;
 
 namespace BBBZ.Controllers
 {
-    public class UsersController : BaseController
+    public class UserController : BaseController
     {
         public ActionResult Index(string user)
         {

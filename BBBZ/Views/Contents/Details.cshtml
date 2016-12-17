@@ -1,0 +1,107 @@
+﻿@model BBBZ.Models.Content
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Content</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Alias)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Alias)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IntroText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IntroText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FullText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descrption)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descrption)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MetaDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MetaDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MetaKey)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MetaKey)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MetaData)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MetaData)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedByUsername)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedByUsername)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Published)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Published)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class="btn btn-sm btn-success"}) |
+    @Html.ActionLink("Back", "Index", null, new { @class="btn btn-sm btn-warning"})
+</p>

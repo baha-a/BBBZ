@@ -1,0 +1,118 @@
+﻿@model BBBZ.Models.Content
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Content</h4>
+        <hr />
+		<div>
+			@Html.ActionLink("Back", "Index", null, new { @class="btn btn-xs btn-warning"})
+		</div>
+        @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Title, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Alias, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Alias, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Alias, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IntroText, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.IntroText, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IntroText, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FullText, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.FullText, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FullText, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CreatedTime, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.CreatedTime, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CreatedTime, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Descrption, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Descrption, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Descrption, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MetaDesc, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.MetaDesc, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MetaDesc, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MetaKey, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.MetaKey, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MetaKey, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MetaData, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.MetaData, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MetaData, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CreatedByUsername, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.CreatedByUsername, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CreatedByUsername, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Published, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Published, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Published, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success btn-sm" />
+            </div>
+        </div>
+    </div>
+}
+

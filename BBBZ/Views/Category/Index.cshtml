@@ -2,58 +2,93 @@
 
 @{
     ViewBag.Title = "Index";
-    ViewBag.NoFooter = true;
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-@Html.Partial("_AdminMenuPartial")
+<h2>Index</h2>
 
-<div class="main">
-    <div class="jumbotron">
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Key)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Url)
-                </th>
-                <th>
-                    Parent
-                </th>
-                <th></th>
-            </tr>
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-sm" })
+</p>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Alias)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Url)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MetaDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MetaKey)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MetaData)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Language)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedByUsername)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Published)
+        </th>
+        <th></th>
+    </tr>
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                       <a href="/Category/Index/@item.ID">@Html.DisplayFor(modelItem => item.Key)</a> 
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Url)
-                    </td>
-                    <td>
-                        @if (item.Parent != null)
-                        {
-                            @item.Parent.Key
-                        }
-                        else
-                        {
-                            <p>-</p>
-                        }
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-                    </td>
-                </tr>
-            }
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Alias)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Url)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MetaDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MetaKey)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MetaData)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Language)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedByUsername)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Published)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
 
-        </table>
-        <p>
-            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-default" })
-        </p>
-    </div>    
-</div>
+</table>

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BBBZ.Models.SelectableGroup>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-sm" })
+</p>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Text)
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Parent
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Text)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Group.Description)
+        </td>
+        <td>
+            @if (item.Group.Parnet == null)
+            {
+                <i class="control-label"> no parent</i>
+            }
+            else
+            {
+                <i class="control-label"> @item.Group.Parnet.Title </i>
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+

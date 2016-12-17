@@ -1,58 +1,180 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace BBBZ.Models
 {
-    public class Language
+#region User and ACL
+    public partial class Group
     {
-        public Language()
+        public Group()
         {
-            Resources = new List<Resource>();
+            Children = new List<Group>();
+            Users = new List<UserGroup>();
+            Access = new List<ViewLevel>();
+        }
+        public int ID { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        
+        public Group Parnet { get; set; }
+        public List<Group> Children { get; set; }
+
+        public List<UserGroup> Users { get; set; }
+        public List<ViewLevel> Access { get; set; }
+    }
+
+    public class UserGroup
+    {
+        public int ID { get; set; }
+        public string username { get; set; }
+        public Group Groups { get; set; }
+    }
+     
+    public class Profile
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public string username { get; set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Image { get; set;}
+        public DateTime RegisterDate{ get; set; }
+        public DateTime LastVisitDate{ get; set; }
+    }
+
+    public class Message
+    {
+        public int ID { get; set; }
+
+        public DateTime Date { get; set; }
+        public string Subject { get; set; }
+        public string Text { get; set; }
+
+        public string From_username { get; set; }
+        public string To_username { get; set; }
+    }
+
+
+    public class ViewLevel
+    {
+        public ViewLevel()
+        {
+            Groups = new List<Group>();
+        }
+        public int ID { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+
+        public List<Group> Groups { get; set; }
+    }
+
+    public class Asset
+    {
+        // this model follows the Nested Set Model to store data Hierhically
+        // the root id must be 0 and it has no parent, root is the global configuration
+
+        public Asset()
+        {
+            Children = new List<Asset>();
         }
 
         public int ID { get; set; }
-        public string ISOName { get; set; }
-        public string FullName { get; set; }
 
-        public List<Resource> Resources { get; set; }
+        public bool? SiteLogin { get; set; }      //  only Global Configuration
+        public bool? AdminLogin { get; set; }     //  only Global Configuration
+        public bool? SuperUser { get; set; }      //  Global Configuration and Component Manager
+        public bool? AdminInterface { get; set; } //  Global Configuration and Component Manager
+
+        public bool? Configure { get; set; }      //  Global Configuration and Component Manager
+        public bool? Create { get; set; }         //  Global Configuration, Component Manager and Category level
+        public bool? Delete { get; set; }         //  all level above plus Article level
+        public bool? Edit { get; set; }           //  all level above plus Article level
+        public bool? EditState { get; set; }      //  all level above plus Article level
+        public bool? EditOwn { get; set; }        //  Global Configuration, Component Manager and Category level
+
+        public Asset Parent { get; set; }
+        public List<Asset> Children { get; set; }
     }
 
-    public class Resource
+#endregion
+
+
+    public class Language
     {
         public int ID { get; set; }
-        public string Key { get; set; }
-        public string Value { get; set; }
+        public string Code { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string MetaDesc { get; set; }
+        public string MetaKey { get; set; }
+        public string MetaData { get; set; }
+        public string SiteName { get; set; }
 
-        public Language Language { get; set; }
+        public Asset Asset { get; set; }
+        public ViewLevel Access { get; set; }
     }
+    
+    public class MenuType
+	{
+        public MenuType ()
+	    {
+                Menus = new List<Menu>();
+	    }
 
+	    public int ID { get; set; }
+        public string menuType { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
 
-
-
-    public class MenuForRole
-    {
-        public int ID { get; set; }
-        public string Role { get; set; }
-        public Menu Menu { get; set; }
-    }
-
+        public List<Menu> Menus { get; set; }
+        public Asset Asset { get; set; }
+	}
     public class Menu
     {
         public Menu()
         {
-            MenuForRole = new List<MenuForRole>();
             MenuCategories = new List<MenuCategory>();
+            Menus = new List<Menu>();
+            Modules = new List<Module>();
         }
 
         public int ID { get; set; }
-        public string Name { get; set; }
+        public string Title { get; set; }
+        public string Alias { get; set; }
+        public string Note { get; set; }
+        public string Link { get; set; }
+        public string Type { get; set; }
+        public bool Published { get; set; }
+        public bool Home { get; set; }
+        public int Order { get; set; }
 
+        public bool OpenInSameWindow{ get; set;}
 
-        public List<MenuForRole> MenuForRole { get; set; }
+        public Language Langauge { get; set; }
+        public Menu Parent { get; set; }
+        public List<Menu> Menus { get; set; }
+
+        public MenuType MenuType { get; set; }
+        public List<Module> Modules { get; set; }
+
         public List<MenuCategory> MenuCategories { get; set; }
+    }
+
+    public class Module
+    {
+        public int ID { get; set; }
+        public string  Title { get; set; }
+        public string  Position { get; set; }
+        public string  Note { get; set; }
+
+        public Language Langauge { get; set; }
+
+        public Asset Asset { get; set; }
     }
 
     public class MenuCategory 
@@ -68,35 +190,76 @@ namespace BBBZ.Models
         public Category()
         {
             SubCategories = new List<Category>();
-            Items = new List<Item>();
+            Contents = new List<Content>();
             MenuCategories = new List<MenuCategory>();
+            Published = true;
         }
 
         public int ID { get; set; }
-        public string Key { get; set; }
+        public string Title { get; set; }
+        public string Alias { get; set; }
         public string Url { get; set; }
+        public string Description { get; set; }
+        public string MetaDesc { get; set; }
+        public string MetaKey { get; set; }
+        public string MetaData { get; set; }
+        public string Language { get; set; }
+        public string CreatedByUsername { get; set; }
+        public DateTime Date { get; set; }
+        public bool Published { get; set; }
 
         public Category Parent { get; set; }
-        public List<MenuCategory> MenuCategories { get; set; }
         public List<Category> SubCategories { get; set; }
-        public List<Item> Items { get; set; }
+        public List<Content> Contents { get; set; }
+
+        public List<MenuCategory> MenuCategories { get; set; }
+
+        public ViewLevel Access { get; set; }
+        public Asset Asset { get; set; }
     }
 
-    public class Item
+    public class Content
     {
+        public Content() 
+        {
+            CustomFields = new List<CustomField>(); 
+        }
+
         public int ID { get; set; }
-
         public string Title { get; set; }
-        public string ImgURl { get; set; }
+        public string Alias { get; set; }
+        public string IntroText { get; set; }
+        public string FullText { get; set; }
+        public DateTime CreatedTime { get; set; }
         public string Descrption { get; set; }
+        public string MetaDesc { get; set; }
+        public string MetaKey { get; set; }
+        public string MetaData { get; set; }
+        public string CreatedByUsername { get; set; }
+        public bool Published { get; set; }
         public Category Category { get; set; }
-        public DateTime ActivationTime { get; set; }
-
         public Language Language { get; set; }
 
-        public string Creator { get; set; }
-        public DateTime CreationTime { get; set; }
+        public List<CustomField> CustomFields { get; set; }
+
+        public ViewLevel Access { get; set; }
+        public Asset Asset { get; set; }
     }
+
+    public class CustomField
+    {
+        public int ID { get; set; }
+        public Content Content { get; set; }
+
+        public string Name { get; set; }
+        public string Value { get; set; }
+        public string DataType { get; set; }
+    }
+
+
+
+
+
 
 
     public class PublicData
@@ -130,34 +293,7 @@ namespace BBBZ.Models
         [RegularExpression("[A-Za-z]{2}")]
         public string Language { get; set; }
     }
-
-
-
-
-
-
-
     
-    //public class Teacher
-    //{
-    //    public int ID { get; set; }
-    //    public string Name { get; set; }
-
-    //    public List<Class> Classes { get; set; }
-
-    //    public string UserName { get; set; }
-    //}
-
-    //public class Student
-    //{
-    //    public int ID { get; set; }
-    //    public string Name { get; set; }
-
-    //    public List<Enrollment> Enrollments { get; set; }
-
-    //    public string UserName { get; set; }
-    //}
-
 
     //public class Enrollment
     //{
@@ -172,19 +308,6 @@ namespace BBBZ.Models
 
     //    public List<Attendance> Attendances { get; set; }
     //    public List<Message> Messages { get; set; }
-    //}
-
-    //public class Message
-    //{
-    //    public int ID { get; set; }
-    //    public int Text { get; set; }
-    //    public DateTime Date { get; set; }
-
-    //    public bool Readed { get;set;}
-
-    //    public string File { get; set; }
-
-    //    public Enrollment Enroll { get; set; }
     //}
 
     //public class Class
@@ -246,7 +369,4 @@ namespace BBBZ.Models
 
     //    public Item Course { get; set; }
     //}    
-
-
-
 }

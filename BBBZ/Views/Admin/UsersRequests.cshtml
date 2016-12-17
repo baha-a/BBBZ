@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Users Requests";
     ViewBag.NoFooter = true;
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 @helper addCancelButtonForUser(string username)
@@ -21,10 +21,6 @@
     }
 }
 
-
-@Html.Partial("_AdminMenuPartial")
-
-<div class="main">
     <div class="jumbotron">
         <h2> New users </h2>
         <h3> Students: </h3>
@@ -103,11 +99,3 @@
             <p>  no new admins request </p>
         }
     </div>
-</div>
-
-@section scripts
-{
-        @Scripts.Render("~/bundles/myscript")
-        @Scripts.Render("~/bundles/jqueryval")
-        @Scripts.Render("~/bundles/jquery")
-    }

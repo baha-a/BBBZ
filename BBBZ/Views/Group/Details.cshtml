@@ -1,0 +1,49 @@
+﻿@model BBBZ.Models.Group
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Group</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Parnet)
+        </dt>
+
+        <dd>
+            @if (Model.Parnet == null)
+            {
+                <i> no parent</i>
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.Parnet.Title)
+            }
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class="btn btn-sm btn-success"}) |
+    @Html.ActionLink("Back", "Index", null, new { @class="btn btn-sm btn-warning"})
+</p>

@@ -1,0 +1,67 @@
+﻿@model BBBZ.Models.Group
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Group</h4>
+        <hr />
+		<div>
+			@Html.ActionLink("Back", "Index", null, new { @class="btn btn-xs btn-warning"})
+		</div>
+        @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Title, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Description, null, new { @class = "has-error" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label col-md-2"> Parent</label>
+            <div class="col-md-6">
+                @if (Model.Parnet == null)
+                {
+                    <i class="control-label"> no parent</i>
+                }
+                else
+                {
+                    <i class="control-label"> @Model.Parnet.Title </i>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.helperID,"Parent", new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.helperID, new SelectList(ViewBag.Groups, "ID", "Text",string.Empty),string.Empty, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success btn-sm" />
+            </div>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,56 @@
+﻿@model BBBZ.Models.ViewLevelViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>ViewLevel</h4>
+        <hr />
+		<div>
+			@Html.ActionLink("Back", "Index", null, new { @class="btn btn-xs btn-warning"})
+            <input type="submit" value="Save" class="btn btn-success btn-xs" />
+            <hr />
+		</div>
+        @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
+        @Html.HiddenFor(model => model.theViewlevel.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.theViewlevel.Title, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.theViewlevel.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.theViewlevel.Title, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.theViewlevel.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.theViewlevel.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.theViewlevel.Description, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2">
+                User Groups Having Viewing Access:
+                <hr />
+                @for (int i = 0 ; i < Model.Groups.Count ; i++)
+                {
+                    <div>
+                        @Html.CheckBoxFor(x => Model.Groups[i].Selected, new { @id = "id" + Model.Groups[i].ID })
+                        @Html.LabelFor(x => Model.Groups[i].Selected, Model.Groups[i].Text, new { @for = "id" + Model.Groups[i].ID })
+                        @Html.HiddenFor(x => Model.Groups[i].ID)
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+

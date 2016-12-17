@@ -66,7 +66,7 @@ var deleteFromMenu = function () {
 var menuEditor = $("#menu-editor");
 var editButton = $("#editButton");
 var editInputName = $("#editInputName");
-var editInputUrl = $("#editInputUrl");
+var editInputDesc = $("#editInputDesc");
 var currentEditName = $("#currentEditName");
 
 // Prepares and shows the Edit Form
@@ -75,7 +75,7 @@ var prepareEdit = function () {
   var target = $('[data-id="' + targetId + '"]');
 
   editInputName.val(target.data("name"));
-  editInputUrl.val(target.data("url"));
+  editInputDesc.val(target.data("Desc"));
   currentEditName.html(target.data("name"));
   editButton.data("owner-id", target.data("id"));
 
@@ -90,10 +90,10 @@ var editMenuItem = function () {
   var target = $('[data-id="' + targetId + '"]');
 
   var newName = editInputName.val();
-  var newUrl = editInputUrl.val();
+  var newDesc = editInputDesc.val();
 
   target.data("name", newName);
-  target.data("url", newUrl);
+  target.data("Desc", newDesc);
 
   if (target.data('new') == 0)
       target.data("edit", 1);
@@ -115,14 +115,14 @@ var newIdCount = 1;
 
 var addToMenu = function () {
   var newName = $("#addInputName").val();
-  var newUrl = $("#addInputUrl").val();
+  var newDesc = $("#addInputDesc").val();
   var newId = newIdCount;
 
   nestableList.append(
     '<li class="dd-item" ' +
     'data-id="' + newId + '" ' +
     'data-name="' + newName + '" ' +
-    'data-url="' + newUrl + '" ' +
+    'data-Desc="' + newDesc + '" ' +
     'data-new="1" data-edit="0" data-delete="0">' +
     '<div class="dd-handle">' + newName + '</div> ' +
     '<span class="button-delete btn btn-default btn-xs pull-right" ' +
@@ -153,7 +153,7 @@ var addToMenu = function () {
 /*************** Load json to menu *****/
 
 function buildItem(item) {
-    var html = '<li class="dd-item" data-id="' + item.id + '" data-name="' + item.name + '" data-url="' + item.url + '" data-new="0" data-edit="0" data-delete="0">';
+    var html = '<li class="dd-item" data-id="' + item.id + '" data-name="' + item.name + '" data-Desc="' + item.Desc + '" data-new="0" data-edit="0" data-delete="0">';
     if (item.children) {
         html += '<button data-action="collapse" type="button">"collapse"</button>' + '<button data-action="expand" type="button" style="display: none;">Expand</button>'
     }
@@ -207,7 +207,7 @@ $(document).ready(function () {
       var jsn = updateOutput($('#nestable').data('output', $('#json-output')));
       var id = $('#menuDropList').find('option:selected').data('id');
       $.ajax({
-          url: "/Admin/SaveMenu",
+          url: "/Group/SaveGroups",
           method: 'POST',
           data: { id:id , json: jsn },
           success: function () { Toast('saved'); },

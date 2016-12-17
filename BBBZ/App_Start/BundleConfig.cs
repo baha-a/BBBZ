@@ -47,6 +47,27 @@ namespace BBBZ
 
             bundles.Add(new StyleBundle("~/Content/css-rtl").Include(
                         "~/Content/bootstrap-rtl.css"));
+
+
+
+
+
+            bundles.Add(new StyleBundle("~/Content/admin").Include(
+                      "~/Content/admin/modal.css",
+                      "~/Content/admin/tmploverride.css",
+                      "~/Content/admin/font-awesome.min.css",
+                      "~/Content/admin/ace-fonts.css",
+                      "~/Content/admin/ace.min.css",
+                      "~/Content/admin/template.css",
+                      "~/Content/admin/general.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/admin").Include(
+                        "~/Content/admin/bootstrap.min.js",
+                        "~/Content/admin/template.js",
+                        "~/Content/admin/ace-elements.min.js",
+                        "~/Content/admin/ace.min.js"
+                        ));
+
         }
     }
 }

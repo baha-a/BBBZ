@@ -168,9 +168,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\CategoryController.cs" />
-    <Compile Include="Controllers\ItemsController.cs" />
-    <Compile Include="Controllers\TeacherController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\CategoryXController.cs" />
+    <Compile Include="Controllers\ContentsController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\LanguagesController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\ViewLevelController.cs" />
     <Compile Include="Helper\HasPermission.cs" />
     <Compile Include="Migrations\201611070812076_add_duration_to_News.cs" />
     <Compile Include="Migrations\201611070812076_add_duration_to_News.Designer.cs">
@@ -208,6 +212,23 @@
     <Compile Include="Migrations\201612051944306_change_Item_table.Designer.cs">
       <DependentUpon>201612051944306_change_Item_table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612161550149_Redesign_the_database.cs" />
+    <Compile Include="Migrations\201612161550149_Redesign_the_database.Designer.cs">
+      <DependentUpon>201612161550149_Redesign_the_database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612161925278_fix_relation_between_Content_and_Category.cs" />
+    <Compile Include="Migrations\201612161925278_fix_relation_between_Content_and_Category.Designer.cs">
+      <DependentUpon>201612161925278_fix_relation_between_Content_and_Category.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Extenisons.cs" />
+    <Compile Include="Migrations\201612170637150_tiny_changes_in_some_table.cs" />
+    <Compile Include="Migrations\201612170637150_tiny_changes_in_some_table.Designer.cs">
+      <DependentUpon>201612170637150_tiny_changes_in_some_table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612170853107_fix_stupid_Bug.cs" />
+    <Compile Include="Migrations\201612170853107_fix_stupid_Bug.Designer.cs">
+      <DependentUpon>201612170853107_fix_stupid_Bug.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -231,7 +252,6 @@
     </Compile>
     <Compile Include="Helper\BaseController.cs" />
     <Compile Include="Helper\LocalizationHelper.cs" />
-    <Compile Include="Helper\InternationalizationAttribute.cs" />
     <Compile Include="Migrations\201610311426280_InitalDB.cs" />
     <Compile Include="Migrations\201610311426280_InitalDB.Designer.cs">
       <DependentUpon>201610311426280_InitalDB.cs</DependentUpon>
@@ -257,6 +277,16 @@
     <Content Include="App_Data\aspnet-BBBZ-20161027062314_log.ldf">
       <DependentUpon>aspnet-BBBZ-20161027062314.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\admin\ace-fonts.css" />
+    <Content Include="Content\admin\ace.min.css" />
+    <Content Include="Content\admin\bootstrap.min.css" />
+    <Content Include="Content\admin\font-awesome.min.css" />
+    <Content Include="Content\admin\font\fontawesome-webfont.svg" />
+    <Content Include="Content\admin\general.css" />
+    <Content Include="Content\admin\g_admin_modal.css" />
+    <Content Include="Content\admin\icon_video.gif" />
+    <Content Include="Content\admin\modal.css" />
+    <Content Include="Content\admin\template.css" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\images\ui-icons_555555_256x240.png" />
     <Content Include="Content\images\ui-icons_777620_256x240.png" />
@@ -265,14 +295,9 @@
     <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\bootstrap-Cerulean.css" />
-    <Content Include="Content\bootstrap-Flaty.css" />
-    <Content Include="Content\bootstrap-journal.css" />
     <Content Include="Content\bootstrap-lumen.css" />
     <Content Include="Content\bootstrap-rtl.css" />
-    <Content Include="Content\bootstrap-Sandstone.css" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap-Yeti.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -280,6 +305,19 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\admin\ace-elements.min.js" />
+    <Content Include="Content\admin\ace.min.js" />
+    <Content Include="Content\admin\bootstrap.min.js" />
+    <Content Include="Content\admin\font\fontawesome-webfont.eot" />
+    <Content Include="Content\admin\font\fontawesome-webfont.ttf" />
+    <Content Include="Content\admin\font\fontawesome-webfont.woff" />
+    <Content Include="Content\admin\font\fontawesome-webfont.woff2" />
+    <Content Include="Content\admin\font\FontAwesome.otf" />
+    <Content Include="Content\admin\font\IcoMoon.ttf" />
+    <Content Include="Content\admin\font\IcoMoon.woff" />
+    <Content Include="Content\admin\jquery.DOMWindow.js" />
+    <Content Include="Content\admin\template.js" />
+    <Content Include="Content\font\DXI1ORHCpsQm3Vp6mXoaTXhCUOGz7vYGh680lGh-uXM.woff" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Properties\PublishProfiles\smarterAsp.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -327,30 +365,52 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_LanguagesPartial.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\Teacher\Index.cshtml" />
-    <Content Include="Views\Category\Preview.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Categoryx\Preview.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\Admin\Menus.cshtml" />
     <Content Include="Views\Admin\PublicData.cshtml" />
     <Content Include="Views\Admin\UsersRequests.cshtml" />
     <Content Include="Views\Shared\_AdminMenuPartial.cshtml" />
     <Content Include="Views\Admin\Teachers.cshtml" />
-    <Content Include="Views\Category\Create.cshtml" />
-    <Content Include="Views\Category\Delete.cshtml" />
-    <Content Include="Views\Category\Details.cshtml" />
-    <Content Include="Views\Category\Edit.cshtml" />
-    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Categoryx\Index.cshtml" />
     <Content Include="Views\Items\Create.cshtml" />
     <Content Include="Views\Items\Delete.cshtml" />
     <Content Include="Views\Items\Details.cshtml" />
     <Content Include="Views\Items\Edit.cshtml" />
     <Content Include="Views\Items\Index.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Languages\Create.cshtml" />
+    <Content Include="Views\Languages\Delete.cshtml" />
+    <Content Include="Views\Languages\Details.cshtml" />
+    <Content Include="Views\Languages\Edit.cshtml" />
+    <Content Include="Views\Languages\Index.cshtml" />
+    <Content Include="Views\Contents\Create.cshtml" />
+    <Content Include="Views\Contents\Delete.cshtml" />
+    <Content Include="Views\Contents\Details.cshtml" />
+    <Content Include="Views\Contents\Edit.cshtml" />
+    <Content Include="Views\Contents\Index.cshtml" />
+    <Content Include="Views\ViewLevel\Create.cshtml" />
+    <Content Include="Views\ViewLevel\Delete.cshtml" />
+    <Content Include="Views\ViewLevel\Details.cshtml" />
+    <Content Include="Views\ViewLevel\Edit.cshtml" />
+    <Content Include="Views\ViewLevel\Index.cshtml" />
+    <Content Include="Views\Group\Create.cshtml" />
+    <Content Include="Views\Group\Delete.cshtml" />
+    <Content Include="Views\Group\Details.cshtml" />
+    <Content Include="Views\Group\Edit.cshtml" />
+    <Content Include="Views\Group\Index.cshtml" />
+    <Content Include="Views\Message\Create.cshtml" />
+    <Content Include="Views\Message\Details.cshtml" />
+    <Content Include="Views\Message\Index.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Category\Details.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Base\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -385,6 +445,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612051944306_change_Item_table.resx">
       <DependentUpon>201612051944306_change_Item_table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612161550149_Redesign_the_database.resx">
+      <DependentUpon>201612161550149_Redesign_the_database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612161925278_fix_relation_between_Content_and_Category.resx">
+      <DependentUpon>201612161925278_fix_relation_between_Content_and_Category.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612170637150_tiny_changes_in_some_table.resx">
+      <DependentUpon>201612170637150_tiny_changes_in_some_table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612170853107_fix_stupid_Bug.resx">
+      <DependentUpon>201612170853107_fix_stupid_Bug.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

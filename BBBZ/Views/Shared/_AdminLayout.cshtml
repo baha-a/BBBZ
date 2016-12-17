@@ -1,0 +1,310 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    
+    @Styles.Render("~/Content/admin")
+    @Styles.Render("~/Content/css")
+
+    @if (LocalizationHelper.IsRightToLeft())
+    {
+        @Styles.Render("~/Content/css-rtl");
+    }
+    @Scripts.Render("~/bundles/modernizr")
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div class="container-fluid container-main">
+                    <div id="js-cpanel">
+                            <!-- SIDE BAR ----------------------------------------------------------------------------------------------------------------->
+                            <div id="sidebar" class="sidebar">
+                                <ul class="nav nav-list">
+                                    <li> <a href="@Url.Action("Index","Home")"> <i class="icon-home"></i> Preview Site </a></li>
+                                    <li class="open" > 
+                                                <a href="@Url.Action("Menus","Admin")"> <i class="icon-list"></i> Menus </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-toggle" href="@Url.Action("Index", "Category")">
+                                            <i class="icon-archive"></i>
+                                            <span class="menu-text">  Categories </span>
+                                            <b class="arrow js-icon-angle-down"></b>
+                                        </a>
+                                        <ul class="submenu" style="display:none;">
+                                            <li>
+                                                <a href="@Url.Action("Index", "Category")">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Manage Categories
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Create", "Category")">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    New Categoires
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-toggle" href="@Url.Action("Index", "Contents")">
+                                            <i class="icon-book"></i>
+                                            <span class="menu-text"> Contents </span>
+                                            <b class="arrow js-icon-angle-down"></b>
+                                        </a>
+                                        <ul class="submenu">
+                                            <li>
+                                                <a href="@Url.Action("Index", "Contents")">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Manage Contents
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Create", "Contents")">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    New Content
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-toggle" href="">
+                                            <i class="icon-picture"></i>
+                                            <span class="menu-text"> Media </span>
+                                            <b class="arrow js-icon-angle-down"></b>
+                                        </a>
+                                        <ul class="submenu" style="display: none;">
+                                            <li>
+                                                <a href="">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    New Media
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Media Library
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-toggle" href="">
+                                            <i class="icon-checkmark-2"></i>
+                                            <span class="menu-text"> Questions Bank </span>
+                                            <b class="arrow js-icon-angle-down"></b>
+                                        </a>
+                                        <ul class="submenu">
+                                            <li>
+                                                <a href="">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Manage Banks
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Add Banks
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Manage Questions
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Add Questions
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-toggle" href="">
+                                            <i class="icon-users"></i>
+                                            <span class="menu-text"> Users </span>
+                                            <b class="arrow js-icon-angle-down"></b>
+                                        </a>
+                                        <ul class="submenu">
+                                            <li>
+                                                <a href="@Url.Action("Users", "Admin")">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Manage Students
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Manage Teachers
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Manage Admins
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    New User
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Usersrequests", "Admin")">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    New User Request
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-toggle" href="@Url.Action("Index","Group")">
+                                            <i class="icon-eye-open"></i>
+                                            <span class="menu-text"> Permissions </span>
+                                            <b class="arrow js-icon-angle-down"></b>
+                                        </a>
+                                        <ul class="submenu" style="display:none;">
+                                            <li>
+                                                <a href="@Url.Action("Index","Group")">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Manage Groups
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Create","Group")">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Add Groups
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Index","ViewLevel")">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Manage ViewLevel
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Create","ViewLevel")">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Add ViewLevel
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li> <!-- class="open" -->
+                                        <a class="dropdown-toggle" href="">
+                                            <i class="icon-wrench"></i>
+                                            <span class="menu-text"> Settings </span>
+                                            <b class="arrow js-icon-angle-down"></b>
+                                        </a>
+                                        <ul class="submenu"> <!-- style="display:block;" -->
+                                            <li> <!-- class="Active" -->
+                                                <a href="">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    General
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Site Info
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Templates
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-toggle" href="@Url.Action("Index","Languages")">
+                                            <i class="icon-generic"></i>
+                                            <span class="menu-text"> Languages </span>
+                                            <b class="arrow js-icon-angle-down"></b>
+                                        </a>
+                                        <ul class="submenu">
+                                            <li>
+                                                <a href="@Url.Action("Index","Languages")">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Manage Language
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("Create","Languages")">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Add Languages
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-toggle" href="">
+                                            <i class="icon-flag"></i>
+                                            <span class="menu-text"> Reports </span>
+                                            <b class="arrow js-icon-angle-down"></b>
+                                        </a>
+                                        <ul class="submenu">
+                                            <li>
+                                                <a href="">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Content Reports
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Users Reports
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="">
+                                                    <i class="js-icon-double-angle-right"></i>
+                                                    Media Reports
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("PublicData","Admin")">
+                                            <i class="icon-star-empty"></i>
+                                            <span class="menu-text"> News and Public </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="icon-dashboard"></i>
+                                            <span class="menu-text"> Dashboard </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index","Message")">
+                                            <i class="icon-comments-2"></i>
+                                            Massages
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <div id="sidebar-collapse" class="sidebar-collapse">
+                                    <i class="js-icon-double-angle-left"></i>
+                                </div>
+                            </div>
+                            <!-- END SIDE BAR ------------------------------------------------------------------------------------------------------------->
+                    </div>
+                    <div class="main">
+                        @RenderBody()
+                    </div>
+    </div>
+    <div id="snackbar">Some text some message..</div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/admin")
+    @Scripts.Render("~/bundles/myscript")
+
+    @RenderSection("scripts", required : false)
+</body>
+</html>

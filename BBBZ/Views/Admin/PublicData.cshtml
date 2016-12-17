@@ -2,12 +2,9 @@
 @{
     ViewBag.Title = "PublicData";
     ViewBag.NoFooter = true;
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-@Html.Partial("_AdminMenuPartial")
-
-<div class="main">
 <div class="jumbotron">
     <h2> Public Data </h2>
     @if (Model.PublicData.Count > 0)
@@ -146,11 +143,3 @@
     }
 
 </div>
-</div>
-
-@section scripts
-{
-    @Scripts.Render("~/bundles/myscript")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/jquery")
-}

@@ -1,0 +1,119 @@
+﻿@model BBBZ.Models.MessageViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<p>
+    @Html.ActionLink("New Message", "Create", null, new { @class = "btn btn-success btn-sm" })
+</p>
+
+<h3>Inbox (@Model.Inbox.Count) </h3>
+@if (Model.Inbox == null || Model.Inbox.Count == 0)
+{
+    <i> Inbox is Empty </i>
+}
+else
+{ 
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Inbox.First().From_username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inbox.First().To_username)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Inbox.First().Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inbox.First().Subject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inbox.First().Text)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Inbox) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.From_username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.To_username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id=item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+}
+
+<h3>Outbox (@Model.Outbox.Count)</h3>
+@if (Model.Outbox == null || Model.Outbox.Count == 0)
+{
+    <i> Outbox is Empty </i>
+}
+else
+{
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Inbox.First().From_username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inbox.First().To_username)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Inbox.First().Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inbox.First().Subject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inbox.First().Text)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Outbox)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.From_username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.To_username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+}

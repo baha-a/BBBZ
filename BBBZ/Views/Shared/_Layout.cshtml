@@ -10,6 +10,7 @@
     @if(LocalizationHelper.IsRightToLeft())
     {
         @Styles.Render("~/Content/css-rtl");
+        @Scripts.Render("~/bundles/bootstrap-rtl");
     }
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -73,6 +74,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    
     @RenderSection("scripts", required : false)
 
     <div id="snackbar">Some text some message..</div>

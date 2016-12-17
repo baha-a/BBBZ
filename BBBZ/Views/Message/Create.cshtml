@@ -1,0 +1,53 @@
+﻿@model BBBZ.Models.Message
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Message</h4>
+        <hr />
+		<div>
+			@Html.ActionLink("Back", "Index", null, new { @class="btn btn-xs btn-warning"})
+		</div>
+        @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.To_username, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.To_username, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.To_username, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Subject, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Subject, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Subject, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Text, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Text, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Text, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Send" class="btn btn-success btn-sm" />
+            </div>
+        </div>
+    </div>
+}

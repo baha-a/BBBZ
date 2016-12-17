@@ -1,0 +1,59 @@
+﻿@model BBBZ.Models.ViewLevelViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create","ViewLevel",FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>View Level</h4>
+        <hr />
+		<div>
+			@Html.ActionLink("Back", "Index", null, new { @class="btn btn-xs btn-warning"})
+            <input type="submit" value="Create" class="btn btn-success btn-xs" />
+            <hr />
+		</div>
+        @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.theViewlevel.Title, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.theViewlevel.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.theViewlevel.Title, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.theViewlevel.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.theViewlevel.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.theViewlevel.Description, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2">
+                User Groups Having Viewing Access:
+                <hr />
+                @if (Model != null && Model.Groups != null) 
+                {     
+                    for (int i = 0 ; i < Model.Groups.Count ; i++)
+                    {
+                        <div>
+                            @Html.CheckBoxFor(x=> Model.Groups[i].Selected, new { @id = "id"+ Model.Groups[i].ID})
+                            @Html.LabelFor(x => Model.Groups[i].Selected, Model.Groups[i].Text, new { @for = "id" + Model.Groups[i].ID }) 
+                            @Html.HiddenFor(x => Model.Groups[i].ID) 
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}
+

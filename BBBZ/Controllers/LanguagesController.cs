@@ -10,99 +10,105 @@ using BBBZ.Models;
 
 namespace BBBZ.Controllers
 {
-    public class ItemsController : BaseController
+    public class LanguagesController : BaseController
     {
+        // GET: /Languages/
         public ActionResult Index()
         {
-            return View(db.Items.Include(x=>x.Category).ToList());
+            return View(db.Languages.ToList());
         }
 
+        // GET: /Languages/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Items.Find(id);
-            if (item == null)
+            Language language = db.Languages.Find(id);
+            if (language == null)
             {
                 return HttpNotFound();
             }
-            return View(item);
+            return View(language);
         }
 
-        public ActionResult Create(int? id)
+        // GET: /Languages/Create
+        public ActionResult Create()
         {
-            if (id == null)
-                return View();
-            return View(new Item() { Category = db.Categories.Find(id) ,Creator = User.Identity.Name});
+            return View();
         }
 
+        // POST: /Languages/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,ImgURl,Descrption,ActivationTime,Creator,CreationTime")] Item item,int CategoryID)
+        public ActionResult Create([Bind(Include="ID,Code,Title,Description,MetaKey,MetaDesc,SiteName")] Language language)
         {
             if (ModelState.IsValid)
             {
-                item.Category = db.Categories.Find(CategoryID);
-                item.Creator = User.Identity.Name;
-                item.CreationTime = DateTime.Now;
-                item.ActivationTime = DateTime.Now;
-                db.Items.Add(item);
+                db.Languages.Add(language);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(item);
+            return View(language);
         }
 
+        // GET: /Languages/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Items.Find(id);
-            if (item == null)
+            Language language = db.Languages.Find(id);
+            if (language == null)
             {
                 return HttpNotFound();
             }
-            return View(item);
+            return View(language);
         }
 
+        // POST: /Languages/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ID,Title,ImgURl,Descrption,ActivationTime,Creator,CreationTime")] Item item)
+        public ActionResult Edit([Bind(Include="ID,Code,Title,Description,MetaKey,MetaDesc,SiteName")] Language language)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(item).State = EntityState.Modified;
+                db.Entry(language).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(item);
+            return View(language);
         }
 
+        // GET: /Languages/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Item item = db.Items.Find(id);
-            if (item == null)
+            Language language = db.Languages.Find(id);
+            if (language == null)
             {
                 return HttpNotFound();
             }
-            return View(item);
+            return View(language);
         }
 
+        // POST: /Languages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Item item = db.Items.Find(id);
-            db.Items.Remove(item);
+            Language language = db.Languages.Find(id);
+            db.Languages.Remove(language);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -110,7 +116,9 @@ namespace BBBZ.Controllers
         protected override void Dispose(bool disposing)
         {
             if (disposing)
+            {
                 db.Dispose();
+            }
             base.Dispose(disposing);
         }
     }
