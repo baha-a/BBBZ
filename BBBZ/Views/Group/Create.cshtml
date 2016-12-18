@@ -36,9 +36,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Parnet, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Parent, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.Parnet.ID, new SelectList(ViewBag.Groups, "ID", "Text", string.Empty), string.Empty, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Parent.ID, new SelectList(ViewBag.Groups, "ID", "Text", string.Empty), string.Empty, new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">

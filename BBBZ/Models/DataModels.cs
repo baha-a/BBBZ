@@ -20,7 +20,7 @@ namespace BBBZ.Models
         public string Title { get; set; }
         public string Description { get; set; }
         
-        public Group Parnet { get; set; }
+        public Group Parent { get; set; }
         public List<Group> Children { get; set; }
 
         public List<UserGroup> Users { get; set; }
@@ -185,7 +185,7 @@ namespace BBBZ.Models
         public int Order { get; set; }
     }
 
-    public class Category
+    public partial class Category
     {
         public Category()
         {
@@ -204,6 +204,7 @@ namespace BBBZ.Models
         public string MetaKey { get; set; }
         public string MetaData { get; set; }
         public string Language { get; set; }
+        [Display(Name="Creator")]
         public string CreatedByUsername { get; set; }
         public DateTime Date { get; set; }
         public bool Published { get; set; }
@@ -235,6 +236,7 @@ namespace BBBZ.Models
         public string MetaDesc { get; set; }
         public string MetaKey { get; set; }
         public string MetaData { get; set; }
+        [Display(Name = "Creator")]
         public string CreatedByUsername { get; set; }
         public bool Published { get; set; }
         public Category Category { get; set; }

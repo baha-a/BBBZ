@@ -15,7 +15,7 @@
         <h4>Category</h4>
         <hr />
 		<div>
-			@Html.ActionLink("Back", "Index", null, new { @class="btn btn-xs btn-warning"})
+            <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" />
 		</div>
         @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
         @Html.HiddenFor(model => model.ID)
@@ -77,26 +77,37 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Language, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.Language, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Language, null, new { @class = "has-error" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.CreatedByUsername, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.EditorFor(model => model.CreatedByUsername, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CreatedByUsername, null, new { @class = "has-error" })
+                @Html.DisplayFor(model => model.CreatedByUsername)
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.EditorFor(model => model.Date, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Date, null, new { @class = "has-error" })
+                @Html.DisplayFor(model => model.Date)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NewParentID_helper, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.NewParentID_helper, new SelectList(Extenisons.GetAllCategories(), "ID", "Title", (Model.Parent == null) ? 0 : Model.Parent.ID), string.Empty, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Language, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.Language, new SelectList(Extenisons.GetAllLanguages(), "Code", "Title", Model.Language), string.Empty, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NewAccessID_helper, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.NewAccessID_helper, new SelectList(Extenisons.GetAllViewLevels(), "ID", "Title", (Model.Access == null)? 0:Model.Access.ID), new { @class = "form-control" })
             </div>
         </div>
 

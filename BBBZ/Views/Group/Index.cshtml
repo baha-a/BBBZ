@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<BBBZ.Models.SelectableGroup>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Groups";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Groups</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-sm" })
@@ -33,24 +33,27 @@
             @Html.DisplayFor(modelItem => item.ID)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Text)
+            <a href="@Url.Action("Details",null,new { id = item.ID})">
+                @Html.DisplayFor(modelItem => item.Text)
+             </a>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Group.Description)
         </td>
         <td>
-            @if (item.Group.Parnet == null)
+            @if (item.Group.Parent == null)
             {
-                <i class="control-label"> no parent</i>
+                <i> no parent</i>
             }
             else
             {
-                <i class="control-label"> @item.Group.Parnet.Title </i>
+                <a href="@Url.Action("Details",null,new { id = item.Group.Parent.ID})">
+                    @item.Group.Parent.Title
+                </a>
             }
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID })
         </td>
     </tr>

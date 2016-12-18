@@ -29,17 +29,17 @@
         </dd>
         
         <dt>
-            @Html.DisplayNameFor(model => model.Parnet)
+            @Html.DisplayNameFor(model => model.Parent)
         </dt>
 
         <dd>
-            @if(Model.Parnet == null)
+            @if(Model.Parent == null)
             {
                 <i> no parent</i>
             }
             else
             {
-                @Html.DisplayFor(model => model.Parnet.Title)
+                @Html.DisplayFor(model => model.Parent.Title)
             }
         </dd>
     </dl>

@@ -229,6 +229,10 @@
     <Compile Include="Migrations\201612170853107_fix_stupid_Bug.Designer.cs">
       <DependentUpon>201612170853107_fix_stupid_Bug.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612181229190_fix_Typo_in_Table_Group.cs" />
+    <Compile Include="Migrations\201612181229190_fix_Typo_in_Table_Group.Designer.cs">
+      <DependentUpon>201612181229190_fix_Typo_in_Table_Group.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -457,6 +461,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612170853107_fix_stupid_Bug.resx">
       <DependentUpon>201612170853107_fix_stupid_Bug.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612181229190_fix_Typo_in_Table_Group.resx">
+      <DependentUpon>201612181229190_fix_Typo_in_Table_Group.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

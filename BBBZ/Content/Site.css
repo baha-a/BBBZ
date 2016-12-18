@@ -511,3 +511,10 @@ div.container-fluid{
 label {
     font-weight: normal;
 }
+
+a{
+ text-decoration:none !important ;
+}
+td > i{
+    color:lightgray;
+}

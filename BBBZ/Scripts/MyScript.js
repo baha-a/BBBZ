@@ -1,16 +1,4 @@
-﻿    $('#datetimepicker1').datepicker({    
-        onSelect: function() { 
-            x = $(this).datepicker('getDate').toLocaleDateString();
-            console.log(x);
-        }
-    });
-
-    $('#datetimepicker2').datepicker({
-        onSelect: function () {
-            x = $(this).datepicker('getDate').toLocaleDateString();
-            console.log(x);
-        }
-    });
+﻿    
 
 
 function ToggelPostButton(txt) {
@@ -78,10 +66,22 @@ $(document).ready(function () {
 
         $('.nav li.open').not($(this).parents("li")).removeClass("open");
 
+
+
+        $('#datetimepicker1').datepicker({
+            onSelect: function () {
+                x = $(this).datepicker('getDate').toLocaleDateString();
+                console.log(x);
+            }
+        });
+
+        $('#datetimepicker2').datepicker({
+            onSelect: function () {
+                x = $(this).datepicker('getDate').toLocaleDateString();
+                console.log(x);
+            }
+        });
+
         return false;
     });
 });
-
-
-
-

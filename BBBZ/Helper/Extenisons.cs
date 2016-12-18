@@ -13,6 +13,14 @@ public class CategoryView
 
 public static class Extenisons
 {
+    public static int ParentsLength(Category c)
+    {
+        int lngth = -1;
+        for (Category mover = c ; mover != null ; mover = mover.Parent)
+            lngth++;
+        return lngth;
+    }
+
     public static string Dashis(int count)
     {
         string ans = "";
@@ -33,7 +41,12 @@ public static class Extenisons
 
     public static List<CategoryView> GetAllCategories()
     {
-        return db.Categories.ToList().FillWithChildren().ConvertToViewModel();
+        return GetParentCatgory().FillWithChildren().ConvertToViewModel();
+    }
+
+    public static List<Category> GetParentCatgory()
+    {
+        return db.Categories.Where(x => x.Parent == null).ToList();
     }
 
     public static List<Category> FillWithChildren(this List<Category> gs, int without = -1)

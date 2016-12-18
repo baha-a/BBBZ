@@ -99,9 +99,65 @@
             @Html.DisplayFor(model => model.Published)
         </dd>
 
+
+        <dt>
+            Parent
+        </dt>
+
+        <dd>
+            @if(Model.Parent == null)
+            {
+                <i> no parent </i>
+            }
+            else
+            {
+                var v = Model.Parent;
+                while (v!=null)
+	            {
+                    <b> > </b> <a href="@Url.Action("Details", new { id = v.ID })"> @Html.DisplayFor(model => v.Title) </a>
+                    v = v.Parent;
+	            }
+            }
+        </dd>
+
+        <dt>
+            SubCategories
+        </dt>
+        <dd>
+            @if (Model.SubCategories.Count == 0)
+            {
+              <i> no subcategories </i>
+            }
+            
+            <ul>
+                @foreach (var g in Model.SubCategories)
+                {
+                    <li> <a href="@Url.Action("Details", new { id = g.ID})"> @Html.DisplayFor(model => g.Title) </a> </li>
+                }
+            </ul>
+        </dd>
+
+
+        <dt>
+            Access
+        </dt>
+
+        <dd>
+            @if(Model.Access == null)
+            {
+                  <i> no access selected </i>
+            }
+            else
+            {
+                <a href="@Url.Action("Details","ViewLevel", new { id = Model.Access.ID})"> @Html.DisplayFor(model => Model.Access.Title) </a>
+            }
+        </dd>
+
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class="btn btn-sm btn-success"}) |
-    @Html.ActionLink("Back", "Index", null, new { @class="btn btn-sm btn-warning"})
+    <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" /> 
+    @Html.ActionLink("Back To List", "Index",null, new { @class = "btn btn-sm btn-warning" })
+
 </p>

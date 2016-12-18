@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<BBBZ.Models.Category>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Categories";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Categories</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-sm" })
@@ -13,25 +13,13 @@
 <table class="table table-bordered">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.ID)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Alias)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Url)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MetaDesc)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MetaKey)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MetaData)
+            @Html.DisplayNameFor(model => model.Parent)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Language)
@@ -40,7 +28,7 @@
             @Html.DisplayNameFor(model => model.CreatedByUsername)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.DisplayNameFor(model => model.Access)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Published)
@@ -51,25 +39,21 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
+            @Html.DisplayFor(modelItem => item.ID)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Alias)
+             @Extenisons.Dashis(Extenisons.ParentsLength(item)) 
+            <a href="@Url.Action("Details", new { id = item.ID })"> @Html.DisplayFor(modelItem => item.Title) </a>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Url)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MetaDesc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MetaKey)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MetaData)
+            @if(item.Parent == null)
+            {
+                <i> no parent </i>
+            }
+            else
+            { 
+                <a href="@Url.Action("Details", new { id = item.Parent.ID })">  @Html.DisplayFor(modelItem => item.Parent.Title) </a>
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Language)
@@ -78,14 +62,22 @@
             @Html.DisplayFor(modelItem => item.CreatedByUsername)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Date)
+            @if(item.Access != null)
+            {
+                <a href="@Url.Action("Details", "ViewLevel", new { id= item.Access.ID})">
+                    @Html.DisplayFor(modelItem => item.Access.Title)
+                 </a>
+            }
+            else
+            {
+                <i> none </i>
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Published)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID })
         </td>
     </tr>

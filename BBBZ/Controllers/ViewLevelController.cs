@@ -16,7 +16,7 @@ namespace BBBZ.Controllers
         {
             foreach (var g in gs)
             {
-                g.Children = db.Groups.Where(x => x.Parnet != null && x.Parnet.ID == g.ID).ToList();
+                g.Children = db.Groups.Where(x => x.Parent != null && x.Parent.ID == g.ID).ToList();
                 FillWithChildren(g.Children);
             }
             return gs;
@@ -45,7 +45,7 @@ namespace BBBZ.Controllers
         
         public ActionResult Create()
         {
-            return View(new ViewLevelViewModel().Initialize(FillWithChildren(db.Groups.Where(x=>x.Parnet == null).ToList())));
+            return View(new ViewLevelViewModel().Initialize(FillWithChildren(db.Groups.Where(x=>x.Parent == null).ToList())));
         }
 
         // POST: /ViewLevel/Create
@@ -91,7 +91,7 @@ namespace BBBZ.Controllers
             }
             viewlevel.Groups = db.Groups.Include(x => x.Access).Where(x => x.Access.FirstOrDefault(y => y.ID == viewlevel.ID) != null).ToList();
 
-            return View(new ViewLevelViewModel().Initialize(FillWithChildren(db.Groups.Where(x => x.Parnet == null).ToList()), viewlevel));
+            return View(new ViewLevelViewModel().Initialize(FillWithChildren(db.Groups.Where(x => x.Parent == null).ToList()), viewlevel));
         }
 
         [HttpPost]

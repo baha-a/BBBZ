@@ -39,7 +39,7 @@
             <ul>
                 @foreach (var g in Model.Groups)
                 {
-                    <li> @g.Title </li>
+                    <li> <a href="@Url.Action("Details","Group", new { id = g.ID})"> @g.Title </a> </li>
                 }
             </ul>
         </dd>
@@ -48,5 +48,6 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class="btn btn-sm btn-success"}) |
-    @Html.ActionLink("Back", "Index", null, new { @class="btn btn-sm btn-warning"})
+    <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" />
+    @Html.ActionLink("Back To List", "Index", null, new { @class = "btn btn-sm btn-warning" })
 </p>

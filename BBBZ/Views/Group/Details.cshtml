@@ -7,6 +7,10 @@
 
 <h2>Details</h2>
 
+@if (Model == null)
+{
+    <h3><i> Error </i></h3>
+}
 <div>
     <h4>Group</h4>
 	<hr />
@@ -28,22 +32,67 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Parnet)
+            @Html.DisplayNameFor(model => model.Parent)
         </dt>
 
         <dd>
-            @if (Model.Parnet == null)
+            @if (Model.Parent == null)
             {
                 <i> no parent</i>
             }
             else
             {
-                @Html.DisplayFor(model => model.Parnet.Title)
+                var v = Model.Parent;
+                while (v != null)
+	            {
+                    <b> > </b> <a href="@Url.Action("Details","Group", new { id = v.ID })"> @v.Title </a>
+                    v = v.Parent;
+	            }
+            }
+        </dd>
+
+        <dt>
+            Children
+        </dt>
+
+        <dd>
+            @if (Model.Children == null || Model.Children.Count == 0)
+            {
+                <i> no children </i>
+            }
+            else
+            {
+                <ul>
+                @foreach (var v in Model.Children)
+                {
+                    <li><a href="@Url.Action("Details","Group", new { id = v.ID})"> @v.Title </a></li>
+                }
+                </ul>
+            }
+        </dd>
+
+        <dt>
+            Access
+        </dt>
+        <dd>
+            @if (Model.Access == null || Model.Access.Count == 0)
+            {
+                <i> no access selected </i>
+            }
+            else
+            {
+                <ul>
+                    @foreach (var v in Model.Access)
+                    {
+                        <li><a href="@Url.Action("Details","ViewLevel", new { id = v.ID})"> @v.Title </a></li>
+                    }
+                </ul>
             }
         </dd>
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class="btn btn-sm btn-success"}) |
-    @Html.ActionLink("Back", "Index", null, new { @class="btn btn-sm btn-warning"})
+    <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" />
+    @Html.ActionLink("Back To List", "Index", null, new { @class = "btn btn-sm btn-warning" })
 </p>

@@ -100,6 +100,56 @@
             @Html.DisplayFor(model => model.Published)
         </dd>
 
+
+
+        <dt>
+            Parent
+        </dt>
+
+        <dd>
+            @if (Model.Parent == null)
+            {
+                <i> no parent </i>
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.Parent.Title)
+            }
+        </dd>
+
+        <dt>
+            SubCategories
+        </dt>
+        <dd>
+            @if (Model.SubCategories.Count == 0)
+            {
+                <i> no subcategories </i>
+            }
+
+            <ul>
+                @foreach (var g in Model.SubCategories)
+                {
+                    <li> <a href="@Url.Action("Details", new { id = g.ID})"> @Html.DisplayFor(model => g.Title) </a> </li>
+                }
+            </ul>
+        </dd>
+
+
+        <dt>
+            Access
+        </dt>
+
+        <dd>
+            @if (Model.Access == null)
+            {
+                <i> no access selected </i>
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.Access.Title)
+            }
+        </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {
@@ -107,7 +157,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-danger btn-sm" /> |
-            @Html.ActionLink("Back", "Index", null, new { @class="btn btn-sm btn-warning"})
+            <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" />
         </div>
     }
 </div>

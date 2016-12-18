@@ -16,7 +16,7 @@ namespace BBBZ.Controllers
         {
             foreach (var g in gs)
             {
-                g.Children = db.Groups.Where(x => x.Parnet != null && x.Parnet.ID == g.ID && x.ID != without).ToList();
+                g.Children = db.Groups.Where(x => x.Parent != null && x.Parent.ID == g.ID && x.ID != without).ToList();
                 FillWithChildren(g.Children,without);
             }
             return gs;
@@ -26,7 +26,7 @@ namespace BBBZ.Controllers
         // GET: /Group/
         public ActionResult Index()
         {
-            return View(SelectableGroup.Convert(FillWithChildren(db.Groups.Where(p => p.Parnet == null).ToList())));
+            return View(SelectableGroup.Convert(FillWithChildren(db.Groups.Where(p => p.Parent == null).ToList())));
         }
 
         // GET: /Group/Details/5
@@ -36,7 +36,15 @@ namespace BBBZ.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Group group = db.Groups.Find(id);
+            Group group = db.Groups.Include(x=>x.Access).Include(x => x.Parent).Include(x=>x.Children).SingleOrDefault(x => x.ID == id);
+            
+            Group mover = group;
+            while (mover != null && mover.Parent != null)
+            {
+                mover.Parent = db.Groups.Include(x=>x.Parent).SingleOrDefault(x => x.ID == mover.Parent.ID);
+                mover = mover.Parent;
+            }
+
             if (group == null)
             {
                 return HttpNotFound();
@@ -47,7 +55,7 @@ namespace BBBZ.Controllers
         // GET: /Group/Create
         public ActionResult Create()
         {
-            ViewBag.Groups = SelectableGroup.Convert( FillWithChildren( db.Groups.Where(p=>p.Parnet == null).ToList() ));
+            ViewBag.Groups = SelectableGroup.Convert(FillWithChildren(db.Groups.Where(p => p.Parent == null).ToList()));
             return View();
         }
 
@@ -58,7 +66,7 @@ namespace BBBZ.Controllers
         {
             if (ModelState.IsValid)
             {
-                group.Parnet = db.Groups.SingleOrDefault(x => x.ID == group.Parnet.ID);
+                group.Parent = db.Groups.SingleOrDefault(x => x.ID == group.Parent.ID);
                 db.Groups.Add(group);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -79,7 +87,7 @@ namespace BBBZ.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Groups = SelectableGroup.Convert(FillWithChildren(db.Groups.Where(p => p.Parnet == null && p.ID != group.ID).ToList(), group.ID));
+            ViewBag.Groups = SelectableGroup.Convert(FillWithChildren(db.Groups.Where(p => p.Parent == null && p.ID != group.ID).ToList(), group.ID));
             return View(group);
         }
 
@@ -94,7 +102,7 @@ namespace BBBZ.Controllers
                 var g = db.Groups.SingleOrDefault(x => x.ID == group.ID);
                 g.Title = group.Title;
                 g.Description = group.Description;
-                g.Parnet = (group.helperID == null) ? null : db.Groups.SingleOrDefault(x => x.ID == (int)group.helperID);
+                g.Parent = (group.helperID == null) ? null : db.Groups.SingleOrDefault(x => x.ID == (int)group.helperID);
 
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -109,7 +117,7 @@ namespace BBBZ.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Group group = db.Groups.Find(id);
+            Group group = db.Groups.Include(x => x.Parent).SingleOrDefault(x => x.ID == id);
             if (group == null)
             {
                 return HttpNotFound();

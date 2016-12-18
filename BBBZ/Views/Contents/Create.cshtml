@@ -49,18 +49,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FullText, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.FullText, new { @class = "control-label col-md-2 " })
             <div class="col-md-6">
                 @Html.EditorFor(model => model.FullText, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FullText, null, new { @class = "has-error" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedTime, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.CreatedTime, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CreatedTime, null, new { @class = "has-error" })
             </div>
         </div>
 
@@ -97,14 +89,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CreatedByUsername, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.CreatedByUsername, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CreatedByUsername, null, new { @class = "has-error" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Published, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
                 @Html.EditorFor(model => model.Published, new { @class = "form-control" })
@@ -118,4 +102,9 @@
             </div>
         </div>
     </div>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/myscript")
 }

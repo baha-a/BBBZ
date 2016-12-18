@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace BBBZ.Models
 {
@@ -12,6 +13,16 @@ namespace BBBZ.Models
         public bool Selected { get; set; }
         [NotMapped]
         public int? helperID { get; set; }
+    }
+    public partial class Category
+    {
+        [NotMapped]
+        [Display(Name="Parent")]
+        public int? NewParentID_helper { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Access")]
+        public int? NewAccessID_helper { get; set; }
     }
 
     public class SelectableGroup

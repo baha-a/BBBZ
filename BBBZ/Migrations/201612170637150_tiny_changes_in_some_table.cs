@@ -11,10 +11,10 @@ namespace BBBZ.Migrations
             DropForeignKey("dbo.PermissionGroups", "Group_ID", "dbo.Groups");
             DropIndex("dbo.PermissionGroups", new[] { "Permission_ID" });
             DropIndex("dbo.PermissionGroups", new[] { "Group_ID" });
-            AddColumn("dbo.Groups", "Parnet_ID", c => c.Int());
+            AddColumn("dbo.Groups", "Parent_ID", c => c.Int());
             AddColumn("dbo.Languages", "MetaData", c => c.String());
-            CreateIndex("dbo.Groups", "Parnet_ID");
-            AddForeignKey("dbo.Groups", "Parnet_ID", "dbo.Groups", "ID");
+            CreateIndex("dbo.Groups", "Parent_ID");
+            AddForeignKey("dbo.Groups", "Parent_ID", "dbo.Groups", "ID");
             DropTable("dbo.Permissions");
             DropTable("dbo.PermissionGroups");
         }
@@ -40,10 +40,10 @@ namespace BBBZ.Migrations
                     })
                 .PrimaryKey(t => t.ID);
             
-            DropForeignKey("dbo.Groups", "Parnet_ID", "dbo.Groups");
-            DropIndex("dbo.Groups", new[] { "Parnet_ID" });
+            DropForeignKey("dbo.Groups", "Parent_ID", "dbo.Groups");
+            DropIndex("dbo.Groups", new[] { "Parent_ID" });
             DropColumn("dbo.Languages", "MetaData");
-            DropColumn("dbo.Groups", "Parnet_ID");
+            DropColumn("dbo.Groups", "Parent_ID");
             CreateIndex("dbo.PermissionGroups", "Group_ID");
             CreateIndex("dbo.PermissionGroups", "Permission_ID");
             AddForeignKey("dbo.PermissionGroups", "Group_ID", "dbo.Groups", "ID", cascadeDelete: true);
