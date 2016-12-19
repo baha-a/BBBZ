@@ -32,7 +32,7 @@ namespace BBBZ.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             ViewLevel viewlevel = db.ViewLevels.Find(id);
             if (viewlevel == null)
@@ -82,7 +82,7 @@ namespace BBBZ.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             ViewLevel viewlevel = db.ViewLevels.Find(id);
             if (viewlevel == null)
@@ -116,7 +116,7 @@ namespace BBBZ.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             ViewLevel viewlevel = db.ViewLevels.Find(id);
             if (viewlevel == null)

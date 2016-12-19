@@ -170,9 +170,13 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CategoryXController.cs" />
     <Compile Include="Controllers\ContentsController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\LanguagesController.cs" />
+    <Compile Include="Controllers\MenuItemController.cs" />
+    <Compile Include="Controllers\MenusController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ViewLevelController.cs" />
     <Compile Include="Helper\HasPermission.cs" />
@@ -233,6 +237,18 @@
     <Compile Include="Migrations\201612181229190_fix_Typo_in_Table_Group.Designer.cs">
       <DependentUpon>201612181229190_fix_Typo_in_Table_Group.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612190626402_delete_Modules_table.cs" />
+    <Compile Include="Migrations\201612190626402_delete_Modules_table.Designer.cs">
+      <DependentUpon>201612190626402_delete_Modules_table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612191150354_update1.cs" />
+    <Compile Include="Migrations\201612191150354_update1.Designer.cs">
+      <DependentUpon>201612191150354_update1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612191558257_update2.cs" />
+    <Compile Include="Migrations\201612191558257_update2.Designer.cs">
+      <DependentUpon>201612191558257_update2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -291,6 +307,7 @@
     <Content Include="Content\admin\icon_video.gif" />
     <Content Include="Content\admin\modal.css" />
     <Content Include="Content\admin\template.css" />
+    <Content Include="Content\images\robot.png" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\images\ui-icons_555555_256x240.png" />
     <Content Include="Content\images\ui-icons_777620_256x240.png" />
@@ -339,7 +356,89 @@
     <Content Include="Scripts\MyScript.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\tinymce.js" />
+    <Content Include="Scripts\tinymce\jquery.tinymce.min.js" />
+    <Content Include="Scripts\tinymce\license.txt" />
+    <Content Include="Scripts\tinymce\plugins\advlist\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\anchor\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\autolink\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\autoresize\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\autosave\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\bbcode\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\charmap\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\codesample\css\prism.css" />
+    <Content Include="Scripts\tinymce\plugins\codesample\plugin.dev.js" />
+    <Content Include="Scripts\tinymce\plugins\codesample\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\code\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\colorpicker\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\contextmenu\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\directionality\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-cool.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-cry.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-embarassed.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-frown.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-innocent.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-kiss.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-laughing.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-money-mouth.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-sealed.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-smile.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-surprised.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-tongue-out.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-undecided.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-wink.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\img\smiley-yell.gif" />
+    <Content Include="Scripts\tinymce\plugins\emoticons\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\example\dialog.html" />
+    <Content Include="Scripts\tinymce\plugins\example\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\example_dependency\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\fullpage\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\fullscreen\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\hr\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\imagetools\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\image\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\importcss\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\insertdatetime\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\layer\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\legacyoutput\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\link\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\lists\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\media\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\nonbreaking\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\noneditable\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\pagebreak\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\paste\plugin.dev.js" />
+    <Content Include="Scripts\tinymce\plugins\paste\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\preview\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\print\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\save\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\searchreplace\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\spellchecker\plugin.dev.js" />
+    <Content Include="Scripts\tinymce\plugins\spellchecker\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\tabfocus\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\table\plugin.dev.js" />
+    <Content Include="Scripts\tinymce\plugins\table\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\template\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\textcolor\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\textpattern\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\toc\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="Scripts\tinymce\plugins\visualblocks\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\visualchars\plugin.min.js" />
+    <Content Include="Scripts\tinymce\plugins\wordcount\plugin.min.js" />
+    <Content Include="Scripts\tinymce\skins\lightgray\content.inline.min.css" />
+    <Content Include="Scripts\tinymce\skins\lightgray\content.min.css" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.svg" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.svg" />
+    <Content Include="Scripts\tinymce\skins\lightgray\img\anchor.gif" />
+    <Content Include="Scripts\tinymce\skins\lightgray\img\loader.gif" />
+    <Content Include="Scripts\tinymce\skins\lightgray\img\object.gif" />
+    <Content Include="Scripts\tinymce\skins\lightgray\img\trans.gif" />
+    <Content Include="Scripts\tinymce\skins\lightgray\skin.ie7.min.css" />
+    <Content Include="Scripts\tinymce\skins\lightgray\skin.min.css" />
+    <Content Include="Scripts\tinymce\themes\inlite\theme.min.js" />
+    <Content Include="Scripts\tinymce\themes\modern\theme.min.js" />
+    <Content Include="Scripts\tinymce\tinymce.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -352,7 +451,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -370,19 +468,12 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_LanguagesPartial.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\Categoryx\Preview.cshtml" />
+    <Content Include="Views\Category\Preview.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\Admin\Menus.cshtml" />
     <Content Include="Views\Admin\PublicData.cshtml" />
     <Content Include="Views\Admin\UsersRequests.cshtml" />
-    <Content Include="Views\Shared\_AdminMenuPartial.cshtml" />
     <Content Include="Views\Admin\Teachers.cshtml" />
-    <Content Include="Views\Categoryx\Index.cshtml" />
-    <Content Include="Views\Items\Create.cshtml" />
-    <Content Include="Views\Items\Delete.cshtml" />
-    <Content Include="Views\Items\Details.cshtml" />
-    <Content Include="Views\Items\Edit.cshtml" />
-    <Content Include="Views\Items\Index.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Languages\Create.cshtml" />
@@ -413,6 +504,85 @@
     <Content Include="Views\Category\Details.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Scripts\tinymce\langs\readme.md" />
+    <Content Include="Scripts\tinymce\skins\lightgray\AbsoluteLayout.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Animations.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Arrows.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Button.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\ButtonGroup.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Checkbox.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\ColorBox.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\ColorButton.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\ColorPicker.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\ComboBox.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Container.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Content.Inline.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Content.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Content.Objects.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\CropRect.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\FieldSet.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\FitLayout.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\FloatPanel.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\FlowLayout.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.eot" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.ttf" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.woff" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.eot" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.ttf" />
+    <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Icons.Ie7.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Icons.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Iframe.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\ImagePanel.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\InfoBox.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Label.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\ListBox.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Menu.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\MenuBar.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\MenuButton.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\MenuItem.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Mixins.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Notification.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Panel.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Path.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Progress.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Radio.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Reset.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\ResizeHandle.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Scrollable.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\SelectBox.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Sidebar.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\skin.dev.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\skin.ie7.dev.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\skin.ie7.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\skin.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Slider.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Spacer.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\SplitButton.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\StackLayout.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\TabPanel.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\TextBox.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Throbber.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\TinyMCE.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\ToolTip.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Variables.less" />
+    <Content Include="Scripts\tinymce\skins\lightgray\Window.less" />
+    <Content Include="Views\Menus\Create.cshtml" />
+    <Content Include="Views\Menus\Delete.cshtml" />
+    <Content Include="Views\Menus\Details.cshtml" />
+    <Content Include="Views\Menus\Edit.cshtml" />
+    <Content Include="Views\Menus\Index.cshtml" />
+    <Content Include="Views\MenuItem\Create.cshtml" />
+    <Content Include="Views\MenuItem\Delete.cshtml" />
+    <Content Include="Views\MenuItem\Details.cshtml" />
+    <Content Include="Views\MenuItem\Edit.cshtml" />
+    <Content Include="Views\MenuItem\Index.cshtml" />
+    <Content Include="Views\Profile\Details.cshtml" />
+    <Content Include="Views\Profile\Edit.cshtml" />
+    <Content Include="Views\Shared\_NavBarPartial.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -464,6 +634,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612181229190_fix_Typo_in_Table_Group.resx">
       <DependentUpon>201612181229190_fix_Typo_in_Table_Group.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612190626402_delete_Modules_table.resx">
+      <DependentUpon>201612190626402_delete_Modules_table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612191150354_update1.resx">
+      <DependentUpon>201612191150354_update1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612191558257_update2.resx">
+      <DependentUpon>201612191558257_update2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

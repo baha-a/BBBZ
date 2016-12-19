@@ -32,7 +32,8 @@ namespace BBBZ
                         "~/Scripts/myscript.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/tinymce").Include(
-                        "~/Scripts/tinymce.js"));
+                        "~/Scripts/tinymce/jquery.tinymce.min.js",
+                        "~/Scripts/tinymce/tinymce.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nestable").Include(
                         "~/Scripts/jquery.nestable.js",

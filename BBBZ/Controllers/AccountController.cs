@@ -48,6 +48,12 @@ namespace BBBZ.Controllers
                 var user = await UserManager.FindAsync(model.UserName, model.Password);
                 if (user != null)
                 {
+                    var p = db.Profiles.SingleOrDefault(x => x.username == model.UserName);
+                    if (p != null)
+                    {
+                        p.LastVisitDate = DateTime.Now;
+                        db.SaveChanges();
+                    }
                     await SignInAsync(user, model.RememberMe);
                     return RedirectToLocal(returnUrl);
                 }
@@ -78,25 +84,21 @@ namespace BBBZ.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!RegisterViewModel.UserTypes.Contains(model.UserType, StringComparer.OrdinalIgnoreCase))
-                    ModelState.AddModelError("500", "Incorrent UserType");
+                var user = new ApplicationUser() { UserName = model.UserName };
+                var result = await UserManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    db.Profiles.Add(new Profile() { username = model.UserName, RegisterDate = DateTime.Now, LastVisitDate = DateTime.Now });
+                    db.UserGroups.Add(new UserGroup() { username = model.UserName, Groups = db.Groups.SingleOrDefault(x => x.Title == "NewRegisterUser") });
+
+                    db.SaveChanges();
+                    await SignInAsync(user, isPersistent : false);
+                    return RedirectToAction("Index", "Home");
+                }
                 else
                 {
-                    var user = new ApplicationUser() { UserName = model.UserName };
-                    var result = await UserManager.CreateAsync(user, model.Password);
-                    if (result.Succeeded)
-                    {
-                        model.UserType += "_temp";
-                        model.UserType = model.UserType.ToLower();
-                        await UserManager.AddToRoleAsync(user.Id, model.UserType);
-
-                        await SignInAsync(user, isPersistent : false);
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        AddErrors(result);
-                    }
+                    AddErrors(result);
                 }
             }
 

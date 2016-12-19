@@ -518,3 +518,8 @@ a{
 td > i{
     color:lightgray;
 }
+
+dt, dd{
+    padding-top:10px;
+}
+

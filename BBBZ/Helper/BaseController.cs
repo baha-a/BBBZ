@@ -27,18 +27,6 @@ public abstract class BaseController: Controller
         _defaultLang = _supportedLocales[0];
 
         db = new ApplicationDbContext();
-        var m = db.Menus.ToList()[0];
-        ViewBag.Menu = getCategoriesTree(db.MenuCategories.Where(x => x.Menu.ID == m.ID).Select(x => x.Category).ToList());
-    }
-
-    private List<Category> getCategoriesTree(List<Category> cat)
-    {
-        foreach (var c in cat)
-        {
-            c.SubCategories = db.Categories.Where(x => x.Parent != null && x.Parent.ID == c.ID).ToList();
-            getCategoriesTree(c.SubCategories);
-        }
-        return cat;
     }
 
     /// Apply locale to current thread
@@ -63,5 +51,25 @@ public abstract class BaseController: Controller
         SetLang(lang);
         
         base.OnActionExecuting(filterContext);
+    }
+
+    protected override HttpNotFoundResult HttpNotFound(string statusDescription)
+    {
+        throw new HttpException(404, statusDescription);
+    }
+
+    protected new ActionResult HttpNotFound()
+    {
+        return RedirectToAction("Index", "Error", new { id = 404 });
+    }
+
+    protected ActionResult BadRequest()
+    {
+        return RedirectToAction("Index", "Error", new { id = 400 });
+    }
+
+    protected ActionResult Unauthorized()
+    {
+        return RedirectToAction("Index", "Error", new { id = 401 });
     }
 }

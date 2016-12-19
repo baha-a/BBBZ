@@ -21,7 +21,7 @@ namespace BBBZ.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             Category category = db.Categories.Include(x => x.Access).SingleOrDefault(x => x.ID == id);
             if (category == null)
@@ -64,7 +64,7 @@ namespace BBBZ.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             Category category = db.Categories.Include(x => x.Access).SingleOrDefault(x => x.ID == id);
             if (category == null)
@@ -109,7 +109,7 @@ namespace BBBZ.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             Category category = db.Categories.Include(x => x.Access).SingleOrDefault(x => x.ID == id);
             if (category == null)

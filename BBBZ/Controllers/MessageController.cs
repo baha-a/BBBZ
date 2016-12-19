@@ -26,7 +26,7 @@ namespace BBBZ.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             Message message = db.Messages.Find(id);
             if (message == null)

@@ -59,10 +59,6 @@ namespace BBBZ.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
-        public string UserType { get; set; }
-
-        public static string[] UserTypes { get { return new string[] { "User", "Teacher", "Admin" }; } }
     }
     
 }

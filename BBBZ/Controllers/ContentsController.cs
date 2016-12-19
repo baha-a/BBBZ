@@ -23,7 +23,7 @@ namespace BBBZ.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             Content content = db.Contents.Find(id);
             if (content == null)
@@ -40,14 +40,15 @@ namespace BBBZ.Controllers
         }
 
         // POST: /Content/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ID,Title,Alias,IntroText,FullText,CreatedTime,Descrption,MetaDesc,MetaKey,MetaData,CreatedByUsername,Published")] Content content)
+        public ActionResult Create(Content content)
         {
             if (ModelState.IsValid)
             {
+                content.CreatedByUsername = User.Identity.Name;
+                content.CreatedTime = DateTime.Now;
+
                 db.Contents.Add(content);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -61,7 +62,7 @@ namespace BBBZ.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             Content content = db.Contents.Find(id);
             if (content == null)
@@ -72,11 +73,9 @@ namespace BBBZ.Controllers
         }
 
         // POST: /Content/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ID,Title,Alias,IntroText,FullText,CreatedTime,Descrption,MetaDesc,MetaKey,MetaData,CreatedByUsername,Published")] Content content)
+        public ActionResult Edit(Content content)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +91,7 @@ namespace BBBZ.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             Content content = db.Contents.Find(id);
             if (content == null)

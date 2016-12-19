@@ -31,7 +31,7 @@
 {
     <tr>
         <td>
-            <a href="@Url.Action("Detials", new { id= item.ID})">
+            <a href="@Url.Action("Details", new { id= item.ID})">
                 @Html.DisplayFor(modelItem => item.Title)
             </a>
         </td>
@@ -45,7 +45,7 @@
             }
             else 
             { 
-                <a href="@Url.Action("Detials","Category", new { id= item.Category.ID})">
+                <a href="@Url.Action("Details","Category", new { id= item.Category.ID})">
                     @Html.DisplayFor(modelItem => item.Category.Title)
                 </a>
             }

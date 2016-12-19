@@ -34,7 +34,7 @@ namespace BBBZ.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             Group group = db.Groups.Include(x=>x.Access).Include(x => x.Parent).Include(x=>x.Children).SingleOrDefault(x => x.ID == id);
             
@@ -66,7 +66,7 @@ namespace BBBZ.Controllers
         {
             if (ModelState.IsValid)
             {
-                group.Parent = db.Groups.SingleOrDefault(x => x.ID == group.Parent.ID);
+                group.Parent = db.Groups.SingleOrDefault(x => x.ID == group.helperID);
                 db.Groups.Add(group);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -80,7 +80,7 @@ namespace BBBZ.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             Group group = db.Groups.Find(id);
             if (group == null)
@@ -99,10 +99,17 @@ namespace BBBZ.Controllers
         {
             if (ModelState.IsValid)
             {
-                var g = db.Groups.SingleOrDefault(x => x.ID == group.ID);
+                var g = db.Groups.Include(x=>x.Parent).SingleOrDefault(x => x.ID == group.ID);
                 g.Title = group.Title;
                 g.Description = group.Description;
-                g.Parent = (group.helperID == null) ? null : db.Groups.SingleOrDefault(x => x.ID == (int)group.helperID);
+
+                if (group.helperID == null || group.helperID == -1)
+                {
+                    if (g.Parent != null)
+                        g.Parent.Children.Remove(g);
+                }
+                else
+                    g.Parent = db.Groups.SingleOrDefault(x => x.ID == (int)group.helperID);
 
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -115,7 +122,7 @@ namespace BBBZ.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return BadRequest();
             }
             Group group = db.Groups.Include(x => x.Parent).SingleOrDefault(x => x.ID == id);
             if (group == null)

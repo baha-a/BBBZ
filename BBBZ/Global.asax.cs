@@ -18,6 +18,20 @@ namespace BBBZ
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Error += Application_Error;
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            var error = Server.GetLastError();
+
+            try { System.IO.File.AppendAllText("C:\\server_log.txt", ((error is HttpException) ? ((HttpException)error).GetHttpCode() : -1) + "\r\n" + error.Message + "\r\n-------------------------------\r\n"); } catch { }
+            Session["PreviousUrl"] = Request.Url.AbsolutePath;
+            Session["errorCode"] = (error is HttpException) ? ((HttpException)error).GetHttpCode() : 500;
+            Session["errorMessage"] = (error == null) ? "error has occure" : error.Message; 
+            Server.ClearError();
+            Response.Redirect("~/Error");
         }
     }
 }

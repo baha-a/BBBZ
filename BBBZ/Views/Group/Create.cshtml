@@ -38,7 +38,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Parent, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.Parent.ID, new SelectList(ViewBag.Groups, "ID", "Text", string.Empty), string.Empty, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.helperID, new SelectList(ViewBag.Groups, "ID", "Text", -1), string.Empty, new { @class = "form-control" })
+                @Html.HiddenFor(model=>model.helperID)
             </div>
         </div>
         <div class="form-group">

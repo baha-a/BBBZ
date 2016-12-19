@@ -15,48 +15,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink(Resources.R.MainTitle, "Index", "Home", null, new { @class = "navbar-brand" })
-            </div>
-
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink(Resources.R.Home, "Index", "Home")</li>
-                    <li>@Html.ActionLink(Resources.R.About, "About", "Home")</li>
-                    <li>@Html.ActionLink(Resources.R.Contact, "Contact", "Home")</li>
-                    
-
-                    @if(User.IsInRole("superadmin") || User.IsInRole("admin"))
-                    {
-                        <li>@Html.ActionLink("ControlPanel", "Index", "Admin")</li>
-                    }
-                    else if(User.IsInRole("teacher"))
-                    {
-                        <li>@Html.ActionLink("TeaacherPanel", "Index", "Teacher")</li>
-                    }
-                    else if(User.IsInRole("user"))
-                    {
-                        <li>@Html.ActionLink("Courses", "Courses", "Home")</li>
-                        <li>@Html.ActionLink("Students", "Index", "Users", new { user = User.Identity.Name},null)</li>
-                    }
-                </ul>
-
-                @Html.Partial("_MenuPartial")
-
-                <ul class="nav navbar-nav @(LocalizationHelper.IsRightToLeft() ? "navbar-left" : "navbar-right")">
-                    <li>@Html.Partial("_LoginPartial")</li>
-                    <li>@Html.Partial("_LanguagesPartial")</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    @Html.Partial("_NavBarPartial")
     <div class="container body-content">
         @RenderBody()
         @if (ViewBag.NoFooter == true)

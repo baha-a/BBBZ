@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace BBBZ.Models
 {
@@ -16,6 +17,7 @@ namespace BBBZ.Models
             Users = new List<UserGroup>();
             Access = new List<ViewLevel>();
         }
+
         public int ID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
@@ -39,6 +41,7 @@ namespace BBBZ.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string username { get; set; }
+
         public string Name { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -123,13 +126,15 @@ namespace BBBZ.Models
 	{
         public MenuType ()
 	    {
-                Menus = new List<Menu>();
+             Menus = new List<Menu>();
 	    }
 
 	    public int ID { get; set; }
         public string menuType { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public bool IsTopMenu { get; set; }
+        public bool Published { get; set; }
 
         public List<Menu> Menus { get; set; }
         public Asset Asset { get; set; }
@@ -138,43 +143,33 @@ namespace BBBZ.Models
     {
         public Menu()
         {
-            MenuCategories = new List<MenuCategory>();
             Menus = new List<Menu>();
-            Modules = new List<Module>();
+            MenuCategories = new List<MenuCategory>();
+            OpenInSameWindow = true;
         }
 
         public int ID { get; set; }
         public string Title { get; set; }
         public string Alias { get; set; }
         public string Note { get; set; }
-        public string Link { get; set; }
-        public string Type { get; set; }
+        public string Link { get; set; } /////////////////  ex.:  /index.php?view=artical&id=3  or /index.php?view=cateogry&id=5
+        public string Type { get; set; } ///////////////// The type of link: Component, URL, Alias, Separator or Heading.
         public bool Published { get; set; }
         public bool Home { get; set; }
-        public int Order { get; set; }
 
-        public bool OpenInSameWindow{ get; set;}
+        public string Url { get; set; }
+        public bool OpenInSameWindow { get; set; }
 
         public Language Langauge { get; set; }
+        
         public Menu Parent { get; set; }
         public List<Menu> Menus { get; set; }
 
         public MenuType MenuType { get; set; }
-        public List<Module> Modules { get; set; }
 
         public List<MenuCategory> MenuCategories { get; set; }
-    }
-
-    public class Module
-    {
-        public int ID { get; set; }
-        public string  Title { get; set; }
-        public string  Position { get; set; }
-        public string  Note { get; set; }
-
-        public Language Langauge { get; set; }
-
-        public Asset Asset { get; set; }
+        public Category SingleCategory { get; set; }
+        public Content SingleContent { get; set; }
     }
 
     public class MenuCategory 
@@ -230,6 +225,7 @@ namespace BBBZ.Models
         public string Title { get; set; }
         public string Alias { get; set; }
         public string IntroText { get; set; }
+        [AllowHtml]
         public string FullText { get; set; }
         public DateTime CreatedTime { get; set; }
         public string Descrption { get; set; }
@@ -370,5 +366,5 @@ namespace BBBZ.Models
     //    public string option4 { get; set; }
 
     //    public Item Course { get; set; }
-    //}    
+    //}
 }

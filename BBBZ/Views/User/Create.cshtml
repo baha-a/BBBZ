@@ -1,0 +1,76 @@
+﻿@model BBBZ.Models.UserManagerDataView
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Create</h2>
+@using (Html.BeginForm("Create", "User", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>User</h4>
+        <hr />
+        <div>
+            @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-xs btn-warning" })
+        </div>
+        @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TheUser.UserName, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.TheUser.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TheUser.UserName, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TheUser.Password, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.TheUser.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TheUser.Password, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TheUser.ConfirmPassword, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.TheUser.ConfirmPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TheUser.ConfirmPassword, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Locked, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Locked, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2">
+                User Groups Having Viewing Access:
+                <hr />
+                @if (Model != null && Model.AllGroups != null)
+                {
+                    for (int i = 0 ; i < Model.AllGroups.Count ; i++)
+                    {
+                        <div>
+                            @Html.CheckBoxFor(x => Model.AllGroups[i].Selected, new { @id = "id" + Model.AllGroups[i].ID })
+                            @Html.LabelFor(x => Model.AllGroups[i].Selected, Model.AllGroups[i].Text, new { @for = "id" + Model.AllGroups[i].ID })
+                            @Html.HiddenFor(x => Model.AllGroups[i].ID)
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-success btn-sm" />
+            </div>
+        </div>
+    </div>
+}
