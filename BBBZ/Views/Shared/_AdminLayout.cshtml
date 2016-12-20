@@ -6,11 +6,6 @@
     
     @Styles.Render("~/Content/admin")
     @Styles.Render("~/Content/css")
-
-    @if (LocalizationHelper.IsRightToLeft())
-    {
-        @Styles.Render("~/Content/css-rtl");
-    }
     @Scripts.Render("~/bundles/modernizr")
     <title>@ViewBag.Title</title>
 </head>
@@ -36,7 +31,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("Index", "MenuItem")">
+                                    <a href="@Url.Action("", "MenuItem")">
                                         <i class="js-icon-double-angle-right"></i>
                                         Manage Menu Items
                                     </a>
@@ -278,21 +273,9 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="@Url.Action("PublicData","Admin")">
+                            <a href="@Url.Action("Index","News")">
                                 <i class="icon-star-empty"></i>
                                 <span class="menu-text"> News and Public </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <i class="icon-dashboard"></i>
-                                <span class="menu-text"> Dashboard </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index","Message")">
-                                <i class="icon-comments-2"></i>
-                                Massages
                             </a>
                         </li>
                     </ul>

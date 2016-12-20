@@ -54,7 +54,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Type, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.EditorFor(model => model.Type, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Type, new SelectList(Extenisons.GetAllMenuTypes()), new { @class = "form-control" })
             </div>
         </div>
 

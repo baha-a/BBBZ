@@ -43,14 +43,10 @@ namespace BBBZ.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(MenuType menut)
         {
-            System.Windows.Forms.MessageBox.Show("T0");
             if (ModelState.IsValid)
             {
-                System.Windows.Forms.MessageBox.Show("T1");
                 db.MenuTypes.Add(menut);
-                System.Windows.Forms.MessageBox.Show("T2"); 
                 db.SaveChanges();
-                System.Windows.Forms.MessageBox.Show("T3"); 
                 return RedirectToAction("Index");
             }
 

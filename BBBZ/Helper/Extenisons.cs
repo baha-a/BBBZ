@@ -96,4 +96,17 @@ public static class Extenisons
         }
         return a;
     }
+
+
+    public static List<string> GetAllMenuTypes() 
+    {
+        return new List<string>(new string[] 
+        {
+            "SinglePage",
+            "SingleCategory",
+            "ListOfCategory",
+            "ExternalLink",
+            "InternalLink"
+        }); 
+    }
 }

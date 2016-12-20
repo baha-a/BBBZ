@@ -8,7 +8,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-sm" })
+    @Html.ActionLink("Create New", "Create", "MenuItem", (ViewBag.ID == null) ? null : new { id = ViewBag.ID }, new { @class = "btn btn-success btn-sm" })
 </p>
 <table class="table table-bordered">
     <tr>
@@ -19,12 +19,6 @@
             @Html.DisplayNameFor(model => model.Alias)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Note)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Link)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Type)
         </th>
         <th>
@@ -32,8 +26,7 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Home)
-        </th>
-        
+        </th>        
         <th>
             @Html.DisplayNameFor(model => model.OpenInSameWindow)
         </th>
@@ -43,16 +36,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
+            @Html.ActionLink( item.Title, "Details", new { id = item.ID },null)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Alias)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Note)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Link)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Type)
@@ -68,9 +55,7 @@
             @Html.DisplayFor(modelItem => item.OpenInSameWindow)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) | @Html.ActionLink("Delete", "Delete", new { id=item.ID })
         </td>
     </tr>
 }

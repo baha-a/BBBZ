@@ -127,6 +127,7 @@ namespace BBBZ.Models
         public MenuType ()
 	    {
              Menus = new List<Menu>();
+             Published = true;
 	    }
 
 	    public int ID { get; set; }
@@ -146,27 +147,25 @@ namespace BBBZ.Models
             Menus = new List<Menu>();
             MenuCategories = new List<MenuCategory>();
             OpenInSameWindow = true;
+            Published = true;
         }
 
         public int ID { get; set; }
         public string Title { get; set; }
         public string Alias { get; set; }
         public string Note { get; set; }
-        public string Link { get; set; } /////////////////  ex.:  /index.php?view=artical&id=3  or /index.php?view=cateogry&id=5
-        public string Type { get; set; } ///////////////// The type of link: Component, URL, Alias, Separator or Heading.
+        public string Type { get; set; } ///////////////// The type of link: URL, Alias, Separator or Heading....
         public bool Published { get; set; }
-        public bool Home { get; set; }
-
-        public string Url { get; set; }
         public bool OpenInSameWindow { get; set; }
 
-        public Language Langauge { get; set; }
+        public string Langauge { get; set; }
         
         public Menu Parent { get; set; }
         public List<Menu> Menus { get; set; }
 
         public MenuType MenuType { get; set; }
 
+        public string Url { get; set; }
         public List<MenuCategory> MenuCategories { get; set; }
         public Category SingleCategory { get; set; }
         public Content SingleContent { get; set; }
@@ -236,7 +235,7 @@ namespace BBBZ.Models
         public string CreatedByUsername { get; set; }
         public bool Published { get; set; }
         public Category Category { get; set; }
-        public Language Language { get; set; }
+        public string Language { get; set; }
 
         public List<CustomField> CustomFields { get; set; }
 

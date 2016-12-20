@@ -13,8 +13,17 @@ namespace BBBZ.Controllers
     public class MenuItemController : BaseController
     {
         // GET: /MenuItem/
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
+            if (id != null)
+            {
+                var m = db.MenuTypes.SingleOrDefault(x => x.ID == id);
+                if (m != null)
+                {
+                    ViewBag.ID = id;
+                    return View(m.Menus.ToList());
+                }
+            }
             return View(db.Menus.ToList());
         }
 
@@ -34,8 +43,17 @@ namespace BBBZ.Controllers
         }
 
         // GET: /MenuItem/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
+            if (id != null)
+            {
+                var m = db.MenuTypes.SingleOrDefault(x => x.ID == id);
+                if (m != null)
+                {
+                    ViewBag.ID = id;
+                    return View(m);
+                }
+            }
             return View();
         }
 

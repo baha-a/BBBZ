@@ -7,19 +7,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BBBZ.Models
 {
-    public class UserManagerDataView
-    {
-        public UserManagerDataView()
-        {
-            AllGroups = new List<SelectableGroup>();
-            AssignedGroups = new List<Group>();
-        }
-        public RegisterViewModel TheUser { get; set; }
-        public bool Locked { get; set; }
-        public List<SelectableGroup> AllGroups { get; set; }
-        public List<Group> AssignedGroups { get; set; }
-    }
-
     public partial class Group
     {
         [NotMapped]
@@ -60,6 +47,19 @@ namespace BBBZ.Models
             }
             return a;
         }
+    }
+
+    public class UserManagerDataView
+    {
+        public UserManagerDataView()
+        {
+            AllGroups = new List<SelectableGroup>();
+            AssignedGroups = new List<Group>();
+        }
+        public RegisterViewModel TheUser { get; set; }
+        public bool Locked { get; set; }
+        public List<SelectableGroup> AllGroups { get; set; }
+        public List<Group> AssignedGroups { get; set; }
     }
 
     public class ViewLevelViewModel
@@ -114,7 +114,6 @@ namespace BBBZ.Models
         }
     }
 
-
     public class MessageViewModel
     {
         public List<Message> Inbox { get; set; }
@@ -124,6 +123,10 @@ namespace BBBZ.Models
 
 
 
+
+    
+    
+    
     public class HomeViewModel
     {
         public List<PublicData> PublicData { get; set; }
