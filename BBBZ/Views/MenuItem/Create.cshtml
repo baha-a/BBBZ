@@ -19,7 +19,7 @@
 			@Html.ActionLink("Back", "Index", null, new { @class="btn btn-xs btn-warning"})
 		</div>
         @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
-
+ 
         <div class="form-group">
             @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
@@ -40,7 +40,6 @@
             @Html.LabelFor(model => model.Note, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
                 @Html.EditorFor(model => model.Note, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Note, null, new { @class = "has-error" })
             </div>
         </div>
 
@@ -56,7 +55,6 @@
             @Html.LabelFor(model => model.Type, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
                 @Html.EditorFor(model => model.Type, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Type, null, new { @class = "has-error" })
             </div>
         </div>
 
@@ -64,7 +62,6 @@
             @Html.LabelFor(model => model.Published, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
                 @Html.EditorFor(model => model.Published, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Published, null, new { @class = "has-error" })
             </div>
         </div>
 
@@ -72,7 +69,6 @@
             @Html.LabelFor(model => model.Home, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
                 @Html.EditorFor(model => model.Home, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Home, null, new { @class = "has-error" })
             </div>
         </div>
 
@@ -80,7 +76,6 @@
             @Html.LabelFor(model => model.OpenInSameWindow, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
                 @Html.EditorFor(model => model.OpenInSameWindow, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.OpenInSameWindow, null, new { @class = "has-error" })
             </div>
         </div>
 

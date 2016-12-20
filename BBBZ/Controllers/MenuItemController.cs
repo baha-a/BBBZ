@@ -42,7 +42,7 @@ namespace BBBZ.Controllers
         // POST: /MenuItem/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="ID,Title,Alias,Note,Link,Type,Published,Home,Order,OpenInSameWindow")] Menu menu)
+        public ActionResult Create(Menu menu)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace BBBZ.Controllers
         // POST: /MenuItem/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="ID,Title,Alias,Note,Link,Type,Published,Home,Order,OpenInSameWindow")] Menu menu)
+        public ActionResult Edit(Menu menu)
         {
             if (ModelState.IsValid)
             {
