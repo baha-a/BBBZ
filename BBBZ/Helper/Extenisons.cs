@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.IO;
+using System.Web.Mvc;
 
 public class CategoryView
 {
@@ -87,19 +88,19 @@ public static class Extenisons
         }
         return gs;
     }
-    public static List<SelectableGroup> ConvertToViewModel(this List<Group> gs,int level = 0)
+    public static List<SelectableGroup> ConvertToViewModel(this List<Group> gs, int level = 0)
     {
         List<SelectableGroup> a = new List<SelectableGroup>();
         foreach (var i in gs)
         {
-            a.Add(new SelectableGroup() { ID = i.ID, Selected = false, Text = Extenisons.Dashis(level) + i.Title , Group = i});
+            a.Add(new SelectableGroup() { ID = i.ID, Selected = false, Text = Extenisons.Dashis(level) + i.Title, Group = i });
             a.AddRange(ConvertToViewModel(i.Children, level + 1));
         }
         return a;
     }
 
 
-    public static List<MenuViewModel> GetAllMenuItems(List<Menu> ms=null)
+    public static List<MenuViewModel> GetAllMenuItems(List<Menu> ms = null)
     {
         return ((ms != null) ? ms : GetAllMenuItemParents()).FillWithChildren().ConvertToViewModel();
     }
@@ -132,14 +133,14 @@ public static class Extenisons
         return a;
     }
 
-    public static List<string> GetAllMenuTypes() 
+    public static List<string> GetAllMenuTypes()
     {
         return new List<string>(new string[] 
         {
             "SinglePage",
             "Category",
             "Link"
-        }); 
+        });
     }
 
     public static List<Content> GetAllContents()
@@ -149,14 +150,14 @@ public static class Extenisons
 
     public static string AddBackslashFirst(this string x)
     {
-        if(string.IsNullOrEmpty(x) == false)
+        if (string.IsNullOrEmpty(x) == false)
             if (x[0] != '\\')
                 x = "\\" + x;
         return x;
     }
     public static string AddBackslash(this string x)
     {
-        if(string.IsNullOrEmpty(x) == false)
+        if (string.IsNullOrEmpty(x) == false)
             if (x[x.Length - 1] != '\\')
                 x += "\\";
         return x;
@@ -168,5 +169,21 @@ public static class Extenisons
             Directory.CreateDirectory(path);
 
         return path;
+    }
+
+    public static MvcHtmlString UploadFile(this HtmlHelper helper, string name, object htmlAttributes = null)
+    {
+        TagBuilder input = new TagBuilder("input");
+        input.Attributes.Add("type", "file");
+        input.Attributes.Add("id", helper.ViewData.TemplateInfo.GetFullHtmlFieldId(name));
+        input.Attributes.Add("name", helper.ViewData.TemplateInfo.GetFullHtmlFieldName(name));
+
+        if (htmlAttributes != null)
+        {
+            var attributes = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+            input.MergeAttributes(attributes);
+        }
+
+        return new MvcHtmlString(input.ToString());
     }
 }

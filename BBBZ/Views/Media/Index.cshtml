@@ -32,7 +32,34 @@
             </td>
         </tr>
     }
+
+    <tr>
+        <td>
+            @using (Html.BeginForm("Upload", "Media", FormMethod.Post, new { enctype = "multipart/form-data", id = "UploadForm" }))
+            {
+                <div class="row">
+                    <div class="form-group-sm">
+                        <div class="col-md-2">
+                            Upload File
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-control">
+                                    @Html.UploadFile("Uploader", new { multiple = "multiple" })
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-success btn-sm">Upload</button>
+                        </div>
+                        <input hidden="hidden" type="text" value="@Model.CurrnetPath" id="path" name="path" />
+                    </div>
+                </div>
+            }
+        </td>
+        <td> </td>
+    </tr>
 </table>
+
+
 <h3>Folders</h3>
 <table class="table table-bordered table-condensed">
     <tr>
@@ -53,14 +80,28 @@
             </td>
         </tr>
     }
+
+    <tr>
+        <td>
+            <form action="@Url.Action("CreateFolder")" method="get">
+                <div class="row">
+                    <div class="form-group-sm">
+                        <div class="col-md-2">
+                            Create Folder
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" value="" id="folder" name="folder" class="form-control" />
+                        </div>
+                        <div class="col-md-2">
+                            <input type="submit" value="Create" class="btn btn-success btn-sm" />
+                        </div>
+                    </div>
+                    <input hidden="hidden" type="text" value="@Model.CurrnetPath" id="path" name="path" />
+                </div>
+            </form>
+        </td>
+        <td>
+        </td>
+    </tr>
 </table>
 
-<form action="@Url.Action("CreateFolder")" method="get">
-    <div class="col-md-6">
-        <input type="text" value="" id="folder" name="folder" class="form-control" />
-    </div>
-    <div class="col-md-2">
-        <input type="submit" value="Create" class="btn btn-success" />
-    </div>
-    <input hidden="hidden" type="text" value="@Model.CurrnetPath" id="path" name="path" />
-</form>
