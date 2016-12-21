@@ -110,7 +110,10 @@ namespace BBBZ.Models
     public class Language
     {
         public int ID { get; set; }
+        [Required]
+        [RegularExpression("[A-Za-z]{2}")]
         public string Code { get; set; }
+        [Required]
         public string Title { get; set; }
         public string Description { get; set; }
         public string MetaDesc { get; set; }
@@ -131,7 +134,10 @@ namespace BBBZ.Models
 	    }
 
 	    public int ID { get; set; }
+        [Required]
+        [RegularExpression("[A-Za-z]*")]
         public string menuType { get; set; }
+        [Required]
         public string Title { get; set; }
         public string Description { get; set; }
         public bool IsTopMenu { get; set; }
@@ -140,21 +146,21 @@ namespace BBBZ.Models
         public List<Menu> Menus { get; set; }
         public Asset Asset { get; set; }
 	}
+
     public class Menu
     {
         public Menu()
         {
             Menus = new List<Menu>();
-            MenuCategories = new List<MenuCategory>();
             OpenInSameWindow = true;
             Published = true;
         }
 
         public int ID { get; set; }
+        [Required]
         public string Title { get; set; }
         public string Alias { get; set; }
         public string Note { get; set; }
-        public string Type { get; set; } ///////////////// The type of link: URL, Alias, Separator or Heading....
         public bool Published { get; set; }
         public bool OpenInSameWindow { get; set; }
 
@@ -165,18 +171,11 @@ namespace BBBZ.Models
 
         public MenuType MenuType { get; set; }
 
+        [Required]
+        public string Type { get; set; }
         public string Url { get; set; }
-        public List<MenuCategory> MenuCategories { get; set; }
-        public Category SingleCategory { get; set; }
-        public Content SingleContent { get; set; }
-    }
-
-    public class MenuCategory 
-    {
-        public int ID { get; set; }
-        public Menu Menu { get; set; }
-        public Category Category { get; set; }
-        public int Order { get; set; }
+        public int? CategoryID { get; set; }
+        public int? ContentID { get; set; }
     }
 
     public partial class Category
@@ -185,7 +184,6 @@ namespace BBBZ.Models
         {
             SubCategories = new List<Category>();
             Contents = new List<Content>();
-            MenuCategories = new List<MenuCategory>();
             Published = true;
         }
 
@@ -207,8 +205,6 @@ namespace BBBZ.Models
         public List<Category> SubCategories { get; set; }
         public List<Content> Contents { get; set; }
 
-        public List<MenuCategory> MenuCategories { get; set; }
-
         public ViewLevel Access { get; set; }
         public Asset Asset { get; set; }
     }
@@ -217,10 +213,11 @@ namespace BBBZ.Models
     {
         public Content() 
         {
-            CustomFields = new List<CustomField>(); 
+            CustomFieldValues = new List<CustomFieldValue>(); 
         }
 
         public int ID { get; set; }
+        [Required]
         public string Title { get; set; }
         public string Alias { get; set; }
         public string IntroText { get; set; }
@@ -235,33 +232,44 @@ namespace BBBZ.Models
         public string CreatedByUsername { get; set; }
         public bool Published { get; set; }
         public Category Category { get; set; }
+        
         public string Language { get; set; }
 
-        public List<CustomField> CustomFields { get; set; }
+        public List<CustomFieldValue> CustomFieldValues { get; set; }
 
         public ViewLevel Access { get; set; }
         public Asset Asset { get; set; }
     }
 
-    public class CustomField
+    public class CustomFieldValue
     {
         public int ID { get; set; }
-        public Content Content { get; set; }
+        public Content Content{ get; set; }
+        public CustomField CustomField { get; set; }
 
-        public string Name { get; set; }
         public string Value { get; set; }
-        public string DataType { get; set; }
     }
 
+    public class CustomField
+    {
+        public CustomField()
+        {
+            Values = new List<CustomFieldValue>();
+        }
 
+        public int ID { get; set; }
+        [Required]
+        public string Title { get; set; }
 
+        public List<CustomFieldValue> Values { get; set; }
+
+    }
 
 
 
 
     public class PublicData
     {
-        [Key]
         public int ID { get; set; }
         [Required]
         public string Title { get; set; }
@@ -274,7 +282,6 @@ namespace BBBZ.Models
 
     public class News
     {
-        [Key]
         public int ID { get; set; }
         [Required]
         public string Title { get; set; }
@@ -290,7 +297,10 @@ namespace BBBZ.Models
         [RegularExpression("[A-Za-z]{2}")]
         public string Language { get; set; }
     }
-    
+
+
+
+
 
     //public class Enrollment
     //{

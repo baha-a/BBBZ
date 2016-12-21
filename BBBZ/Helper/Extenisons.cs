@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using System.IO;
 
 public class CategoryView
 {
@@ -98,15 +99,74 @@ public static class Extenisons
     }
 
 
+    public static List<MenuViewModel> GetAllMenuItems(List<Menu> ms=null)
+    {
+        return ((ms != null) ? ms : GetAllMenuItemParents()).FillWithChildren().ConvertToViewModel();
+    }
+
+    private static List<Menu> GetAllMenuItemParents()
+    {
+        return db.Menus.Where(x => x.Parent == null).ToList();
+    }
+
+    public static List<Menu> FillWithChildren(this List<Menu> gs)
+    {
+        foreach (var g in gs)
+        {
+            g.Menus = db.Menus
+                .Include(x => x.Parent)
+                .Where(x => x.Parent != null && x.Parent.ID == g.ID)
+                .ToList();
+            FillWithChildren(g.Menus);
+        }
+        return gs;
+    }
+    public static List<MenuViewModel> ConvertToViewModel(this List<Menu> gs, int level = 0)
+    {
+        List<MenuViewModel> a = new List<MenuViewModel>();
+        foreach (var i in gs)
+        {
+            a.Add(new MenuViewModel() { ID = i.ID, Title = Extenisons.Dashis(level) + i.Title, Menu = i });
+            a.AddRange(ConvertToViewModel(i.Menus, level + 1));
+        }
+        return a;
+    }
+
     public static List<string> GetAllMenuTypes() 
     {
         return new List<string>(new string[] 
         {
             "SinglePage",
-            "SingleCategory",
-            "ListOfCategory",
-            "ExternalLink",
-            "InternalLink"
+            "Category",
+            "Link"
         }); 
+    }
+
+    public static List<Content> GetAllContents()
+    {
+        return db.Contents.ToList();
+    }
+
+    public static string AddBackslashFirst(this string x)
+    {
+        if(string.IsNullOrEmpty(x) == false)
+            if (x[0] != '\\')
+                x = "\\" + x;
+        return x;
+    }
+    public static string AddBackslash(this string x)
+    {
+        if(string.IsNullOrEmpty(x) == false)
+            if (x[x.Length - 1] != '\\')
+                x += "\\";
+        return x;
+    }
+
+    public static string CheckFolder(this string path)
+    {
+        if (Directory.Exists(path) == false)
+            Directory.CreateDirectory(path);
+
+        return path;
     }
 }

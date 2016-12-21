@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BBBZ.Models.Menu>
+﻿@model IEnumerable<BBBZ.Models.MenuViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -8,27 +8,30 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", "MenuItem", (ViewBag.ID == null) ? null : new { id = ViewBag.ID }, new { @class = "btn btn-success btn-sm" })
+    @Html.ActionLink("Create New", "Create", "MenuItem", (ViewBag.ID == null) ? null : new { selectedMenuTypeID = ViewBag.ID }, new { @class = "btn btn-success btn-sm" })
 </p>
 <table class="table table-bordered">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Menu.ID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Alias)
+            @Html.DisplayNameFor(model => model.Menu.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.DisplayNameFor(model => model.Menu.Alias)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Published)
+            @Html.DisplayNameFor(model => model.Menu.Type)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Home)
-        </th>        
+            @Html.DisplayNameFor(model => model.Menu.Published)
+        </th>
         <th>
-            @Html.DisplayNameFor(model => model.OpenInSameWindow)
+            @Html.DisplayNameFor(model => model.Menu.Parent)
+        </th>
+        <th>
+            Menu
         </th>
         <th></th>
     </tr>
@@ -36,26 +39,46 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink( item.Title, "Details", new { id = item.ID },null)
+            @Html.DisplayFor(modelItem => item.Menu.ID)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Alias)
+            @if (string.IsNullOrEmpty(item.Title) == false)
+            {
+                @Html.ActionLink(item.Title, "Details", "MenuItem", new { id = item.ID }, null)
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Type)
+            @Html.DisplayFor(modelItem => item.Menu.Alias)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Published)
+            @Html.DisplayFor(modelItem => item.Menu.Type)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Home)
-        </td>
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.OpenInSameWindow)
+            @Html.DisplayFor(modelItem => item.Menu.Published)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) | @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @if (item.Menu.Parent == null)
+            {
+                <i> no parent </i>
+            }
+            else if (string.IsNullOrEmpty(item.Menu.Parent.Title) == false)
+            {
+                @Html.ActionLink(item.Menu.Parent.Title, "Details", "MenuItem", new { id = item.Menu.Parent.ID }, null)
+            }
+        </td>
+        <td>
+            @if (item.Menu.MenuType == null)
+            {
+                <i> no menu </i>
+            }
+            else if (string.IsNullOrEmpty(item.Menu.MenuType.Title) == false)
+            {
+                @Html.ActionLink(item.Menu.MenuType.Title, "Details", "Menus", new { id = item.Menu.MenuType.ID }, null)
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", "MenuItem", new { id = item.ID },null) | 
+            @Html.ActionLink("Delete", "Delete", "MenuItem", new { id = item.ID },null)
         </td>
     </tr>
 }

@@ -36,11 +36,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Link)
+            @Html.DisplayNameFor(model => model.Url)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Link)
+            @Html.DisplayFor(model => model.Url)
         </dd>
 
         <dt>
@@ -60,19 +60,83 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Home)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Home)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.OpenInSameWindow)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.OpenInSameWindow)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentID)
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Parent)
+        </dt>
+
+        <dd>
+            @if (Model.Parent == null)
+            {
+                <i> no parent </i>
+            }
+            else if (string.IsNullOrEmpty(Model.Parent.Title) == false)
+            {
+                @Html.ActionLink(Model.Parent.Title, "Details", "MenuItem", new { id = Model.Parent.ID }, null)
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MenuType)
+        </dt>
+
+        <dd>
+            @if (Model.MenuType == null)
+            {
+                <i> not selected yet</i>
+            }
+            else if (string.IsNullOrEmpty(Model.MenuType.Title) == false)
+            {
+                @Html.ActionLink(Model.MenuType.Title, "Details", "Menus", new { id = Model.MenuType.ID }, null)
+            }
+        </dd>
+
+
+
+        <dt>
+            SubMenu
+        </dt>
+
+        <dd>
+            @if (Model.Menus == null)
+            {
+                <i> no child </i>
+            }
+            else
+            {
+                <ul>
+                @foreach (var c in Model.Menus)
+                {
+                    <li>
+                        @Html.ActionLink(c.Title, "Details", "MenuItem", new { id = c.ID }, null)
+                    </li>
+                }
+                </ul>
+            }
         </dd>
 
     </dl>

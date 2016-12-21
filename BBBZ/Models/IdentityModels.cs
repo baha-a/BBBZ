@@ -21,7 +21,6 @@ namespace BBBZ.Models
 
         public DbSet<MenuType>  MenuTypes { get; set; }
         public DbSet<Menu> Menus { get; set; }
-        public DbSet<MenuCategory> MenuCategories { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Content> Contents { get; set; }
 
@@ -35,7 +34,7 @@ namespace BBBZ.Models
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
-
+            
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

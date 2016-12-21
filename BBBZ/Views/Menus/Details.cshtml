@@ -54,6 +54,7 @@
     </dl>
 </div>
 <p>
+    @Html.ActionLink("Items", "Index", "MenuItem", new { id = Model.ID }, new { @class = "btn btn-sm btn-info" }) |
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class="btn btn-sm btn-success"}) |
     @Html.ActionLink("Back", "Index", null, new { @class="btn btn-sm btn-warning"})
 </p>

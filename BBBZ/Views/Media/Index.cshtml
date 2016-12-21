@@ -1,0 +1,66 @@
+﻿@model BBBZ.Models.MediaViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Media</h2>
+
+<hr />
+<b> Current Path: <i> @(Model != null? Model.CurrnetPath:string.Empty) </i></b>
+<br />
+<a href="@Url.Action("Back", new { path = Model.CurrnetPath})" class="btn btn-danger btn-xs"> back </a>
+<hr />
+
+<h3> Files </h3>
+<table class="table table-bordered table-condensed">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Files)
+    {
+        <tr>
+            <td>
+                <a target="_blank" href="@("/Files/"+User.Identity.Name + Model.CurrnetPath.Replace('\\','/') + item)">@item</a>
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "DeleteFile", new { file = item,path = Model.CurrnetPath })
+            </td>
+        </tr>
+    }
+</table>
+<h3>Folders</h3>
+<table class="table table-bordered table-condensed">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Folders)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item, "Index", "Media", new { folder = item, path = Model.CurrnetPath },null)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "DeleteFolder", new { folder = item, path = Model.CurrnetPath })
+            </td>
+        </tr>
+    }
+</table>
+
+<form action="@Url.Action("CreateFolder")" method="get">
+    <div class="col-md-6">
+        <input type="text" value="" id="folder" name="folder" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <input type="submit" value="Create" class="btn btn-success" />
+    </div>
+    <input hidden="hidden" type="text" value="@Model.CurrnetPath" id="path" name="path" />
+</form>

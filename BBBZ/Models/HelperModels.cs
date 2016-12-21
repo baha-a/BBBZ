@@ -121,6 +121,57 @@ namespace BBBZ.Models
     }
 
 
+    public class MenuViewModel
+    {
+        public int ID { get; set; }
+        public string Title { get; set; }
+        public Menu Menu{ get; set; }
+    }
+    public class MenuItemViewModel
+    {
+        public MenuItemViewModel()
+        {
+            TheMenu = new Menu();
+        }
+        public Menu TheMenu { get; set; }
+        public List<MenuViewModel> AllMenus { get; set; }
+        
+        public List<MenuType> AllMenuTypes { get; set; }
+        public MenuType TheMenuType { get; set; }
+
+        public List<Content> AllContents{ get; set; }
+        public List<Category> AlllCategories { get; set; }
+
+        [Display(Name = "Parent Menu")]
+        public int? selectedMenuTypeID { get; set; }
+        [Display(Name = "Parent Menu Item")]
+        public int? selectedParentID { get; set; }
+
+        [Display(Name = "Category")]
+        public int? selectedCategoryID { get; set; }
+        [Display(Name = "Content")]
+        public int? selectedContentID { get; set; }
+
+        public bool AddThisToMenuType { get; set; }
+        
+        [Required]
+        public string ItemType { get; set; }
+
+        public int? id { get; set; }
+    }
+
+
+
+
+
+    public class MediaViewModel
+    {
+        public string[] Files { get; set; }
+        public string[] Folders { get; set; }
+        public string CurrnetPath { get; set; }
+    }
+
+
 
 
 
