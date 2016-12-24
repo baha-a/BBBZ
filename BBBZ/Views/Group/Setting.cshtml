@@ -1,0 +1,46 @@
+﻿@model IEnumerable<BBBZ.Models.SelectableGroup>
+@{
+    ViewBag.Title = "Setting";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Setting</h2>
+
+@using(Html.BeginForm("Setting","Group",FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-2">
+                <label class="control-label" for="guestGroup">Guest Group</label>
+            </div>
+            <div class="col-md-6">
+                <select class="form-control" id="guestGroup" name="guestGroup">
+                    @foreach (var g in Model)
+                    {
+                        <option value="@g.ID" @(g.ID != ViewBag.guestGroup ? "" : "selected=\"selected\"")>@g.Text</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="form-group">
+                <div class="col-md-2">
+                    <label class="control-label" for="newUserGroup">New User Group</label>
+                </div>
+                <div class="col-md-6">
+                    <select class="form-control" id="newUserGroup" name="newUserGroup">
+                        @foreach (var g in Model)
+                {
+                            <option value="@g.ID" @(g.ID != ViewBag.newUserGroup ? "" : "selected=\"selected\"")>@g.Text</option>
+                }
+                    </select>
+                </div>
+            </div>
+        </div>
+    <br />
+    <input type="submit" value="Save" class="btn btn-danger btn-sm" />
+    <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" />
+}

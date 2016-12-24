@@ -96,14 +96,14 @@ namespace BBBZ.Controllers
 
             user.Locked = us.Locked;
 
+            db.UserGroups.RemoveRange(db.UserGroups.Where(x=>x.username == user.UserName));
+
             foreach (var g in us.AllGroups)
             {
                 if (g.Selected)
                 {
                     var group = db.Groups.SingleOrDefault(x => x.ID == g.ID);
-
-                    if (db.UserGroups.SingleOrDefault(x => x.Groups.ID == group.ID && x.username == user.UserName) == null)
-                        db.UserGroups.Add(new UserGroup() { username = user.UserName, Groups = group });
+                    db.UserGroups.Add(new UserGroup() { username = user.UserName, Groups = group });
                 }
             }
 
@@ -128,6 +128,16 @@ namespace BBBZ.Controllers
         public UserController()
         {
             UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && UserManager != null)
+            {
+                UserManager.Dispose();
+                UserManager = null;
+            }
+            base.Dispose(disposing);
         }
 	}
 }

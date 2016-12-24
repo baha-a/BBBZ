@@ -15,7 +15,7 @@
         <h4>Profile</h4>
         <hr />
 		<div>
-			@Html.ActionLink("Back", "Index", null, new { @class="btn btn-xs btn-warning"})
+            <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" />
 		</div>
         @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
         @Html.HiddenFor(model => model.username)

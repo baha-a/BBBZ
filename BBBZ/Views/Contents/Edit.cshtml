@@ -46,17 +46,9 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.FullText, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.FullText, new { @class = "form-control" })
+            <div class="col-md-8">
+                @Html.TextAreaFor(model => model.FullText, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FullText, null, new { @class = "has-error" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedTime, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.CreatedTime, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CreatedTime, null, new { @class = "has-error" })
             </div>
         </div>
 
@@ -93,18 +85,37 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CreatedByUsername, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.CreatedByUsername, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CreatedByUsername, null, new { @class = "has-error" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.Published, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
                 @Html.EditorFor(model => model.Published, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Published, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Category, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.CategoryID, new SelectList(Extenisons.GetAllCategories(), "ID", "Title",string.Empty),string.Empty, new { @class = "form-control" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Access, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.AccessID, new SelectList(Extenisons.GetAllViewLevels(), "ID", "Title", string.Empty), string.Empty, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CreatedTime, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DisplayFor(model => model.CreatedTime)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CreatedByUsername, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DisplayFor(model => model.CreatedByUsername)
             </div>
         </div>
 
@@ -116,3 +127,20 @@
     </div>
 }
 
+@section scripts
+{
+    @Scripts.Render("~/bundles/tinymce")
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            height: 350,
+            plugins: ['advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'],
+            toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons | codesample',
+            image_advtab: true,
+        })
+    </script>
+}

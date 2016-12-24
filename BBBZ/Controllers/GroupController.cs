@@ -142,13 +142,23 @@ namespace BBBZ.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
+
+
+        public ActionResult Setting()
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            ViewBag.newUserGroup = GroupSetting.NewUserGroupId;
+            ViewBag.guestGroup = GroupSetting.GuestGroupId;
+
+            return View(Extenisons.GetAllGroups());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Setting(int? newUserGroup, int? guestGroup)
+        {
+            GroupSetting.GuestGroupId = guestGroup;
+            GroupSetting.NewUserGroupId = newUserGroup;
+            return RedirectToAction("Setting");
         }
     }
 }

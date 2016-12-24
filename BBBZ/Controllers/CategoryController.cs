@@ -14,7 +14,7 @@ namespace BBBZ.Controllers
     {
         public ActionResult Index()
         {
-            return View(db.Categories.Include(x => x.Access).ToList());
+            return View(Extenisons.GetAllCategories());
         }
 
         public ActionResult Details(int? id)
@@ -23,12 +23,12 @@ namespace BBBZ.Controllers
             {
                 return BadRequest();
             }
-            Category category = db.Categories.Include(x => x.Access).SingleOrDefault(x => x.ID == id);
+            Category category = db.Categories.Include(x=>x.Contents).Include(x=>x.Parent).Include(x => x.Access).SingleOrDefault(x => x.ID == id);
             if (category == null)
             {
                 return HttpNotFound();
             }
-
+            category.SubCategories = db.Categories.Include(x => x.Parent).Where(x => x.Parent != null && x.Parent.ID == id).ToList();
             return View(category);
         }
 
@@ -66,11 +66,12 @@ namespace BBBZ.Controllers
             {
                 return BadRequest();
             }
-            Category category = db.Categories.Include(x => x.Access).SingleOrDefault(x => x.ID == id);
+            Category category = db.Categories.Include(x => x.Parent).Include(x => x.Access).SingleOrDefault(x => x.ID == id);
             if (category == null)
             {
                 return HttpNotFound();
             }
+            category.NewParentID_helper = category.Parent != null ? (int?)category.Parent.ID : null;
             return View(category);
         }
 
@@ -80,7 +81,7 @@ namespace BBBZ.Controllers
         {
             if (ModelState.IsValid)
             {
-                var category = db.Categories.SingleOrDefault(c => c.ID == cat.ID);
+                var category = db.Categories.Include(x=>x.Parent).SingleOrDefault(c => c.ID == cat.ID);
 
                 category.Title = cat.Title;
                 category.Description = cat.Description;
@@ -116,6 +117,7 @@ namespace BBBZ.Controllers
             {
                 return HttpNotFound();
             }
+            category.SubCategories = db.Categories.Include(x => x.Parent).Where(x => x.Parent != null && x.Parent.ID == id).ToList();
 
             return View(category);
         }
@@ -128,15 +130,6 @@ namespace BBBZ.Controllers
             db.Categories.Remove(category);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

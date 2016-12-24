@@ -49,7 +49,8 @@
         
         @Html.HiddenFor(model => model.selectedMenuTypeID)
         @Html.HiddenFor(model => model.ItemType)
-        
+        @Html.HiddenFor(model => model.TheMenu.Type)
+        if((Model.TheMenu.Type = "SinglePage") != ""){}
         
         if (Model.AllMenus != null)
         {
@@ -132,6 +133,13 @@
             </div>
         </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.selectedAccessID, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.selectedAccessID, new SelectList(Extenisons.GetAllViewLevels(), "ID", "Title"), new { @class = "form-control" })
+            </div>
+        </div>
+                
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-success btn-sm" />

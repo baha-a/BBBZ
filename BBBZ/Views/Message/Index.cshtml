@@ -40,7 +40,10 @@ else
     @foreach (var item in Model.Inbox) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.From_username)
+                @if (string.IsNullOrEmpty(item.From_username) ==false)
+                {
+                    @Html.ActionLink(item.From_username, "Create", new { touser = item.From_username },null)
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.To_username)
@@ -98,7 +101,10 @@ else
                 @Html.DisplayFor(modelItem => item.From_username)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.To_username)
+                @if (string.IsNullOrEmpty(item.To_username) == false)
+                {
+                    @Html.ActionLink(item.To_username, "Create", new { touser = item.To_username },null)
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)

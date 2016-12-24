@@ -68,13 +68,6 @@ namespace BBBZ.Controllers
             }
             return View(pro);
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-                db.Dispose();
-            base.Dispose(disposing);
-        }
     }
 }
 

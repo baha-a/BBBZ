@@ -15,7 +15,8 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    @Html.Partial("_NavBarPartial")
+    @Html.Partial("_NavBarPartial", ((BBBZ.Models.SharedLayoutViewModel)ViewBag.LayoutViewModel) == null ? null:
+                ((BBBZ.Models.SharedLayoutViewModel)ViewBag.LayoutViewModel).TopMenuItems)
     <div class="container body-content">
         @RenderBody()
         @if (ViewBag.NoFooter == true)

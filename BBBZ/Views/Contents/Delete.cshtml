@@ -41,7 +41,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FullText)
+            @Html.Raw(Model.FullText)
         </dd>
 
         <dt>
@@ -83,6 +83,38 @@
         <dd>
             @Html.DisplayFor(model => model.MetaData)
         </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+
+        <dd>
+            @if (Model.Category == null)
+            {
+                <i> no category </i>
+            }
+            else
+            {
+                <a href="@Url.Action("Details","ViewLevel", new { id = Model.Category.ID})"> @Html.DisplayFor(model => Model.Category.Title) </a>
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Access)
+        </dt>
+
+        <dd>
+            @if (Model.Access == null)
+            {
+                <i> no access level </i>
+            }
+            else
+            {
+                <a href="@Url.Action("Details","ViewLevel", new { id = Model.Access.ID})"> @Html.DisplayFor(model => Model.Access.Title) </a>
+            }
+        </dd>
+
+
 
         <dt>
             @Html.DisplayNameFor(model => model.CreatedByUsername)

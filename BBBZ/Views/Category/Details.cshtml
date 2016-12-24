@@ -137,6 +137,23 @@
             </ul>
         </dd>
 
+        <dt>
+            Contents
+        </dt>
+        <dd>
+            @if (Model.Contents.Count == 0)
+            {
+                <i> no content </i>
+            }
+
+            <ul>
+                @foreach (var g in Model.Contents)
+                {
+                    <li> <a href="@Url.Action("Details","Contents", new { id = g.ID})"> @Html.DisplayFor(model => g.Title) </a> </li>
+                }
+            </ul>
+        </dd>
+
 
         <dt>
             Access

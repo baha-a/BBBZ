@@ -89,8 +89,16 @@ namespace BBBZ.Controllers
 
                 if (result.Succeeded)
                 {
-                    db.Profiles.Add(new Profile() { username = model.UserName, RegisterDate = DateTime.Now, LastVisitDate = DateTime.Now });
-                    db.UserGroups.Add(new UserGroup() { username = model.UserName, Groups = db.Groups.SingleOrDefault(x => x.Title == "NewRegisterUser") });
+                    db.Profiles.Add(new Profile() {
+                        username = model.UserName, 
+                        RegisterDate = DateTime.Now,
+                        LastVisitDate = DateTime.Now 
+                    });
+
+                    db.UserGroups.Add(new UserGroup() {
+                        username = model.UserName,
+                        Groups = db.Groups.SingleOrDefault(x => x.ID == GroupSetting.NewUserGroupId) 
+                    });
 
                     db.SaveChanges();
                     await SignInAsync(user, isPersistent : false);

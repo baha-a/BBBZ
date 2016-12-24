@@ -115,7 +115,20 @@
             }
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Access)
+        </dt>
 
+        <dd>
+            @if (Model.Access == null && string.IsNullOrEmpty(Model.Access.Title))
+            {
+                <i> not selected </i>
+            }
+            else
+            {
+                 @Html.ActionLink(Model.Access.Title, "Details", "ViewLevel", new { id = Model.Access.ID }, null);
+            }
+        </dd>
 
         <dt>
             SubMenu
@@ -143,5 +156,6 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class="btn btn-sm btn-success"}) |
-    @Html.ActionLink("Back", "Index", null, new { @class="btn btn-sm btn-warning"})
+    <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" /> |
+    @Html.ActionLink("Back to list", "Index", null, new { @class="btn btn-sm btn-warning"})
 </p>

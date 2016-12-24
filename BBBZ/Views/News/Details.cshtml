@@ -63,5 +63,5 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class="btn btn-sm btn-success"}) |
-    @Html.ActionLink("Back", "Index", null, new { @class="btn btn-sm btn-warning"})
+    <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" />
 </p>

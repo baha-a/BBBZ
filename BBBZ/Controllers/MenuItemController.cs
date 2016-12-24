@@ -40,7 +40,7 @@ namespace BBBZ.Controllers
             {
                 return BadRequest();
             }
-            Menu menu = db.Menus.Include(x=>x.MenuType).Include(x=>x.Parent).SingleOrDefault(x => x.ID == id);
+            Menu menu = db.Menus.Include(x => x.Access).Include(x => x.MenuType).Include(x => x.Parent).SingleOrDefault(x => x.ID == id);
             if (menu == null)
             {
                 return HttpNotFound();
@@ -82,7 +82,7 @@ namespace BBBZ.Controllers
                     Type = menu.ItemType,
 
                     Title = menu.TheMenu.Title,
-                    Alias = string.IsNullOrEmpty(menu.TheMenu.Alias) ? (menu.TheMenu.Title.ToLower().Replace(" ", "")) : menu.TheMenu.Alias.ToLower().Replace(" ",""),
+                    Alias = string.IsNullOrEmpty(menu.TheMenu.Alias) ? (menu.TheMenu.Title.ToLower().Replace(" ", "")) : menu.TheMenu.Alias.ToLower().Replace(" ", ""),
                     Note = menu.TheMenu.Note,
                     Published = menu.TheMenu.Published,
                     OpenInSameWindow = menu.TheMenu.OpenInSameWindow,
@@ -92,6 +92,9 @@ namespace BBBZ.Controllers
                     ContentID = menu.selectedContentID,
                     Url = menu.TheMenu.Url,
                 };
+
+                if (menu.selectedAccessID != null)
+                    m.Access = db.ViewLevels.SingleOrDefault(x => x.ID == menu.selectedAccessID);
 
                 if (menu.selectedParentID != null)
                     m.Parent = db.Menus.SingleOrDefault(x => x.ID == menu.selectedParentID);
@@ -111,7 +114,7 @@ namespace BBBZ.Controllers
         {
             if (id == null)
                 return BadRequest();
-            Menu menu = db.Menus.Include(x => x.Parent).Include(x => x.MenuType).SingleOrDefault(x => x.ID == id);
+            Menu menu = db.Menus.Include(x=>x.Access).Include(x => x.Parent).Include(x => x.MenuType).SingleOrDefault(x => x.ID == id);
             if (menu == null)
                 return HttpNotFound();
 
@@ -119,9 +122,14 @@ namespace BBBZ.Controllers
             model.ItemType = string.IsNullOrEmpty(itemtype) ? menu.Type : itemtype;
             model.AllMenuTypes = db.MenuTypes.ToList();
             model.TheMenu = menu;
+            model.selectedAccessID = menu.Access == null ? null : (int?)menu.Access.ID;
             model.selectedParentID = menu.Parent == null ? null : (int?)menu.Parent.ID;
+            model.TheMenuType = menu.MenuType;
 
-            if (selectedMenuTypeID != null)
+            model.selectedContentID = menu.ContentID;
+            model.selectedCategoryID = menu.CategoryID;
+
+            if (selectedMenuTypeID != null && model.TheMenuType != null && model.TheMenuType.ID != selectedMenuTypeID)
             {
                 model.selectedMenuTypeID = selectedMenuTypeID;
                 model.TheMenuType = db.MenuTypes.SingleOrDefault(x => x.ID == selectedMenuTypeID);
@@ -129,13 +137,15 @@ namespace BBBZ.Controllers
 
             if (model.TheMenuType != null)
             {
-                model.AllMenus = Extenisons.GetAllMenuItems(db.Menus.Where(x => x.MenuType != null && x.MenuType.ID == model.TheMenuType.ID).ToList());
+                model.AllMenus = Extenisons.GetAllMenuItems(
+                    db.Menus.Where(x => x.MenuType != null && x.MenuType.ID == model.TheMenuType.ID).ToList(),
+                    (int)id);
                 model.selectedMenuTypeID = model.TheMenuType.ID;
             }
             else
             {
                 model.selectedMenuTypeID = null;
-                model.AllMenus = Extenisons.GetAllMenuItems();
+                model.AllMenus = Extenisons.GetAllMenuItems(null, (int)id);
             }
 
             return View(model);
@@ -148,31 +158,52 @@ namespace BBBZ.Controllers
         {
             if (ModelState.IsValid)
             {
-                Menu m = db.Menus.SingleOrDefault(x => x.ID == menu.TheMenu.ID);
+                if (menu.id == menu.selectedParentID)
+                    ModelState.AddModelError("", "Parent can't be same item");
+                else
+                {
+                    Menu m = db.Menus
+                        .Include(x => x.Access)
+                        .Include(x => x.MenuType)
+                        .Include(x => x.Parent)
+                        .SingleOrDefault(x => x.ID == menu.id);
+                    if (m != null)
+                    {
+                        m.Type = menu.ItemType;
 
-                m.Type = menu.ItemType;
+                        m.Title = menu.TheMenu.Title;
+                        m.Alias = string.IsNullOrEmpty(menu.TheMenu.Alias) ?
+                            menu.TheMenu.Title.ToLower().Replace(" ", "") :
+                            menu.TheMenu.Alias.ToLower().Replace(" ", "");
+                        m.Note = menu.TheMenu.Note;
+                        m.Published = menu.TheMenu.Published;
+                        m.OpenInSameWindow = menu.TheMenu.OpenInSameWindow;
+                        m.Langauge = menu.TheMenu.Langauge;
 
-                m.Title = menu.TheMenu.Title;
-                m.Alias = string.IsNullOrEmpty(menu.TheMenu.Alias) ?
-                    menu.TheMenu.Title.ToLower().Replace(" ", "") :
-                    menu.TheMenu.Alias.ToLower().Replace(" ", "");
-                m.Note = menu.TheMenu.Note;
-                m.Published = menu.TheMenu.Published;
-                m.OpenInSameWindow = menu.TheMenu.OpenInSameWindow;
-                m.Langauge = menu.TheMenu.Langauge;
+                        m.CategoryID = menu.selectedCategoryID;
+                        m.ContentID = menu.selectedContentID;
+                        m.Url = menu.TheMenu.Url;
 
-                m.CategoryID = menu.selectedCategoryID;
-                m.ContentID = menu.selectedContentID;
-                m.Url = menu.TheMenu.Url;
+                        if (menu.selectedAccessID != null)
+                            m.Access = db.ViewLevels.SingleOrDefault(x => x.ID == menu.selectedAccessID);
 
-                if (menu.selectedParentID != null)
-                    m.Parent = db.Menus.SingleOrDefault(x => x.ID == menu.selectedParentID);
-                else if (menu.selectedMenuTypeID != null)
-                    m.MenuType = db.MenuTypes.SingleOrDefault(x => x.ID == menu.selectedMenuTypeID);
+                        if (m.Parent != null && menu.selectedParentID == null)
+                            m.Parent = null;
+                        else if (menu.selectedParentID != null)
+                        {
+                            if (m.Parent == null || (m.Parent != null && m.Parent.ID != menu.selectedParentID))
+                                m.Parent = db.Menus.SingleOrDefault(x => x.ID == menu.selectedParentID);
+                        }
 
-                db.Entry(menu).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                        if (m.Parent == null && menu.selectedMenuTypeID != null)
+                            if (m.MenuType == null || (m.MenuType != null && m.MenuType.ID != menu.selectedMenuTypeID))
+                                m.MenuType = db.MenuTypes.SingleOrDefault(x => x.ID == menu.selectedMenuTypeID);
+
+                        db.Entry(m).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                }
             }
             return View(menu);
         }
@@ -203,13 +234,5 @@ namespace BBBZ.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

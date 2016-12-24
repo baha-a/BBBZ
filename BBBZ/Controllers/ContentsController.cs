@@ -15,21 +15,17 @@ namespace BBBZ.Controllers
         // GET: /Content/
         public ActionResult Index()
         {
-            return View(db.Contents.ToList());
+            return View(db.Contents.Include(x=>x.Access).Include(x=>x.Category).ToList());
         }
 
         // GET: /Content/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
-            {
                 return BadRequest();
-            }
-            Content content = db.Contents.Find(id);
+            Content content = db.Contents.Include(x => x.Access).Include(x => x.Category).SingleOrDefault(x => x.ID == id);
             if (content == null)
-            {
                 return HttpNotFound();
-            }
             return View(content);
         }
 
@@ -49,6 +45,12 @@ namespace BBBZ.Controllers
                 content.CreatedByUsername = User.Identity.Name;
                 content.CreatedTime = DateTime.Now;
 
+                if (content.CategoryID != null)
+                    content.Category = db.Categories.SingleOrDefault(x => x.ID == content.CategoryID);
+
+                if (content.AccessID != null)
+                    content.Access = db.ViewLevels.SingleOrDefault(x => x.ID == content.AccessID);
+
                 db.Contents.Add(content);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -61,27 +63,64 @@ namespace BBBZ.Controllers
         public ActionResult Edit(int? id)
         {
             if (id == null)
-            {
                 return BadRequest();
-            }
-            Content content = db.Contents.Find(id);
+
+            Content content = db.Contents.Include(x => x.Category).SingleOrDefault(x => x.ID == id);
             if (content == null)
-            {
                 return HttpNotFound();
-            }
+
+            if (content.Category != null)
+                content.CategoryID = content.Category.ID;
+            if (content.Access != null)
+                content.AccessID = content.Access.ID;
+
             return View(content);
         }
 
-        // POST: /Content/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Content content)
+        public ActionResult Edit(Content con)
         {
+            var content  = con;
             if (ModelState.IsValid)
             {
-                db.Entry(content).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (con != null)
+                {
+                    content = db.Contents.Include(x=>x.Access).Include(x => x.Category).SingleOrDefault(x => x.ID == con.ID);
+
+                    content.Title = con.Title;
+                    content.FullText = con.FullText;
+                    content.IntroText = con.IntroText;
+                    content.Alias = con.Alias;
+                    content.Descrption = con.Descrption;
+
+                    content.Language = con.Language;
+                    content.MetaData = con.MetaData;
+                    content.MetaDesc = con.MetaDesc;
+                    content.MetaKey = con.MetaKey;
+                    content.Published = con.Published;
+
+                    if (con.CategoryID != null)
+                    {
+                        if (content.Category == null || content.Category.ID != con.CategoryID)
+                            content.Category = db.Categories.SingleOrDefault(x => x.ID == con.CategoryID);
+                    }
+                    else
+                        if (content.Category != null)
+                            content.Category = null;
+
+                    if (con.AccessID != null)
+                    {
+                        if (content.Access == null || content.Access.ID != con.AccessID)
+                            content.Access = db.ViewLevels.SingleOrDefault(x => x.ID == con.AccessID);
+                    }
+                    else
+                        if (content.Access != null)
+                            content.Access = null;
+
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
             return View(content);
         }
@@ -90,14 +129,10 @@ namespace BBBZ.Controllers
         public ActionResult Delete(int? id)
         {
             if (id == null)
-            {
                 return BadRequest();
-            }
-            Content content = db.Contents.Find(id);
+            Content content = db.Contents.Include(x => x.Access).Include(x => x.Category).SingleOrDefault(x => x.ID == id);
             if (content == null)
-            {
                 return HttpNotFound();
-            }
             return View(content);
         }
 
@@ -110,15 +145,6 @@ namespace BBBZ.Controllers
             db.Contents.Remove(content);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

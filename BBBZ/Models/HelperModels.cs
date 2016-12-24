@@ -7,6 +7,32 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BBBZ.Models
 {
+    public partial class Content
+    {
+        public Content()
+        {
+            CustomFieldValues = new List<CustomFieldValue>();
+        }
+
+        [NotMapped]
+        public int? CategoryID { get; set; }
+
+        [NotMapped]
+        public int? AccessID { get; set; }
+    }
+
+    public partial class Menu
+    {
+        public Menu()
+        {
+            Children = new List<Menu>();
+            OpenInSameWindow = true;
+            Published = true;
+        }
+
+        [NotMapped]
+        public List<Menu> Children{ get; set; }
+    }
     public partial class Group
     {
         [NotMapped]
@@ -16,6 +42,13 @@ namespace BBBZ.Models
     }
     public partial class Category
     {
+        public Category()
+        {
+            SubCategories = new List<Category>();
+            Contents = new List<Content>();
+            Published = true;
+        }
+
         [NotMapped]
         [Display(Name="Parent")]
         public int? NewParentID_helper { get; set; }
@@ -23,6 +56,9 @@ namespace BBBZ.Models
         [NotMapped]
         [Display(Name = "Access")]
         public int? NewAccessID_helper { get; set; }
+
+        [NotMapped]
+        public List<Category> SubCategories { get; set; }
     }
 
     public class SelectableGroup
@@ -131,7 +167,7 @@ namespace BBBZ.Models
     {
         public MenuItemViewModel()
         {
-            TheMenu = new Menu();
+            TheMenu = new Menu() { Type="SinglePage"};
         }
         public Menu TheMenu { get; set; }
         public List<MenuViewModel> AllMenus { get; set; }
@@ -142,6 +178,7 @@ namespace BBBZ.Models
         public List<Content> AllContents{ get; set; }
         public List<Category> AlllCategories { get; set; }
 
+
         [Display(Name = "Parent Menu")]
         public int? selectedMenuTypeID { get; set; }
         [Display(Name = "Parent Menu Item")]
@@ -151,6 +188,9 @@ namespace BBBZ.Models
         public int? selectedCategoryID { get; set; }
         [Display(Name = "Content")]
         public int? selectedContentID { get; set; }
+        
+        [Display(Name = "Access")]
+        public int? selectedAccessID { get; set; }
 
         public bool AddThisToMenuType { get; set; }
         
@@ -222,5 +262,34 @@ namespace BBBZ.Models
         public bool delete { get; set; }
         
         public List<CateogriesJsonItem> children{ get; set; }
+    }
+
+
+    public class SideMenuViewModel
+    {
+        public MenuType MenuType { get; set; }
+        public List<Menu> MenuItems { get; set; }
+    }
+
+
+    public class SharedLayoutViewModel
+    {
+        public SharedLayoutViewModel()
+        {
+            TopMenuItems = new List<Menu>();
+            SideMenus = new List<SideMenuViewModel>();
+            IsAdmin = false;
+        }
+
+        public List<Menu> TopMenuItems { get; set; }
+        public List<SideMenuViewModel> SideMenus { get; set; }
+        public bool IsAdmin { get; set; }
+    }
+
+    public class CategoryView
+    {
+        public int ID { get; set; }
+        public string Title { get; set; }
+        public Category theCategory { get; set; }
     }
 }

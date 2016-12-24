@@ -36,9 +36,12 @@ namespace BBBZ.Controllers
             return View(message);
         }
 
-        public ActionResult Create()
+        public ActionResult Create(string touser = "")
         {
-            return View();
+            return View(new Message(){
+                To_username = touser,
+                From_username = Username
+            });
         }
 
         [HttpPost]
@@ -60,16 +63,6 @@ namespace BBBZ.Controllers
             }
 
             return View(message);
-        }
- 
-       
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

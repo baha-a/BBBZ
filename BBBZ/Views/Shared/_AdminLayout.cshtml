@@ -10,7 +10,7 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-        @Html.Partial("_NavBarPartial")
+        @Html.Partial("_NavBarPartial", ((BBBZ.Models.SharedLayoutViewModel)ViewBag.LayoutViewModel).TopMenuItems)
         <div class="container-fluid container-main">
             <div id="js-cpanel">
                 <!-- SIDE BAR ----------------------------------------------------------------------------------------------------------------->
@@ -87,58 +87,10 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="dropdown-toggle" href="">
+                            <a class="dropdown-toggle" href="@Url.Action("Index", "Media")">
                                 <i class="icon-picture"></i>
-                                <span class="menu-text"> Media Library</span>
-                                <b class="arrow js-icon-angle-down"></b>
+                                <span class="menu-text"> Media Manager </span>
                             </a>
-                            <ul class="submenu" style="display: none;">
-                                <li>
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        New Media
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Media Library
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown-toggle" href="">
-                                <i class="icon-checkmark-2"></i>
-                                <span class="menu-text"> Questions Bank </span>
-                                <b class="arrow js-icon-angle-down"></b>
-                            </a>
-                            <ul class="submenu">
-                                <li>
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Manage Banks
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Add Banks
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Manage Questions
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Add Questions
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li>
                             <a class="dropdown-toggle" href="@Url.Action("Index", "User")">
@@ -195,6 +147,67 @@
                             </ul>
                         </li>
                         <li>
+                            <a class="dropdown-toggle" href="@Url.Action("Index","Languages")">
+                                <i class="icon-generic"></i>
+                                <span class="menu-text"> Languages </span>
+                                <b class="arrow js-icon-angle-down"></b>
+                            </a>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="@Url.Action("Index","Languages")">
+                                        <i class="js-icon-double-angle-right"></i>
+                                        Manage Language
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Create","Languages")">
+                                        <i class="js-icon-double-angle-right"></i>
+                                        Add Languages
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index","News")">
+                                <i class="icon-star-empty"></i>
+                                <span class="menu-text"> News and Public </span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-toggle" href="">
+                                <i class="icon-checkmark-2"></i>
+                                <span class="menu-text"> Questions Bank </span>
+                                <b class="arrow js-icon-angle-down"></b>
+                            </a>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="">
+                                        <i class="js-icon-double-angle-right"></i>
+                                        Manage Banks
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <i class="js-icon-double-angle-right"></i>
+                                        Add Banks
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <i class="js-icon-double-angle-right"></i>
+                                        Manage Questions
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <i class="js-icon-double-angle-right"></i>
+                                        Add Questions
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
                             <!-- class="open" -->
                             <a class="dropdown-toggle" href="">
                                 <i class="icon-wrench"></i>
@@ -225,27 +238,6 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="dropdown-toggle" href="@Url.Action("Index","Languages")">
-                                <i class="icon-generic"></i>
-                                <span class="menu-text"> Languages </span>
-                                <b class="arrow js-icon-angle-down"></b>
-                            </a>
-                            <ul class="submenu">
-                                <li>
-                                    <a href="@Url.Action("Index","Languages")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Manage Language
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Create","Languages")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Add Languages
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
                             <a class="dropdown-toggle" href="">
                                 <i class="icon-flag"></i>
                                 <span class="menu-text"> Reports </span>
@@ -271,12 +263,6 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index","News")">
-                                <i class="icon-star-empty"></i>
-                                <span class="menu-text"> News and Public </span>
-                            </a>
                         </li>
                     </ul>
 
