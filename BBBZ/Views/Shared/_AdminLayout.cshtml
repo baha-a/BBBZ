@@ -13,10 +13,9 @@
         @Html.Partial("_NavBarPartial", ((BBBZ.Models.SharedLayoutViewModel)ViewBag.LayoutViewModel).TopMenuItems)
         <div class="container-fluid container-main">
             <div id="js-cpanel">
-                <!-- SIDE BAR ----------------------------------------------------------------------------------------------------------------->
+                <!-- SIDE BAR ---------------------------------------------------------------------------------------->
                 <div id="sidebar" class="sidebar">
                     <ul class="nav nav-list">
-                        <li class="open"> <a href="@Url.Action("Index","Home")"> <i class="icon-home"></i> Preview Site </a></li>
                         <li>
                             <a class="dropdown-toggle" href="@Url.Action("Index", "Menus")">
                                 <i class="icon-list"></i>
@@ -207,70 +206,14 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <!-- class="open" -->
-                            <a class="dropdown-toggle" href="">
-                                <i class="icon-wrench"></i>
-                                <span class="menu-text"> Settings </span>
-                                <b class="arrow js-icon-angle-down"></b>
-                            </a>
-                            <ul class="submenu">
-                                <!-- style="display:block;" -->
-                                <li>
-                                    <!-- class="Active" -->
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        General
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Site Info
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Templates
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown-toggle" href="">
-                                <i class="icon-flag"></i>
-                                <span class="menu-text"> Reports </span>
-                                <b class="arrow js-icon-angle-down"></b>
-                            </a>
-                            <ul class="submenu">
-                                <li>
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Content Reports
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Users Reports
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Media Reports
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        <li> <a href="@Url.Action("Index","Home")" target="_blank"> <i class="icon-home"></i> Preview Site </a></li>
                     </ul>
 
                     <div id="sidebar-collapse" class="sidebar-collapse">
                         <i class="js-icon-double-angle-left"></i>
                     </div>
                 </div>
-                <!-- END SIDE BAR ------------------------------------------------------------------------------------------------------------->
+                <!-- END SIDE BAR ------------------------------------------------------------------------------------>
             </div>
             <div class="main">
                 @RenderBody()

@@ -12,6 +12,7 @@ namespace BBBZ.Models
         public Content()
         {
             CustomFieldValues = new List<CustomFieldValue>();
+            Published = true;
         }
 
         [NotMapped]

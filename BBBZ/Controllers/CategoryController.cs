@@ -45,9 +45,6 @@ namespace BBBZ.Controllers
             {
                 category.Date = DateTime.Now;
                 category.CreatedByUsername = User.Identity.Name;
-                if (string.IsNullOrEmpty(category.Alias))
-                    category.Alias = category.Title.Replace(" ", "");
-                category.Alias = category.Alias.ToLower();
 
                 category.Parent = db.Categories.SingleOrDefault(x => x.ID == category.NewParentID_helper);
                 category.Access = db.ViewLevels.SingleOrDefault(x => x.ID == category.NewAccessID_helper);
@@ -91,10 +88,6 @@ namespace BBBZ.Controllers
                 category.MetaKey = cat.MetaKey;
                 category.MetaDesc = cat.MetaDesc;
                 category.Language = cat.Language;
-
-                if (string.IsNullOrEmpty(cat.Alias))
-                    cat.Alias = cat.Title.Replace(" ", "");
-                category.Alias = cat.Alias.ToLower();
 
                 category.Parent = db.Categories.SingleOrDefault(x => x.ID == cat.NewParentID_helper);
                 category.Access = db.ViewLevels.SingleOrDefault(x => x.ID == cat.NewAccessID_helper);

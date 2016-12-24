@@ -19,9 +19,6 @@
             @Html.DisplayNameFor(model => model.Menu.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Menu.Alias)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Menu.Type)
         </th>
         <th>
@@ -46,9 +43,6 @@
             {
                 @Html.ActionLink(item.Title, "Details", "MenuItem", new { id = item.ID }, null)
             }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Menu.Alias)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Menu.Type)

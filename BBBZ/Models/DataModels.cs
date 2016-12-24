@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace BBBZ.Models
 {
-#region User and ACL
+    #region User and ACL
     public partial class Group
     {
         public Group()
@@ -153,7 +153,6 @@ namespace BBBZ.Models
         public int ID { get; set; }
         [Required]
         public string Title { get; set; }
-        public string Alias { get; set; }
         public string Note { get; set; }
         public bool Published { get; set; }
         public bool OpenInSameWindow { get; set; }
@@ -178,7 +177,6 @@ namespace BBBZ.Models
     {
         public int ID { get; set; }
         public string Title { get; set; }
-        public string Alias { get; set; }
         public string Url { get; set; }
         public string Description { get; set; }
         public string MetaDesc { get; set; }
@@ -202,7 +200,6 @@ namespace BBBZ.Models
         public int ID { get; set; }
         [Required]
         public string Title { get; set; }
-        public string Alias { get; set; }
         public string IntroText { get; set; }
         [AllowHtml]
         public string FullText { get; set; }

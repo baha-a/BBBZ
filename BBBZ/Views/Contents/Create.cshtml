@@ -33,14 +33,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Alias, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.Alias, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Alias, null, new { @class = "has-error" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.IntroText, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
                 @Html.EditorFor(model => model.IntroText, new { @class = "form-control" })

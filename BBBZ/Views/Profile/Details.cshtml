@@ -11,6 +11,13 @@
     <h4>Profile</h4>
 	<hr />
     <dl class="dl-horizontal">
+        <dd>
+                <div class="form-group">
+                    <div class="col-md-offset-2">
+                        <img src="@(Model.Image)" alt="@(Model.username)'s profile image" height="460" width="460" style="border:3px solid black" />
+                    </div>
+                </div>
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -33,14 +40,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Image)
         </dd>
 
         <dt>

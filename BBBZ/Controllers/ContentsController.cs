@@ -91,7 +91,6 @@ namespace BBBZ.Controllers
                     content.Title = con.Title;
                     content.FullText = con.FullText;
                     content.IntroText = con.IntroText;
-                    content.Alias = con.Alias;
                     content.Descrption = con.Descrption;
 
                     content.Language = con.Language;

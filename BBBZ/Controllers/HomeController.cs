@@ -13,26 +13,20 @@ namespace BBBZ.Controllers
     {
         public ActionResult Index()
         {
-            return View(new HomeViewModel()
-            {
+            return View(new HomeViewModel(){
                 PublicData = db.PublicData.Where(x => x.Language == Language).ToList(),
                 News = db.News.Where(x => x.Language == Language).ToList()
             });
-        }
-
-        public ActionResult About()
-        {
-            return View();
         }
 
         public ActionResult Contact()
         {
             return View();
         }
+
+        public ActionResult Show()
+        {
+            return View();
+        }
     }
 }
-
-
-
-
-// how to user github with VS13 : http://michaelcrump.net/setting-up-github-to-work-with-visual-studio-2013-step-by-step/

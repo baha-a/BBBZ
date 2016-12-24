@@ -82,7 +82,6 @@ namespace BBBZ.Controllers
                     Type = menu.ItemType,
 
                     Title = menu.TheMenu.Title,
-                    Alias = string.IsNullOrEmpty(menu.TheMenu.Alias) ? (menu.TheMenu.Title.ToLower().Replace(" ", "")) : menu.TheMenu.Alias.ToLower().Replace(" ", ""),
                     Note = menu.TheMenu.Note,
                     Published = menu.TheMenu.Published,
                     OpenInSameWindow = menu.TheMenu.OpenInSameWindow,
@@ -172,9 +171,6 @@ namespace BBBZ.Controllers
                         m.Type = menu.ItemType;
 
                         m.Title = menu.TheMenu.Title;
-                        m.Alias = string.IsNullOrEmpty(menu.TheMenu.Alias) ?
-                            menu.TheMenu.Title.ToLower().Replace(" ", "") :
-                            menu.TheMenu.Alias.ToLower().Replace(" ", "");
                         m.Note = menu.TheMenu.Note;
                         m.Published = menu.TheMenu.Published;
                         m.OpenInSameWindow = menu.TheMenu.OpenInSameWindow;

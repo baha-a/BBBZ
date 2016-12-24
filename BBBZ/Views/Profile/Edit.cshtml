@@ -7,70 +7,95 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm("Edit","Profile",FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+<div class="container" style="width:95%">
+    <div class="row">
         <h4>Profile</h4>
         <hr />
-		<div>
+        <div>
             <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" />
-		</div>
-        @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
-        @Html.HiddenFor(model => model.username)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.Name, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Name, null, new { @class = "has-error" })
-            </div>
         </div>
-
+        <br />
+    </div>
+    <div class="row">
         <div class="form-group">
-            @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
+            <div class="col-md-2"> </div>
             <div class="col-md-6">
-                @Html.EditorFor(model => model.LastName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.LastName, null, new { @class = "has-error" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.Email, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Email, null, new { @class = "has-error" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Image, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.Image, new { @class = "form-control" })
-                <img src="@(Model.Image)"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RegisterDate, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.DisplayFor(model => model.RegisterDate)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LastVisitDate, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.DisplayFor(model => model.LastVisitDate)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-success btn-sm" />
+                <img src="@(Model.Image)" alt="@(Model.username)'s profile image" height="460" width="460" style="border:3px solid black" />
             </div>
         </div>
     </div>
-}
+    <div class="row">
+        @using (Html.BeginForm("UploadProfileImage", "Media", FormMethod.Post, new { enctype = "multipart/form-data", id = "UploadForm" }))
+        {
+            @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
+            <div class="form-group">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-4">
+                      @Html.UploadFile("Uploader", new { accept = "image/*" })
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-info btn-sm">Change</button>
+                </div>
+                <input hidden="hidden" type="text" value="@Model.username" id="path" name="path" />
+            </div>
+        }
+    </div>
+    <hr />
+    <div class="row">
+        @using (Html.BeginForm("Edit", "Profile", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
 
+            <div class="form-horizontal">
+                @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
+                @Html.HiddenFor(model => model.username)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Name, null, new { @class = "has-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.LastName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.LastName, null, new { @class = "has-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Email, null, new { @class = "has-error" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RegisterDate, new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.DisplayFor(model => model.RegisterDate)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastVisitDate, new { @class = "control-label col-md-2" })
+                    <div class="col-md-6">
+                        @Html.DisplayFor(model => model.LastVisitDate)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-success btn-sm" />
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

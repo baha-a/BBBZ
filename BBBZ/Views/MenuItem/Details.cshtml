@@ -20,14 +20,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Alias)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Alias)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Note)
         </dt>
 
@@ -135,14 +127,14 @@
         </dt>
 
         <dd>
-            @if (Model.Menus == null)
+            @if (Model.Children == null)
             {
                 <i> no child </i>
             }
             else
             {
                 <ul>
-                @foreach (var c in Model.Menus)
+                @foreach (var c in Model.Children)
                 {
                     <li>
                         @Html.ActionLink(c.Title, "Details", "MenuItem", new { id = c.ID }, null)

@@ -268,6 +268,10 @@
     <Compile Include="Migrations\201612222026231_add_access_to_menu_tabel.Designer.cs">
       <DependentUpon>201612222026231_add_access_to_menu_tabel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612241831042_remove_aliases.cs" />
+    <Compile Include="Migrations\201612241831042_remove_aliases.Designer.cs">
+      <DependentUpon>201612241831042_remove_aliases.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -327,15 +331,7 @@
     <Content Include="Content\admin\modal.css" />
     <Content Include="Content\admin\template.css" />
     <Content Include="Content\images\robot.png" />
-    <Content Include="Content\images\ui-icons_444444_256x240.png" />
-    <Content Include="Content\images\ui-icons_555555_256x240.png" />
-    <Content Include="Content\images\ui-icons_777620_256x240.png" />
-    <Content Include="Content\images\ui-icons_777777_256x240.png" />
-    <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
-    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\jquery-ui.css" />
-    <Content Include="Content\bootstrap-Cerulean.css" />
-    <Content Include="Content\bootstrap-lumen.css" />
     <Content Include="Content\bootstrap-rtl.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="favicon.ico" />
@@ -357,7 +353,6 @@
     <Content Include="Content\admin\font\IcoMoon.woff" />
     <Content Include="Content\admin\jquery.DOMWindow.js" />
     <Content Include="Content\admin\template.js" />
-    <Content Include="Content\font\DXI1ORHCpsQm3Vp6mXoaTXhCUOGz7vYGh680lGh-uXM.woff" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Properties\PublishProfiles\smarterAsp.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -471,7 +466,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
@@ -489,11 +483,6 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Category\Preview.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
-    <Content Include="Views\Admin\Menus.cshtml" />
-    <Content Include="Views\Admin\PublicData.cshtml" />
-    <Content Include="Views\Admin\UsersRequests.cshtml" />
-    <Content Include="Views\Admin\Teachers.cshtml" />
-    <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Languages\Create.cshtml" />
     <Content Include="Views\Languages\Delete.cshtml" />
@@ -610,6 +599,7 @@
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\Media\Index.cshtml" />
     <Content Include="Views\Group\Setting.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\" />
@@ -624,21 +614,26 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611070812076_add_duration_to_News.resx">
       <DependentUpon>201611070812076_add_duration_to_News.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611071009327_add_language_to_publicdata.resx">
       <DependentUpon>201611071009327_add_language_to_publicdata.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611080817059_add_some_annotation_to_Datamodel.resx">
       <DependentUpon>201611080817059_add_some_annotation_to_Datamodel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611141747178_add_table_Language.resx">
       <DependentUpon>201611141747178_add_table_Language.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611150440400_add_Category.resx">
       <DependentUpon>201611150440400_add_Category.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611181543525_majors_changes_for_db_stracture.resx">
       <DependentUpon>201611181543525_majors_changes_for_db_stracture.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611191033454_fix_db_after_the_big_changes.resx">
       <DependentUpon>201611191033454_fix_db_after_the_big_changes.cs</DependentUpon>
@@ -651,12 +646,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612161550149_Redesign_the_database.resx">
       <DependentUpon>201612161550149_Redesign_the_database.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612161925278_fix_relation_between_Content_and_Category.resx">
       <DependentUpon>201612161925278_fix_relation_between_Content_and_Category.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612170637150_tiny_changes_in_some_table.resx">
       <DependentUpon>201612170637150_tiny_changes_in_some_table.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612170853107_fix_stupid_Bug.resx">
       <DependentUpon>201612170853107_fix_stupid_Bug.cs</DependentUpon>
@@ -678,17 +675,23 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612211109366_add_nullable_to_ContentTable.resx">
       <DependentUpon>201612211109366_add_nullable_to_ContentTable.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612220722119_I_dont_know_why_database_whant_update.resx">
       <DependentUpon>201612220722119_I_dont_know_why_database_whant_update.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612222026231_add_access_to_menu_tabel.resx">
       <DependentUpon>201612222026231_add_access_to_menu_tabel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612241831042_remove_aliases.resx">
+      <DependentUpon>201612241831042_remove_aliases.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>R.designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -697,12 +700,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610311426280_InitalDB.resx">
       <DependentUpon>201610311426280_InitalDB.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611021735240_add_PublicData_and_News_Classes.resx">
       <DependentUpon>201611021735240_add_PublicData_and_News_Classes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611021813553_add_UsernameToTeacherAndStudent.resx">
       <DependentUpon>201611021813553_add_UsernameToTeacherAndStudent.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
