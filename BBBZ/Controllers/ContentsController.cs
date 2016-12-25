@@ -12,13 +12,12 @@ namespace BBBZ.Controllers
 {
     public class ContentsController : BaseController
     {
-        // GET: /Content/
         public ActionResult Index()
         {
+            IsAllowed(MyPermission.See_Contents);
             return View(db.Contents.Include(x=>x.Access).Include(x=>x.Category).ToList());
         }
 
-        // GET: /Content/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -26,20 +25,21 @@ namespace BBBZ.Controllers
             Content content = db.Contents.Include(x => x.Access).Include(x => x.Category).SingleOrDefault(x => x.ID == id);
             if (content == null)
                 return HttpNotFound();
+            content.CustomFieldValues = db.CustomFieldValues.Include(x => x.Content).Include(x => x.CustomField).Where(x => x.Content.ID == content.ID).ToList();
             return View(content);
         }
 
-        // GET: /Content/Create
         public ActionResult Create()
         {
+            IsAllowed(MyPermission.Create_Contents);
             return View();
         }
 
-        // POST: /Content/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Content content)
         {
+            IsAllowed(MyPermission.Create_Contents);
             if (ModelState.IsValid)
             {
                 content.CreatedByUsername = User.Identity.Name;
@@ -59,9 +59,9 @@ namespace BBBZ.Controllers
             return View(content);
         }
 
-        // GET: /Content/Edit/5
         public ActionResult Edit(int? id)
         {
+            IsAllowed(MyPermission.Edit_Contents);
             if (id == null)
                 return BadRequest();
 
@@ -81,6 +81,7 @@ namespace BBBZ.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Content con)
         {
+            IsAllowed(MyPermission.Edit_Contents);
             var content  = con;
             if (ModelState.IsValid)
             {
@@ -124,26 +125,102 @@ namespace BBBZ.Controllers
             return View(content);
         }
 
-        // GET: /Content/Delete/5
         public ActionResult Delete(int? id)
         {
+            IsAllowed(MyPermission.Delete_Contents);
             if (id == null)
                 return BadRequest();
-            Content content = db.Contents.Include(x => x.Access).Include(x => x.Category).SingleOrDefault(x => x.ID == id);
+            Content content = db.Contents.Include(x => x.Access).Include(x => x.Category).Include(x => x.CustomFieldValues).SingleOrDefault(x => x.ID == id);
             if (content == null)
                 return HttpNotFound();
             return View(content);
         }
 
-        // POST: /Content/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            IsAllowed(MyPermission.Delete_Contents); 
             Content content = db.Contents.Find(id);
             db.Contents.Remove(content);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+
+        public ActionResult Custom(int? id)
+        {
+            IsAllowed(MyPermission.Edit_Contents);
+            if (id == null)
+                return BadRequest();
+
+            var c = db.Contents.SingleOrDefault(x => x.ID == id);
+            if (c == null)
+                return HttpNotFound();
+            ViewBag.ID = id;
+            ViewBag.ContentTitle = c.Title;
+
+
+            var cfv = db.CustomFieldValues.Include(x => x.Content).Include(x => x.CustomField).Where(x => x.Content.ID == id).ToList();
+            if (cfv == null)
+                return HttpNotFound();
+
+            return View(cfv);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult AddCFV(int? customid, int? contentid, string value)
+        {
+            if (customid == null || contentid == null)
+                return BadRequest();
+
+            var con = db.Contents.SingleOrDefault(x => x.ID == contentid);
+            var cus = db.CustomFields.SingleOrDefault(x => x.ID == customid);
+            if (con == null || cus == null)
+                return HttpNotFound();
+
+            db.CustomFieldValues.Add(new CustomFieldValue()
+            {
+                Value = value,
+                Content = con,
+                CustomField = cus
+            });
+
+            db.SaveChanges();
+
+            return RedirectToAction("Custom", new { id = contentid });
+        }
+        
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult EditCFV(int? contentid, int? id, string value)
+        {
+            if (id == null || contentid == null)
+                return BadRequest();
+
+            var vl = db.CustomFieldValues.SingleOrDefault(x => x.ID == id);
+            if (vl == null)
+                return HttpNotFound();
+
+            vl.Value = value;
+            db.SaveChanges();
+            return RedirectToAction("Custom", new { id = contentid });
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCFV(int? id, int? contentid)
+        {
+            if (id == null)
+                return BadRequest();
+
+            var vl = db.CustomFieldValues.SingleOrDefault(x => x.ID == id);
+            if (vl == null)
+                return HttpNotFound();
+
+            db.CustomFieldValues.Remove(vl);
+            db.SaveChanges();
+            return RedirectToAction("Custom", new { id = contentid });
         }
     }
 }

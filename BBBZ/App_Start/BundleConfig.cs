@@ -55,12 +55,10 @@ namespace BBBZ
 
             bundles.Add(new StyleBundle("~/Content/admin").Include(
                       "~/Content/admin/modal.css",
-                      "~/Content/admin/tmploverride.css",
                       "~/Content/admin/font-awesome.min.css",
                       "~/Content/admin/ace-fonts.css",
                       "~/Content/admin/ace.min.css",
-                      "~/Content/admin/template.css",
-                      "~/Content/admin/general.css"));
+                      "~/Content/admin/template.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/admin").Include(
                         "~/Content/admin/bootstrap.min.js",

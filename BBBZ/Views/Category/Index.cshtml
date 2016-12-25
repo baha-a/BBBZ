@@ -2,13 +2,15 @@
 
 @{
     ViewBag.Title = "Categories";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2>Categories</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-sm" })
+    @if (((BBBZ.Models.Permission)ViewBag.Permission).Create_Categories == true)
+    {
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-sm" })
+    }
 </p>
 <table class="table table-bordered">
     <tr>
@@ -64,8 +66,15 @@
             @Html.DisplayFor(modelItem => item.theCategory.Published)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @if (((BBBZ.Models.Permission)ViewBag.Permission).Edit_Categories == true)
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+            }
+            |            
+            @if (((BBBZ.Models.Permission)ViewBag.Permission).Delete_Categories == true)
+            {
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            }
         </td>
     </tr>
 }

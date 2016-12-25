@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿
+@{
+    BBBZ.Models.Permission _perm =(BBBZ.Models.Permission)ViewBag.Permission;
+}
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -10,205 +14,260 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-        @Html.Partial("_NavBarPartial", ((BBBZ.Models.SharedLayoutViewModel)ViewBag.LayoutViewModel).TopMenuItems)
         <div class="container-fluid container-main">
             <div id="js-cpanel">
+
                 <!-- SIDE BAR ---------------------------------------------------------------------------------------->
                 <div id="sidebar" class="sidebar">
                     <ul class="nav nav-list">
-                        <li>
-                            <a class="dropdown-toggle" href="@Url.Action("Index", "Menus")">
-                                <i class="icon-list"></i>
-                                <span class="menu-text">  Menu </span>
-                                <b class="arrow js-icon-angle-down"></b>
-                            </a>
-                            <ul class="submenu" style="display:none;">
-                                <li>
-                                    <a href="@Url.Action("Index", "Menus")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Manage Menus
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("", "MenuItem")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Manage Menu Items
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Create", "MenuItem")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Add Menu Item
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown-toggle" href="@Url.Action("Index", "Category")">
-                                <i class="icon-archive"></i>
-                                <span class="menu-text">  Categories </span>
-                                <b class="arrow js-icon-angle-down"></b>
-                            </a>
-                            <ul class="submenu" style="display:none;">
-                                <li>
-                                    <a href="@Url.Action("Index", "Category")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Manage Categories
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Create", "Category")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        New Categoires
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown-toggle" href="@Url.Action("Index", "Contents")">
-                                <i class="icon-book"></i>
-                                <span class="menu-text"> Contents </span>
-                                <b class="arrow js-icon-angle-down"></b>
-                            </a>
-                            <ul class="submenu">
-                                <li>
-                                    <a href="@Url.Action("Index", "Contents")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Manage Contents
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Create", "Contents")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        New Content
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown-toggle" href="@Url.Action("Index", "Media")">
-                                <i class="icon-picture"></i>
-                                <span class="menu-text"> Media Manager </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-toggle" href="@Url.Action("Index", "User")">
+                        @if (_perm.Menus == true)
+                        {
+                            <li>
+                                <a class="dropdown-toggle" href="@Url.Action("Index", "Menus")">
+                                    <i class="icon-list"></i>
+                                    <span class="menu-text">  Menu </span>
+                                    <b class="arrow js-icon-angle-down"></b>
+                                </a>
+                                <ul class="submenu" style="display:none;">
+                                    <li>
+                                        <a href="@Url.Action("Index", "Menus")">
+                                            <i class="js-icon-double-angle-right"></i>
+                                            Manage Menus
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("", "MenuItem")">
+                                            <i class="js-icon-double-angle-right"></i>
+                                            Manage Menu Items
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Create", "MenuItem")">
+                                            <i class="js-icon-double-angle-right"></i>
+                                            Add Menu Item
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+
+                        @if (_perm.See_Categories == true)
+                        {
+                            <li>
+                                <a class="dropdown-toggle" href="@Url.Action("Index", "Category")">
+                                    <i class="icon-archive"></i>
+                                    <span class="menu-text">  Categories </span>
+                                    <b class="arrow js-icon-angle-down"></b>
+                                </a>
+                                <ul class="submenu" style="display:none;">
+                                    <li>
+                                        <a href="@Url.Action("Index", "Category")">
+                                            <i class="js-icon-double-angle-right"></i>
+                                            Manage Categories
+                                        </a>
+                                    </li>
+                                    @if (_perm.Create_Categories == true)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Create", "Category")">
+                                                <i class="js-icon-double-angle-right"></i>
+                                                New Categoires
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+
+                        @if (_perm.See_Contents == true)
+                        {
+                            <li>
+                                <a class="dropdown-toggle" href="@Url.Action("Index", "Contents")">
+                                    <i class="icon-book"></i>
+                                    <span class="menu-text"> Contents </span>
+                                    <b class="arrow js-icon-angle-down"></b>
+                                </a>
+                                <ul class="submenu">
+                                    <li>
+                                        <a href="@Url.Action("Index", "Contents")">
+                                            <i class="js-icon-double-angle-right"></i>
+                                            Manage Contents
+                                        </a>
+                                    </li>
+                                    @if (_perm.Create_Contents == true)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Create", "Contents")">
+                                                <i class="js-icon-double-angle-right"></i>
+                                                New Content
+                                            </a>
+                                        </li>
+                                    }
+                                    <li>
+                                        <a href="@Url.Action("Index", "CustomField")">
+                                            <i class="js-icon-double-angle-right"></i>
+                                            Manage CustomFields
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        @if (_perm.Media == true)
+                        {                        
+                            <li>
+                                <a class="dropdown-toggle" href="@Url.Action("Index", "Media")">
+                                    <i class="icon-picture"></i>
+                                    <span class="menu-text"> Media Manager </span>
+                                </a>
+                            </li>
+                        }
+                        @if (_perm.Users == true)
+                        {
+                            <li>
+                                <a class="dropdown-toggle" href="@Url.Action("Index", "User")">
                                     <i class="icon-users"></i>
                                     <span class="menu-text"> Users </span>
                                     <b class="arrow js-icon-angle-down"></b>
                                 </a>
-                            <ul class="submenu">
-                                <li>
-                                    <a href="@Url.Action("Index", "User")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Manage User
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Create", "User")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Create User
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown-toggle" href="@Url.Action("Index","Group")">
-                                <i class="icon-eye-open"></i>
-                                <span class="menu-text"> Permissions </span>
-                                <b class="arrow js-icon-angle-down"></b>
-                            </a>
-                            <ul class="submenu" style="display:none;">
-                                <li>
-                                    <a href="@Url.Action("Index","Group")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Manage Groups
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Create","Group")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Add Groups
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Index","ViewLevel")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Manage ViewLevel
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Create","ViewLevel")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Add ViewLevel
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown-toggle" href="@Url.Action("Index","Languages")">
-                                <i class="icon-generic"></i>
-                                <span class="menu-text"> Languages </span>
-                                <b class="arrow js-icon-angle-down"></b>
-                            </a>
-                            <ul class="submenu">
-                                <li>
-                                    <a href="@Url.Action("Index","Languages")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Manage Language
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Create","Languages")">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Add Languages
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index","News")">
-                                <i class="icon-star-empty"></i>
-                                <span class="menu-text"> News and Public </span>
-                            </a>
-                        </li>
+                                <ul class="submenu">
+                                    <li>
+                                        <a href="@Url.Action("Index", "User")">
+                                            <i class="js-icon-double-angle-right"></i>
+                                            Manage User
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Create", "User")">
+                                            <i class="js-icon-double-angle-right"></i>
+                                            Create User
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
 
-                        <li>
-                            <a class="dropdown-toggle" href="">
-                                <i class="icon-checkmark-2"></i>
-                                <span class="menu-text"> Questions Bank </span>
-                                <b class="arrow js-icon-angle-down"></b>
-                            </a>
-                            <ul class="submenu">
-                                <li>
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Manage Banks
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Add Banks
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Manage Questions
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <i class="js-icon-double-angle-right"></i>
-                                        Add Questions
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li> <a href="@Url.Action("Index","Home")" target="_blank"> <i class="icon-home"></i> Preview Site </a></li>
-                    </ul>
+                        @if (_perm.Groups == true || _perm.ViewLevels == true)
+                        {
+                            <li>
+                                <a class="dropdown-toggle" href="@Url.Action("Index","Group")">
+                                    <i class="icon-eye-open"></i>
+                                    <span class="menu-text"> Permissions </span>
+                                    <b class="arrow js-icon-angle-down"></b>
+                                </a>
+                                <ul class="submenu" style="display:none;">
+                                    @if (_perm.Groups == true)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Index","Group")">
+                                                <i class="js-icon-double-angle-right"></i>
+                                                Manage Groups
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("Create","Group")">
+                                                <i class="js-icon-double-angle-right"></i>
+                                                Add Groups
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("Setting","Group")">
+                                                <i class="js-icon-double-angle-right"></i>
+                                                Group Setting
+                                            </a>
+                                        </li>
+                                    }
 
+                                    @if (_perm.ViewLevels == true)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Index","ViewLevel")">
+                                                <i class="js-icon-double-angle-right"></i>
+                                                Manage ViewLevel
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("Create","ViewLevel")">
+                                                <i class="js-icon-double-angle-right"></i>
+                                                Add ViewLevel
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+
+                        @if (_perm.Languages == true)
+                        {
+                            <li>
+                                <a class="dropdown-toggle" href="@Url.Action("Index","Languages")">
+                                    <i class="icon-generic"></i>
+                                    <span class="menu-text"> Languages </span>
+                                    <b class="arrow js-icon-angle-down"></b>
+                                </a>
+                                <ul class="submenu">
+                                    <li>
+                                        <a href="@Url.Action("Index","Languages")">
+                                            <i class="js-icon-double-angle-right"></i>
+                                            Manage Language
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Create","Languages")">
+                                            <i class="js-icon-double-angle-right"></i>
+                                            Add Languages
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        @if (_perm.Newss == true)
+                        {
+                            <li>
+                                <a href="@Url.Action("Index","News")">
+                                    <i class="icon-star-empty"></i>
+                                    <span class="menu-text"> News and Public </span>
+                                </a>
+                            </li>
+                        }
+
+                        @if (_perm.Questions == true)
+                        {
+                            <li>
+                                <a class="dropdown-toggle" href="">
+                                    <i class="icon-checkmark-2"></i>
+                                    <span class="menu-text"> Questions Bank </span>
+                                    <b class="arrow js-icon-angle-down"></b>
+                                </a>
+                                <ul class="submenu">
+                                    <li>
+                                        <a href="">
+                                            <i class="js-icon-double-angle-right"></i>
+                                            Manage Banks
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="js-icon-double-angle-right"></i>
+                                            Add Banks
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="js-icon-double-angle-right"></i>
+                                            Manage Questions
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <i class="js-icon-double-angle-right"></i>
+                                            Add Questions
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li> <a href="@Url.Action("Index","Admin")"> <i class="icon-exit"></i> Close </a> </li>
+                        }
+                    </ul>    
                     <div id="sidebar-collapse" class="sidebar-collapse">
                         <i class="js-icon-double-angle-left"></i>
                     </div>

@@ -15,7 +15,7 @@ namespace BBBZ.Models
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<ViewLevel> ViewLevels { get; set; }
-        public DbSet<Asset> Assets { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
 
         public DbSet<Language> Languages { get; set; }
 
@@ -23,7 +23,7 @@ namespace BBBZ.Models
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Content> Contents { get; set; }
-
+        public DbSet<CustomFieldValue> CustomFieldValues { get; set; }
         public DbSet<CustomField> CustomFields { get; set; }
 
 
@@ -39,12 +39,22 @@ namespace BBBZ.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //modelBuilder
-            //    .Entity<Language>()
-            //    .HasRequired(t => t.JohnsParentTable)
-            //    .WithMany(t => t.JohnsChildTables)
-            //    .HasForeignKey(d => d.JohnsParentTableId)
-            //    .WillCascadeOnDelete(true);
+            modelBuilder.Entity<UserGroup>()
+                .HasRequired(t => t.Groups)
+                .WithMany()
+                .WillCascadeOnDelete(true);
+
+            
+            modelBuilder.Entity<CustomFieldValue>()
+                .HasRequired(x => x.CustomField)
+                .WithMany()
+                .WillCascadeOnDelete(true); 
+            
+            modelBuilder.Entity<CustomFieldValue>()
+                 .HasRequired(x => x.Content)
+                 .WithMany()
+                 .WillCascadeOnDelete(true);
+
 
             base.OnModelCreating(modelBuilder);
         }

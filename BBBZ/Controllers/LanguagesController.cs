@@ -12,6 +12,12 @@ namespace BBBZ.Controllers
 {
     public class LanguagesController : BaseController
     {
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            IsAllowed(MyPermission.Languages);
+        }
+
         public ActionResult Index()
         {
             return View(db.Languages.ToList());

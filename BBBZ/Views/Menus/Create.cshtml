@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    
 }
 
 <h2>Create</h2>
@@ -19,14 +19,6 @@
 			@Html.ActionLink("Back", "Index", null, new { @class="btn btn-xs btn-warning"})
 		</div>
         @Html.ValidationSummary(false,null, new { @class = "alert alert-danger" })
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.menuType, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.menuType, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.menuType, null, new { @class = "has-error" })
-            </div>
-        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })

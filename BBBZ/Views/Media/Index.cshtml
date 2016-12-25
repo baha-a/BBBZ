@@ -1,13 +1,13 @@
 ﻿@model BBBZ.Models.MediaViewModel
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    
 }
 
 <h2>Media</h2>
 
 <hr />
-<b> Current Path: <i> @(Model != null? Model.CurrnetPath:string.Empty) </i></b>
+<b> Current Path:  @(Model != null? Model.CurrnetPath:string.Empty) </b>
 <br />
 <a href="@Url.Action("Back", new { path = Model.CurrnetPath})" class="btn btn-danger btn-xs"> back </a>
 <hr />

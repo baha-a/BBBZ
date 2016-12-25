@@ -1,22 +1,37 @@
-﻿
-@{
-    ViewBag.Title = "Error " + ViewBag.Code;
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{    
+    Layout = null;
 }
 
-<br />
-<br />
-<br />
-<h2>Error <i > @ViewBag.Code </i></h2>
-<div class="col-sm-8">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Error @ViewBag.Code</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="container body-content">
+
+        <br />
+        <br />
+        <br />
+        <h2>Error <i> @ViewBag.Code </i></h2>
+        <div class="col-sm-8">
             <p style="color:red">
                 @ViewBag.Message
             </p>
-</div>
+        </div>
 
-<div class="col-sm-4">
-    <img src="~/Content/images/robot.png" alt="error"/>
-</div>
-<a href="@ViewBag.PreviousUrl" class="btn btn-sm btn-primary"> Retry </a>
-<input type="button" value="Back" class="btn btn-sm btn-info" onclick="history.go(-1);" />
+        <div class="col-sm-4">
+            <img src="~/Content/images/robot.png" alt="error" />
+        </div>
+        <a href="@ViewBag.PreviousUrl" class="btn btn-sm btn-primary"> Retry </a>
+        <input type="button" value="Back" class="btn btn-sm btn-info" onclick="history.go(-1);" />
+    </div>
 
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>

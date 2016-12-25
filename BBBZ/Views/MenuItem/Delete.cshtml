@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Delete";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    
 }
 
 <h2>Delete</h2>
@@ -115,14 +115,14 @@
         </dt>
 
         <dd>
-            @if (Model.Menus == null)
+            @if (Model.Children == null)
             {
                 <i> no child </i>
             }
             else
             {
                 <ul>
-                    @foreach (var c in Model.Menus)
+                    @foreach (var c in Model.Children)
                     {
                         <li>
                             @Html.ActionLink(c.Title, "Details", "MenuItem", new { id = c.ID }, null)
@@ -132,7 +132,7 @@
             }
         </dd>
     </dl>
-    6
+    
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 

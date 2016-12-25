@@ -14,11 +14,14 @@ namespace BBBZ.Controllers
     {
         public ActionResult Index()
         {
+            IsAllowed(MyPermission.See_Categories);
+
             return View(Extenisons.GetAllCategories());
         }
 
         public ActionResult Details(int? id)
         {
+
             if (id == null)
             {
                 return BadRequest();
@@ -34,6 +37,8 @@ namespace BBBZ.Controllers
 
         public ActionResult Create()
         {
+            IsAllowed(MyPermission.Create_Categories);
+
             return View();
         }
 
@@ -41,6 +46,8 @@ namespace BBBZ.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Category category)
         {
+            IsAllowed(MyPermission.Create_Categories);
+
             if (ModelState.IsValid)
             {
                 category.Date = DateTime.Now;
@@ -59,6 +66,8 @@ namespace BBBZ.Controllers
 
         public ActionResult Edit(int? id)
         {
+            IsAllowed(MyPermission.Edit_Categories);
+
             if (id == null)
             {
                 return BadRequest();
@@ -76,6 +85,8 @@ namespace BBBZ.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Category cat)
         {
+            IsAllowed(MyPermission.Edit_Categories);
+
             if (ModelState.IsValid)
             {
                 var category = db.Categories.Include(x=>x.Parent).SingleOrDefault(c => c.ID == cat.ID);
@@ -101,6 +112,8 @@ namespace BBBZ.Controllers
 
         public ActionResult Delete(int? id)
         {
+            IsAllowed(MyPermission.Delete_Categories);
+
             if (id == null)
             {
                 return BadRequest();
@@ -119,10 +132,22 @@ namespace BBBZ.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
+            IsAllowed(MyPermission.Delete_Categories);
+
+            Category category = db.Categories.Include(x => x.Contents).SingleOrDefault(x => x.ID == id);
+            DeleteWithChildren(category);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        private void DeleteWithChildren(Category cat)
+        {
+            if (cat == null)
+                return;
+            var children = db.Categories.Include(x => x.Contents).Include(x => x.Parent).Where(x => x.Parent != null && x.Parent.ID == cat.ID).ToList();
+            foreach (var c in children)
+                DeleteWithChildren(c);
+            db.Categories.Remove(cat);
         }
     }
 }

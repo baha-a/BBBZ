@@ -578,3 +578,26 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
     color: #333333;
     background-color: #ffaaaa;
 }
+
+
+.SideMenu
+{
+    border-radius: 5px;
+    margin: 0px;
+    margin-top: 16px;
+    padding-top: 0px;
+    padding-left: 10px;
+    background-color: #fdfdfd;
+    border:1px solid #e6e6e6;
+}
+
+.SideMenuFirst{
+    margin-top: 100px;
+}
+
+.SideMenu ul li{
+    list-style:inside; 
+}
+.SideMenu ul{
+    padding-left:15px;
+}

@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    
 }
 
 <h2>Edit</h2>
@@ -70,14 +70,6 @@
             <div class="col-md-6">
                 @Html.EditorFor(model => model.TheMenu.Title, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TheMenu.Title, null, new { @class = "has-error" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TheMenu.Alias, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.TheMenu.Alias, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TheMenu.Alias, null, new { @class = "has-error" })
             </div>
         </div>
 

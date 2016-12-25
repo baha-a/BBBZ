@@ -12,6 +12,19 @@ namespace BBBZ.Controllers
 {
     public class UserController : BaseController
     {
+        public UserManager<ApplicationUser> UserManager { get; private set; }
+        public UserController()
+        {
+            UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+        }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            IsAllowed(MyPermission.Users);
+        }
+
+
         public ActionResult Index()
         {
             List<UserManagerDataView> rg = new List<UserManagerDataView>();
@@ -122,12 +135,6 @@ namespace BBBZ.Controllers
                 db.SaveChanges();
             }
             return RedirectToAction("Index");
-        }
-
-        public UserManager<ApplicationUser> UserManager { get; private set; }
-        public UserController()
-        {
-            UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
         }
 
         protected override void Dispose(bool disposing)

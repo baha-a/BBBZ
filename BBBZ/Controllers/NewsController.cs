@@ -12,7 +12,12 @@ namespace BBBZ.Controllers
 {
     public class NewsController : BaseController
     {
-        // GET: /News/
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            IsAllowed(MyPermission.Newss);
+        }
+
         public ActionResult Index()
         {
             return View(db.News.ToList());

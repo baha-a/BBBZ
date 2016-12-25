@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Groups";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    
 }
 
 <h2>Groups</h2>
@@ -54,6 +54,7 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Permission", "Permission", new { id = item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ID })
         </td>
     </tr>

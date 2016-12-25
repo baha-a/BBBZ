@@ -12,6 +12,12 @@ namespace BBBZ.Controllers
 {
     public class ViewLevelController : BaseController
     {
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            IsAllowed(MyPermission.ViewLevels);
+        }
+
         public List<Group> FillWithChildren(List<Group> gs)
         {
             foreach (var g in gs)
@@ -27,7 +33,6 @@ namespace BBBZ.Controllers
             return View(db.ViewLevels.ToList());
         }
 
-        // GET: /ViewLevel/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -48,7 +53,6 @@ namespace BBBZ.Controllers
             return View(new ViewLevelViewModel().Initialize(FillWithChildren(db.Groups.Where(x=>x.Parent == null).ToList())));
         }
 
-        // POST: /ViewLevel/Create
         [HttpPost]
         public ActionResult Create(ViewLevelViewModel vl)
         {
@@ -77,7 +81,6 @@ namespace BBBZ.Controllers
             return vl;
         }
 
-        // GET: /ViewLevel/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -131,7 +134,7 @@ namespace BBBZ.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ViewLevel viewlevel = db.ViewLevels.Find(id);
+            ViewLevel viewlevel = db.ViewLevels.SingleOrDefault(x => x.ID == id);
             db.ViewLevels.Remove(viewlevel);
             db.SaveChanges();
             return RedirectToAction("Index");

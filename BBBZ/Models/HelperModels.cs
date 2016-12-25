@@ -36,6 +36,13 @@ namespace BBBZ.Models
     }
     public partial class Group
     {
+        public Group()
+        {
+            Children = new List<Group>();
+            Users = new List<UserGroup>();
+            Access = new List<ViewLevel>();
+        }
+
         [NotMapped]
         public bool Selected { get; set; }
         [NotMapped]

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<BBBZ.Models.CustomFieldValue>
+
+@{
+    ViewBag.Title = "CustomField";
+}
+
+<h2> Custom Fields for Content: @ViewBag.ContentTitle </h2>
+
+@Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-warning" })
+<input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" /> 
+<br /><br />
+
+<table class="table table-bordered">
+    <tr>
+        <th> ID </th>
+        <th> Title </th>
+        <th> Value </th>
+        <th>  </th>
+    </tr>
+    
+@foreach (var item in Model) 
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomField.Title)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Value)
+        </td>
+
+        <td>
+            @using (Html.BeginForm("DeleteCFV", "Contents", FormMethod.Post))
+            { 
+                <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
+                <input type="hidden" value="@item.ID" name="id" id="id">
+                <input type="hidden" value="@ViewBag.ID" name="contentid" id="contentid">
+            }
+        </td>
+    </tr>
+}
+
+</table>
+
+@using (Html.BeginForm("AddCFV", "Contents", FormMethod.Post))
+{
+    <input type="hidden" value="@ViewBag.ID" name="contentid" id="contentid">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2">
+                Custom Field
+            </div>
+            <div class="col-md-6">
+                @Html.DropDownList("customid", new SelectList(Extenisons.GetAllCustomFields(), "ID", "Title"), new { @class = "form-control" })
+            </div>
+            <div class="col-md-2">
+                <input type="submit" value="Save" class="btn btn-success btn-sm" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2">
+                Value
+            </div>
+                <div class="col-md-6">
+                    <textarea name="value" id="value"></textarea>
+                </div>
+            </div>
+    </div>
+}
+@section scripts
+{
+    @Scripts.Render("~/bundles/tinymce")
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: ['advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'],
+            toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons | codesample',
+        })
+    </script>
+}

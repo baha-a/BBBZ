@@ -10,9 +10,9 @@ using System.Web.Mvc;
 
 public static class Extenisons
 {
-
     #region general helper
-    static ApplicationDbContext db = new ApplicationDbContext();
+
+    public static ApplicationDbContext db { private get; set; }
 
     public static int ParentsLength(Category c)
     {
@@ -83,6 +83,7 @@ public static class Extenisons
     }
     #endregion
 
+    
 
     #region GroupHelper
     public static List<SelectableGroup> GetAllGroups(int without = -1)
@@ -91,7 +92,7 @@ public static class Extenisons
     }
     public static List<Group> GetParentGroup(int without =-1)
     {
-        return db.Groups.Where(x => x.Parent == null && x.ID == without).ToList();
+        return db.Groups.Where(x => x.Parent == null && x.ID != without).ToList();
     }
     public static List<Group> FillWithChildren(this List<Group> gs, int without = -1)
     {
@@ -114,15 +115,137 @@ public static class Extenisons
     }
     #endregion
 
+    #region Permission helper
+
+    public static Permission CalculatePermissions(this Permission per, Permission g, bool first = false)
+    {
+        if (per.Users == null || (first && per.Users == false && g.Users == true))
+            per.Users = g.Users;
+
+        if (per.Groups == null || (first && per.Groups == false && g.Groups == true))
+            per.Groups = g.Groups;
+
+        if (per.ViewLevels == null || (first && per.ViewLevels == false && g.ViewLevels == true))
+            per.ViewLevels = g.ViewLevels;
+
+        if (per.Menus == null || (first && per.Menus == false && g.Menus == true))
+            per.Menus = g.Menus;
+
+        if (per.Languages == null || (first && per.Languages == false && g.Languages == true))
+            per.Languages = g.Languages;
+
+
+        if (per.Newss == null || (first && per.Newss == false && g.Newss == true))
+            per.Newss = g.Newss;
+
+        if (per.Questions == null || (first && per.Questions == false && g.Questions == true))
+            per.Questions = g.Questions;
+
+
+        if (per.See_Categories == null || (first && per.See_Categories == false && g.See_Categories == true))
+            per.See_Categories = g.See_Categories;
+
+        if (per.Create_Categories == null || (first && per.Create_Categories == false && g.Create_Categories == true))
+            per.Create_Categories = g.Create_Categories;
+
+        if (per.Edit_Categories == null || (first && per.Edit_Categories == false && g.Edit_Categories == true))
+            per.Edit_Categories = g.Edit_Categories;
+
+        if (per.Delete_Categories == null || (first && per.Delete_Categories == false && g.Delete_Categories == true))
+            per.Delete_Categories = g.Delete_Categories;
+
+
+        if (per.See_Contents == null || (first && per.See_Contents == false && g.See_Contents == true))
+            per.See_Contents = g.See_Contents;
+
+        if (per.Create_Contents == null || (first && per.Create_Contents == false && g.Create_Contents == true))
+            per.Create_Contents = g.Create_Contents;
+
+        if (per.Edit_Contents == null || (first && per.Edit_Contents == false && g.Edit_Contents == true))
+            per.Edit_Contents = g.Edit_Contents;
+
+        if (per.Delete_Contents == null || (first && per.Delete_Contents == false && g.Delete_Contents == true))
+            per.Delete_Contents = g.Delete_Contents;
+
+
+
+        if (per.AdminPanel == null || (first && per.AdminPanel == false && g.AdminPanel == true))
+            per.AdminPanel = g.AdminPanel;
+
+        if (per.Media == null || (first && per.Media == false && g.Media == true))
+            per.Media = g.Media;
+
+        return per;
+    }
+
+    public static void CheckOne(ref bool? b, bool? d, bool first = false)
+    {
+        if (b == null || (first && b == false && d == true))
+            b = d;
+    }
+
+    public static bool HasNull(this Permission per)
+    {
+        return
+            per.Users == null ||
+            per.Groups == null ||
+            per.Menus == null ||
+            per.ViewLevels == null ||
+            per.Languages == null ||
+
+            per.Newss == null ||
+            per.Questions == null ||
+
+            per.Media == null ||
+            per.AdminPanel == null ||
+
+            per.See_Categories == null ||
+            per.Create_Categories == null ||
+            per.Edit_Categories == null ||
+            per.Delete_Categories == null ||
+
+            per.See_Contents == null ||
+            per.Create_Contents == null ||
+            per.Edit_Contents == null ||
+            per.Delete_Contents == null;
+    }
+    public static bool IsAllTrue(this Permission per)
+    {
+        return
+            per.Users == true &&
+            per.Groups == true &&
+            per.Menus == true &&
+            per.ViewLevels == true &&
+            per.Languages == true &&
+
+            per.Newss == true &&
+            per.Questions == true &&
+
+            per.Media == true &&
+            per.AdminPanel == true &&
+
+            per.See_Categories == true &&
+            per.Create_Categories == true &&
+            per.Edit_Categories == true &&
+            per.Delete_Categories == true &&
+
+            per.See_Contents == true &&
+            per.Create_Contents == true &&
+            per.Edit_Contents == true &&
+            per.Delete_Contents == true;
+    }
+    #endregion
+
+
 
     #region MenuItemHelper
     public static List<MenuViewModel> GetAllMenuItems(List<Menu> ms = null, int without =-1)
     {
         return ((ms != null) ? ms : GetAllMenuItemParents()).FillWithChildren(without).ConvertToViewModel();
     }
-    public static List<Menu> GetAllMenuItemParents()
+    public static List<Menu> GetAllMenuItemParents(int without =-1)
     {
-        return db.Menus.Where(x => x.Parent == null).ToList();
+        return db.Menus.Where(x => x.Parent == null && x.ID != without).ToList();
     }
     public static List<Menu> FillWithChildren(this List<Menu> gs, int without = -1)
     {
@@ -203,5 +326,10 @@ public static class Extenisons
             GetChildernWithCheck(g.Children, levels);
         }
         return gs;
+    }
+
+    public static List<CustomField> GetAllCustomFields()
+    {
+        return db.CustomFields.ToList();
     }
 }

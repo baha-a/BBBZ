@@ -2,12 +2,17 @@
 
 @{
     ViewBag.Title = "Contents";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    
 }
 
 <h2>Contents</h2>
 
-<p> @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-sm" }) </p>
+<p>
+    @if (((BBBZ.Models.Permission)ViewBag.Permission).Create_Contents == true)
+    {
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-sm" })
+    }
+</p>
 
 <table class="table table-bordered">
     <tr>
@@ -59,7 +64,15 @@
                 @Html.DisplayFor(modelItem => item.Published)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) | @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                @if (((BBBZ.Models.Permission)ViewBag.Permission).Edit_Contents == true)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) @:|
+                    @Html.ActionLink("CustromFields", "Custom", new { id = item.ID }) @:|
+                }
+                @if (((BBBZ.Models.Permission)ViewBag.Permission).Delete_Contents == true)
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                }
             </td>
         </tr>
     }

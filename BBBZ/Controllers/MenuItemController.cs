@@ -12,7 +12,12 @@ namespace BBBZ.Controllers
 {
     public class MenuItemController : BaseController
     {
-        // GET: /MenuItem/
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            IsAllowed(MyPermission.Menus);
+        }
+
         public ActionResult Index(int? id)
         {
             if (id != null)
@@ -33,7 +38,6 @@ namespace BBBZ.Controllers
                 .ConvertToViewModel());
         }
 
-        // GET: /MenuItem/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -48,7 +52,6 @@ namespace BBBZ.Controllers
             return View(menu);
         }
 
-        // GET: /MenuItem/Create
         public ActionResult Create(int? selectedMenuTypeID, string itemtype = "")
         {
             MenuItemViewModel model = new MenuItemViewModel();
@@ -70,15 +73,13 @@ namespace BBBZ.Controllers
             return View(model);
         }
 
-        // POST: /MenuItem/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(MenuItemViewModel menu)
         {
             if (ModelState.IsValid)
             {
-                Menu m = new Menu()
-                {
+                Menu m = new Menu(){
                     Type = menu.ItemType,
 
                     Title = menu.TheMenu.Title,
@@ -108,7 +109,6 @@ namespace BBBZ.Controllers
             return View(menu);
         }
 
-        // GET: /MenuItem/Edit/5
         public ActionResult Edit(int? id, int? selectedMenuTypeID, string itemtype = "")
         {
             if (id == null)
@@ -150,7 +150,6 @@ namespace BBBZ.Controllers
             return View(model);
         }
 
-        // POST: /MenuItem/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(MenuItemViewModel menu)
@@ -183,12 +182,13 @@ namespace BBBZ.Controllers
                         if (menu.selectedAccessID != null)
                             m.Access = db.ViewLevels.SingleOrDefault(x => x.ID == menu.selectedAccessID);
 
-                        if (m.Parent != null && menu.selectedParentID == null)
+                        if (menu.selectedParentID == null)
                             m.Parent = null;
-                        else if (menu.selectedParentID != null)
+                        else
                         {
                             if (m.Parent == null || (m.Parent != null && m.Parent.ID != menu.selectedParentID))
                                 m.Parent = db.Menus.SingleOrDefault(x => x.ID == menu.selectedParentID);
+                            m.MenuType = null;
                         }
 
                         if (m.Parent == null && menu.selectedMenuTypeID != null)
@@ -204,7 +204,6 @@ namespace BBBZ.Controllers
             return View(menu);
         }
 
-        // GET: /MenuItem/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -219,15 +218,24 @@ namespace BBBZ.Controllers
             return View(menu);
         }
 
-        // POST: /MenuItem/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Menu menu = db.Menus.Find(id);
-            db.Menus.Remove(menu);
+            Menu menu = db.Menus.SingleOrDefault(x => x.ID == id);
+            DeleteWithChildren(menu);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        private void DeleteWithChildren(Menu mn)
+        {
+            if (mn == null)
+                return;
+            var children = db.Menus.Include(x => x.Access).Where(x => x.Parent != null && x.Parent.ID == mn.ID).ToList();
+            foreach (var c in children)
+                DeleteWithChildren(c);
+            db.Menus.Remove(mn);
         }
 
     }

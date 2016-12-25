@@ -169,6 +169,7 @@
   <ItemGroup>
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ContentsController.cs" />
+    <Compile Include="Controllers\CustomFieldController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\LanguagesController.cs" />
@@ -272,6 +273,34 @@
     <Compile Include="Migrations\201612241831042_remove_aliases.Designer.cs">
       <DependentUpon>201612241831042_remove_aliases.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612242019328_change_ACL_tables.cs" />
+    <Compile Include="Migrations\201612242019328_change_ACL_tables.Designer.cs">
+      <DependentUpon>201612242019328_change_ACL_tables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612242140314_fix_errors.cs" />
+    <Compile Include="Migrations\201612242140314_fix_errors.Designer.cs">
+      <DependentUpon>201612242140314_fix_errors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612250722591_fix_permission_tabel.cs" />
+    <Compile Include="Migrations\201612250722591_fix_permission_tabel.Designer.cs">
+      <DependentUpon>201612250722591_fix_permission_tabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612251030013_fix_permission_tabel2.cs" />
+    <Compile Include="Migrations\201612251030013_fix_permission_tabel2.Designer.cs">
+      <DependentUpon>201612251030013_fix_permission_tabel2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612251258454_onDeleteCascade_for_custom.cs" />
+    <Compile Include="Migrations\201612251258454_onDeleteCascade_for_custom.Designer.cs">
+      <DependentUpon>201612251258454_onDeleteCascade_for_custom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612251332051_fix_bug_ong_customFields.cs" />
+    <Compile Include="Migrations\201612251332051_fix_bug_ong_customFields.Designer.cs">
+      <DependentUpon>201612251332051_fix_bug_ong_customFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612251500392_fix_bug_ong_customFields2.cs" />
+    <Compile Include="Migrations\201612251500392_fix_bug_ong_customFields2.Designer.cs">
+      <DependentUpon>201612251500392_fix_bug_ong_customFields2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -323,10 +352,9 @@
     <Content Include="Content\admin\ace-fonts.css" />
     <Content Include="Content\admin\ace.min.css" />
     <Content Include="Content\admin\bootstrap.min.css" />
+    <Content Include="Content\admin\bootstrap.min.js" />
     <Content Include="Content\admin\font-awesome.min.css" />
     <Content Include="Content\admin\font\fontawesome-webfont.svg" />
-    <Content Include="Content\admin\general.css" />
-    <Content Include="Content\admin\g_admin_modal.css" />
     <Content Include="Content\admin\icon_video.gif" />
     <Content Include="Content\admin\modal.css" />
     <Content Include="Content\admin\template.css" />
@@ -343,7 +371,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\admin\ace-elements.min.js" />
     <Content Include="Content\admin\ace.min.js" />
-    <Content Include="Content\admin\bootstrap.min.js" />
     <Content Include="Content\admin\font\fontawesome-webfont.eot" />
     <Content Include="Content\admin\font\fontawesome-webfont.ttf" />
     <Content Include="Content\admin\font\fontawesome-webfont.woff" />
@@ -482,7 +509,6 @@
     <Content Include="Views\Shared\_LanguagesPartial.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Category\Preview.cshtml" />
-    <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Languages\Create.cshtml" />
     <Content Include="Views\Languages\Delete.cshtml" />
@@ -599,10 +625,15 @@
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\Media\Index.cshtml" />
     <Content Include="Views\Group\Setting.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Group\Permission.cshtml" />
+    <Content Include="Views\Group\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Views\Contents\Custom.cshtml" />
+    <Content Include="Views\CustomField\Index.cshtml" />
+    <Content Include="Views\Shared\_SideMenuPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\" />
+    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -686,6 +717,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612241831042_remove_aliases.resx">
       <DependentUpon>201612241831042_remove_aliases.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612242019328_change_ACL_tables.resx">
+      <DependentUpon>201612242019328_change_ACL_tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612242140314_fix_errors.resx">
+      <DependentUpon>201612242140314_fix_errors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612250722591_fix_permission_tabel.resx">
+      <DependentUpon>201612250722591_fix_permission_tabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612251030013_fix_permission_tabel2.resx">
+      <DependentUpon>201612251030013_fix_permission_tabel2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612251258454_onDeleteCascade_for_custom.resx">
+      <DependentUpon>201612251258454_onDeleteCascade_for_custom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612251332051_fix_bug_ong_customFields.resx">
+      <DependentUpon>201612251332051_fix_bug_ong_customFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612251500392_fix_bug_ong_customFields2.resx">
+      <DependentUpon>201612251500392_fix_bug_ong_customFields2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

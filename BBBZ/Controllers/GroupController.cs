@@ -12,6 +12,12 @@ namespace BBBZ.Controllers
 {
     public class GroupController : BaseController
     {
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            IsAllowed(MyPermission.Groups); 
+        }
+
         public List<Group> FillWithChildren(List<Group> gs,int without=-1)
         {
             foreach (var g in gs)
@@ -23,13 +29,11 @@ namespace BBBZ.Controllers
         }
 
 
-        // GET: /Group/
         public ActionResult Index()
         {
             return View(SelectableGroup.Convert(FillWithChildren(db.Groups.Where(p => p.Parent == null).ToList())));
         }
 
-        // GET: /Group/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -52,7 +56,6 @@ namespace BBBZ.Controllers
             return View(group);
         }
 
-        // GET: /Group/Create
         public ActionResult Create()
         {
             ViewBag.Groups = SelectableGroup.Convert(FillWithChildren(db.Groups.Where(p => p.Parent == null).ToList()));
@@ -67,6 +70,7 @@ namespace BBBZ.Controllers
             if (ModelState.IsValid)
             {
                 group.Parent = db.Groups.SingleOrDefault(x => x.ID == group.helperID);
+                group.Permission = new Permission();
                 db.Groups.Add(group);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -75,7 +79,6 @@ namespace BBBZ.Controllers
             return View(group);
         }
 
-        // GET: /Group/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -117,7 +120,6 @@ namespace BBBZ.Controllers
             return View(group);
         }
 
-        // GET: /Group/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -136,10 +138,20 @@ namespace BBBZ.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Group group = db.Groups.Find(id);
-            db.Groups.Remove(group);
+            Group group = db.Groups.Include(x=>x.Access).SingleOrDefault(x => x.ID == id);
+            DeleteWithChildren(group);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        private void DeleteWithChildren(Group grp)
+        {
+            if (grp == null)
+                return;
+            var children = db.Groups.Include(x=>x.Access).Where(x => x.Parent != null && x.Parent.ID == grp.ID).ToList();
+            foreach (var c in children)
+                DeleteWithChildren(c);
+            db.Groups.Remove(grp);
         }
 
 
@@ -159,6 +171,63 @@ namespace BBBZ.Controllers
             GroupSetting.GuestGroupId = guestGroup;
             GroupSetting.NewUserGroupId = newUserGroup;
             return RedirectToAction("Setting");
+        }
+
+        public ActionResult Permission(int? id)
+        {
+            if (id == null)
+                return HttpNotFound();
+            Permission p =  db.Permissions.SingleOrDefault(x => x.ID == id);
+            if (p == null)
+            {
+                var g = db.Groups.SingleOrDefault(x=>x.ID==id);
+                if (g == null)
+                    return HttpNotFound();
+                else
+                {
+                    p = new Permission();
+                    g.Permission = p;
+                    db.SaveChanges();
+                }
+            }
+            return View(p);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Permission(Permission per)
+        {
+            if (ModelState.IsValid)
+            {
+                Permission p = db.Permissions.SingleOrDefault(x => x.ID == per.ID);
+
+                p.Users = per.Users;
+                p.Groups = per.Groups;
+                p.ViewLevels = per.ViewLevels;
+                p.Menus = per.Menus;
+                p.Languages = per.Languages;
+
+                p.Newss = per.Newss;
+                p.Questions = per.Questions;
+
+                p.Media = per.Media;
+                p.AdminPanel = per.AdminPanel;
+
+                p.See_Categories = per.See_Categories;
+                p.Create_Categories = per.Create_Categories;
+                p.Edit_Categories = per.Edit_Categories;
+                p.Delete_Categories = per.Delete_Categories;
+
+                p.See_Contents = per.See_Contents;
+                p.Create_Contents = per.Create_Contents;
+                p.Edit_Contents = per.Edit_Contents;
+                p.Delete_Contents = per.Delete_Contents;
+
+
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(per);
         }
     }
 }

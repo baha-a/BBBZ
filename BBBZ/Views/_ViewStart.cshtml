@@ -1,3 +1,15 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    if (Session["isAdminLayout"] != null)
+    {
+        if ((bool)Session["isAdminLayout"] == true)
+        {
+            Layout = "~/Views/Shared/_AdminLayout.cshtml";
+        }
+    }
+    else
+    {
+        Session["isAdminLayout"] = false;
+    }
 }

@@ -1,8 +1,7 @@
 ﻿@model BBBZ.Models.Category
 
 @{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Details";    
 }
 
 <h2>Details</h2>
@@ -165,8 +164,26 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class="btn btn-sm btn-success"}) |
-    <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" /> 
-    @Html.ActionLink("Back To List", "Index",null, new { @class = "btn btn-sm btn-warning" })
+    
+    @if (((BBBZ.Models.Permission)ViewBag.Permission).Create_Categories == true)
+    {
+        @Html.ActionLink("Create New", "Create", new { id = Model.ID }, new { @class = "btn btn-sm btn-success" })
+    }
+    
+    @if (((BBBZ.Models.Permission)ViewBag.Permission).Edit_Categories == true)
+    {
+        @Html.ActionLink("Edit this", "Edit", new { id = Model.ID }, new { @class = "btn btn-sm btn-info" })
+    }
 
+    @if (((BBBZ.Models.Permission)ViewBag.Permission).Delete_Categories == true)
+    {
+        @Html.ActionLink("Delete this", "Delete", new { id = Model.ID }, new { @class = "btn btn-sm btn-danger" })
+    }
+    
+    @if (((BBBZ.Models.Permission)ViewBag.Permission).See_Categories == true)
+    {
+        @Html.ActionLink("See The List", "Index", null, new { @class = "btn btn-sm btn-warning" })
+    }
+    
+    <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" />
 </p>

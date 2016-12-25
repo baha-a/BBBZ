@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    
 }
 
 <h2>Details</h2>
@@ -121,10 +121,42 @@
             @Html.DisplayFor(model => model.Published)
         </dd>
 
+        
+        @foreach (var field in Model.CustomFieldValues)
+        {
+            <dt>
+                @Html.DisplayFor(model => field.CustomField.Title)
+            </dt>
+
+            <dd>
+                @Html.Raw(field.Value)
+            </dd>
+        }
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class="btn btn-sm btn-success"}) |
+    
+    @if (((BBBZ.Models.Permission)ViewBag.Permission).Create_Contents == true)
+    {
+        @Html.ActionLink("Create New", "Create", new { id = Model.ID }, new { @class = "btn btn-sm btn-success" })
+    }
+    
+    @if (((BBBZ.Models.Permission)ViewBag.Permission).Edit_Contents == true)
+    {
+        @Html.ActionLink("Edit this", "Edit", new { id = Model.ID }, new { @class = "btn btn-sm btn-info" })
+        
+        @Html.ActionLink("Custom", "Custom", new { id = Model.ID }, new { @class = "btn btn-sm btn-info" })
+    }
+
+    @if (((BBBZ.Models.Permission)ViewBag.Permission).Delete_Contents == true)
+    {
+        @Html.ActionLink("Delete this", "Delete", new { id = Model.ID }, new { @class = "btn btn-sm btn-danger" })
+    }
+
+    @if (((BBBZ.Models.Permission)ViewBag.Permission).See_Contents == true)
+    {
+        @Html.ActionLink("See the List", "Index", null, new { @class = "btn btn-sm btn-warning" })
+    }
+    
     <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" /> 
-    @Html.ActionLink("Back to list", "Index", null, new { @class="btn btn-sm btn-warning"})
 </p>

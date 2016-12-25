@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    BBBZ.Models.SharedLayoutViewModel model = ((BBBZ.Models.SharedLayoutViewModel)ViewBag.LayoutViewModel);
+    
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -15,21 +20,28 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    @Html.Partial("_NavBarPartial", ((BBBZ.Models.SharedLayoutViewModel)ViewBag.LayoutViewModel) == null ? null:
-                ((BBBZ.Models.SharedLayoutViewModel)ViewBag.LayoutViewModel).TopMenuItems)
+    @if (model != null) 
+    { 
+        @Html.Partial("_NavBarPartial", model.TopMenuItems)
+    }
     <div class="container body-content">
-        @RenderBody()
-        @if (ViewBag.NoFooter == true)
-        {
-            
-        }
-        else
-        { 
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year | @Resources.R.Underconstruction </p>
-            </footer>
-        }
+        <div class="row">
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+
+            <div class="col-md-3">
+                @if(model != null)
+                { 
+                    @Html.Partial("_SideMenuPartial", model.SideMenus)
+                }
+            </div>
+
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year | by <a href="https://github.com/bhlshrf/" target="_blank">Baha'a</a> </p>
+        </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

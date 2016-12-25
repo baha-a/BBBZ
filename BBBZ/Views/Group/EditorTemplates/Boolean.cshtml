@@ -1,0 +1,20 @@
+﻿@model bool?
+
+<div class="col-sm-3">
+<label>
+    @Html.RadioButtonFor(x => x, "", !Model.HasValue ? new { @checked = true } : null)
+    <span>Inherited</span>
+</label>
+</div>
+<div class="col-sm-3">
+    <label>
+        @Html.RadioButtonFor(x => x, true, Model.GetValueOrDefault() ? new { @checked = true } : null)
+        <span>Allow</span>
+    </label>
+</div>
+<div class="col-sm-3">
+    <label>
+        @Html.RadioButtonFor(x => x, false, Model.HasValue && !Model.Value ? new { @checked = true } : null)
+        <span>Deny</span>
+    </label>
+</div>

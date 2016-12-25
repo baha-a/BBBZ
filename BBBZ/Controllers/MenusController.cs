@@ -12,7 +12,12 @@ namespace BBBZ.Controllers
 {
     public class MenusController : BaseController
     {
-        // GET: /Menus/
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+            IsAllowed(MyPermission.Menus);
+        }
+
         public ActionResult Index()
         {
             return View(db.MenuTypes.ToList());
@@ -102,7 +107,7 @@ namespace BBBZ.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            MenuType menutype = db.MenuTypes.Find(id);
+            MenuType menutype = db.MenuTypes.Include(x => x.Menus).SingleOrDefault(x => x.ID == id);
             db.MenuTypes.Remove(menutype);
             db.SaveChanges();
             return RedirectToAction("Index");

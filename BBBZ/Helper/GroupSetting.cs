@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 
 public class GroupSetting
 {
+    static string settingfile;
+
     static int? _guestGroupId;
     public static int? GuestGroupId
     {
@@ -30,23 +33,30 @@ public class GroupSetting
 
     static void WriteNewSetting(int? newUserGroup, int? guestGroup)
     {
-        if (File.Exists("\\setting.txt") == false)
-            File.CreateText("\\setting.txt");
+        CheckSettingFile(settingfile);
 
-        File.WriteAllLines("\\setting.txt", new string[] { "newUserGroup=" + newUserGroup, "guestGroup=" + guestGroup });
+        File.WriteAllLines(settingfile, new string[] { "newUserGroup=" + newUserGroup, "guestGroup=" + guestGroup });
     }
 
     static GroupSetting()
     {
-        if (File.Exists("\\setting.txt") == false)
-            File.CreateText("\\setting.txt");
-        string[] setting = File.ReadAllLines("\\setting.txt");
+        settingfile = HostingEnvironment.MapPath("\\setting.txt");
+
+        CheckSettingFile(settingfile);
+
+        string[] setting = File.ReadAllLines(settingfile);
         int t;
         foreach (var i in setting)
             if (i.StartsWith("newUserGroup") && int.TryParse(i.Substring(i.IndexOf("=") + 1), out t))
                 _newUserGroupId = t;
             else if (i.StartsWith("guestGroup") && int.TryParse(i.Substring(i.IndexOf("=") + 1), out t))
                 _guestGroupId = t;
+    }
+
+    private static void CheckSettingFile(string file)
+    {
+        if (File.Exists(file) == false)
+            File.CreateText(file);
     }
 
     public GroupSetting() { }
