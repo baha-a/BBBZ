@@ -512,16 +512,6 @@ dt, dd{
     margin-bottom: 0px;
 }
 
-.searchtextbox {
-    border: none;
-    height: 40px;
-    background:#e2e2e2;
-    color:#ffffff;
-}
-.searchtextbox:focus{
-    background:#ffffff;
-    color:#000000;
-}
 
 ul.nav li.dropdown:hover > ul.dropdown-menu {
     display: block;    
@@ -600,4 +590,19 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 }
 .SideMenu ul{
     padding-left:15px;
+}
+
+
+
+
+
+.searchtextbox {
+    border: none;
+    height: 40px;
+    background:#e2e2e2;
+    color:#ffffff;
+}
+.searchtextbox:focus{
+    background:#ffffff;
+    color:#000000;
 }

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<BBBZ.Models.Profile>
+@{
+    ViewBag.Title = "Search Result for " + ViewBag.Query;
+}
+
+<h2>Search Result for <i>@ViewBag.Query</i></h2>
+
+<hr />
+<form method="get" action="@Url.Action("Index","Search")">
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <input type="text" name="query" value="@ViewBag.Query" placeholder="Query" class="form-control" />
+        </div>
+        <div class="col-sm-2 col-xs-6">
+            @Html.DropDownList("lookingfor", new SelectList(new string[] { "Content", "User" }, ViewBag.lookingfor), new { @class = "form-control" })
+        </div>
+        <div class="col-sm-2 col-xs-6">
+            @Html.DropDownList("pagesize", new SelectList(new int[] { 1, 2, 10, 20, 50, 100 }, ViewBag.pagesize), new { @class = "form-control" })
+        </div>
+        <div class="col-sm-2 col-xs-12">
+            <input type="submit" value="Search" class="btn btn-success" />
+        </div>
+     </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-11">
+            @if (Model == null || Model.Count() == 0)
+            {
+                <h4><i> Nothing found </i> </h4>
+            }
+            else
+            {
+                foreach (var p in Model)
+                {
+                    <p>
+                        @p.username - @p.Name @p.LastName
+                    </p>
+                }
+            }
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-9">
+            <input type="submit" name="page" value="1" class="btn btn-info btn-xs" />
+            <input type="submit" name="page" value="2" class="btn btn-info btn-xs" />
+            <input type="submit" name="page" value="3" class="btn btn-info btn-xs" />
+            <input type="submit" name="page" value="4" class="btn btn-info btn-xs" />
+        </div>
+    </div>
+</form>

@@ -40,6 +40,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NinjaNye.SearchExtensions, Version=2.0.6149.33145, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NinjaNye.SearchExtensions.2.0.6149.33145\lib\net40\NinjaNye.SearchExtensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -617,7 +621,6 @@
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
-    <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\News\Create.cshtml" />
     <Content Include="Views\News\Delete.cshtml" />
     <Content Include="Views\News\Details.cshtml" />
@@ -630,6 +633,8 @@
     <Content Include="Views\Contents\Custom.cshtml" />
     <Content Include="Views\CustomField\Index.cshtml" />
     <Content Include="Views\Shared\_SideMenuPartial.cshtml" />
+    <Content Include="Views\Search\SearchUsers.cshtml" />
+    <Content Include="Views\Search\SearchContents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\" />
