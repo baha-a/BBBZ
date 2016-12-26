@@ -1,0 +1,51 @@
+﻿@model List<BBBZ.Models.SideMenuViewModel>
+
+@helper drawTopMenu(IEnumerable<BBBZ.Models.Menu> ms)
+{
+    if (ms != null)
+    {
+        foreach (var m in ms)
+        {
+            <li>
+                @if (m.Type.ToLower() == "singlepage")
+                {
+                    <a href="@Url.Action("Details", "Contents", new { id = m.ContentID })" target="@(m.OpenInSameWindow ? "" : "_blank")"> @m.Title</a>
+                }
+                else if (m.Type.ToLower() == "category")
+                {
+                    <a href="@Url.Action("Details", "Category", new { id = m.CategoryID })" target="@(m.OpenInSameWindow ? "" : "_blank")"> @m.Title</a>
+                }
+                else if (m.Type.ToLower() == "link")
+                {
+                    <a href="@m.Url" target="@(m.OpenInSameWindow ? "" : "_blank")"> @m.Title </a>
+                }
+
+                @if (m.Children.Count > 0)
+                {
+                    <ul>
+                        @drawTopMenu(m.Children)
+                    </ul>
+                }
+            </li>
+        }
+    }
+}
+
+
+
+@{
+    bool first = true;
+}
+@foreach (var item in Model)
+{
+    <div class="@(first ? "SideMenuFirst" : "") SideMenu">
+        <h4>
+            @item.MenuType.Title
+        </h4>
+
+        <ul>
+            @drawTopMenu(item.MenuItems)
+        </ul>
+    </div>
+    first = false;
+}
