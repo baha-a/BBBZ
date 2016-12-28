@@ -16,18 +16,16 @@ namespace BBBZ.Controllers
     //[Authorize(Roles = "admin")]
     public class AdminController: BaseController
     {
-        public ActionResult Index()
+        public ActionResult Index(bool onlyOnce = false)
         {
             IsAllowed(MyPermission.AdminPanel);
 
             if (Session["isAdminLayout"] == null)
                 Session["isAdminLayout"] = true;
-            else if (Session["isAdminLayout"].ToString() == true.ToString())
-                Session["isAdminLayout"] = false;
             else
-                Session["isAdminLayout"] = true;
+                Session["isAdminLayout"] = !(Session["isAdminLayout"].ToString() == true.ToString());
 
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

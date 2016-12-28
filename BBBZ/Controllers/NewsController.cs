@@ -41,6 +41,7 @@ namespace BBBZ.Controllers
         // GET: /News/Create
         public ActionResult Create()
         {
+            ViewBag.AllLangauges = db.GetAllLanguages();
             return View();
         }
 
@@ -70,6 +71,7 @@ namespace BBBZ.Controllers
             {
                 return HttpNotFound();
             }
+             ViewBag.AllLanguages =  db.GetAllLanguages();
             return View(news);
         }
 

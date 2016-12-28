@@ -187,7 +187,6 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ViewLevelController.cs" />
     <Compile Include="Helper\GroupSetting.cs" />
-    <Compile Include="Helper\HasPermission.cs" />
     <Compile Include="Migrations\201611070812076_add_duration_to_News.cs" />
     <Compile Include="Migrations\201611070812076_add_duration_to_News.Designer.cs">
       <DependentUpon>201611070812076_add_duration_to_News.cs</DependentUpon>
@@ -301,10 +300,15 @@
     <Compile Include="Migrations\201612251332051_fix_bug_ong_customFields.Designer.cs">
       <DependentUpon>201612251332051_fix_bug_ong_customFields.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612251500392_fix_bug_ong_customFields2.cs" />
-    <Compile Include="Migrations\201612251500392_fix_bug_ong_customFields2.Designer.cs">
-      <DependentUpon>201612251500392_fix_bug_ong_customFields2.cs</DependentUpon>
+    <Compile Include="Migrations\201612281345130_fix_category_table.cs" />
+    <Compile Include="Migrations\201612281345130_fix_category_table.Designer.cs">
+      <DependentUpon>201612281345130_fix_category_table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612281444527_add_tamplate_to_Category_n_Content.cs" />
+    <Compile Include="Migrations\201612281444527_add_tamplate_to_Category_n_Content.Designer.cs">
+      <DependentUpon>201612281444527_add_tamplate_to_Category_n_Content.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EnumModel.cs" />
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -343,7 +347,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DataModels.cs" />
-    <Compile Include="Models\HelperModels.cs" />
+    <Compile Include="Helper\HelperModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -512,7 +516,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_LanguagesPartial.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\Category\Preview.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Languages\Create.cshtml" />
     <Content Include="Views\Languages\Delete.cshtml" />
@@ -741,8 +744,11 @@
     <EmbeddedResource Include="Migrations\201612251332051_fix_bug_ong_customFields.resx">
       <DependentUpon>201612251332051_fix_bug_ong_customFields.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612251500392_fix_bug_ong_customFields2.resx">
-      <DependentUpon>201612251500392_fix_bug_ong_customFields2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612281345130_fix_category_table.resx">
+      <DependentUpon>201612281345130_fix_category_table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281444527_add_tamplate_to_Category_n_Content.resx">
+      <DependentUpon>201612281444527_add_tamplate_to_Category_n_Content.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -63,7 +63,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Language, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.Language, new SelectList(Extenisons.GetAllLanguages(), "Code", "Title", string.Empty), string.Empty, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Language, new SelectList(ViewBag.AllLangauges, "Code", "Title", string.Empty), string.Empty, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Language, null, new { @class = "has-error" })
             </div>
         </div>

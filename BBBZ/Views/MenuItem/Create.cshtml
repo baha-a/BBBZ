@@ -94,7 +94,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.selectedContentID, new { @class = "control-label col-md-2" })
                     <div class="col-md-6">
-                        @Html.DropDownListFor(model => model.selectedContentID,new SelectList(Extenisons.GetAllContents(),"ID","Title"), new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.selectedContentID, new SelectList(Model.AllContents, "ID", "Title"), new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.selectedContentID, null, new { @class = "has-error" })
                     </div>
                 </div>                
@@ -104,7 +104,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.selectedCategoryID, new { @class = "control-label col-md-2" })
                     <div class="col-md-6">
-                        @Html.DropDownListFor(model => model.selectedCategoryID, new SelectList(Extenisons.GetAllCategories(), "ID", "Title"), new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.selectedCategoryID, new SelectList(Model.AlllCategories, "ID", "Title"), new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.selectedCategoryID, null, new { @class = "has-error" })
                     </div>
                 </div>
@@ -128,7 +128,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.selectedAccessID, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.selectedAccessID, new SelectList(Extenisons.GetAllViewLevels(), "ID", "Title"), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.selectedAccessID, new SelectList(Model.AllViewLevels, "ID", "Title"), new { @class = "form-control" })
             </div>
         </div>
                 

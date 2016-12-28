@@ -27,28 +27,28 @@ namespace BBBZ.Controllers
                     .Include(x => x.MenuType)
                     .Where(x => x.MenuType != null && x.MenuType.ID == id)
                     .ToList()
-                    .FillWithChildren()
+                    .FillWithChildren(db)
                     .ConvertToViewModel());
             }
             return View(db.Menus
                 .Include(x => x.MenuType)
                 .Where(x => x.Parent == null)
                 .ToList()
-                .FillWithChildren()
+                .FillWithChildren(db)
                 .ConvertToViewModel());
         }
 
         public ActionResult Details(int? id)
         {
             if (id == null)
-            {
                 return BadRequest();
-            }
-            Menu menu = db.Menus.Include(x => x.Access).Include(x => x.MenuType).Include(x => x.Parent).SingleOrDefault(x => x.ID == id);
+            Menu menu = db.Menus
+                .Include(x => x.Access)
+                .Include(x => x.MenuType)
+                .Include(x => x.Parent)
+                .SingleOrDefault(x => x.ID == id);
             if (menu == null)
-            {
                 return HttpNotFound();
-            }
             return View(menu);
         }
 
@@ -58,17 +58,18 @@ namespace BBBZ.Controllers
             model.ItemType = itemtype;
             model.selectedMenuTypeID = selectedMenuTypeID;
             model.AllMenuTypes = db.MenuTypes.ToList();
-            
+            model.AlllCategories = GetAllCategories();
+            model.AllContents = GetAllContents();
+            model.AllViewLevels = GetAllViewLevels();
+
             if (selectedMenuTypeID != null)
             {
                 model.TheMenuType = db.MenuTypes.SingleOrDefault(x => x.ID == selectedMenuTypeID);
                 if (model.TheMenuType != null)
-                {
-                    model.AllMenus = Extenisons.GetAllMenuItems(db.Menus.Where(x => x.MenuType != null && x.MenuType.ID == model.TheMenuType.ID).ToList());
-                }
+                    model.AllMenus = db.GetAllMenuItems(db.Menus.Where(x => x.MenuType != null && x.MenuType.ID == model.TheMenuType.ID).ToList());
             }
             else
-                model.AllMenus = Extenisons.GetAllMenuItems();
+                model.AllMenus = db.GetAllMenuItems();
 
             return View(model);
         }
@@ -128,6 +129,10 @@ namespace BBBZ.Controllers
             model.selectedContentID = menu.ContentID;
             model.selectedCategoryID = menu.CategoryID;
 
+            model.AlllCategories = GetAllCategories();
+            model.AllContents = GetAllContents();
+            model.AllViewLevels = GetAllViewLevels();
+
             if (selectedMenuTypeID != null && model.TheMenuType != null && model.TheMenuType.ID != selectedMenuTypeID)
             {
                 model.selectedMenuTypeID = selectedMenuTypeID;
@@ -136,7 +141,7 @@ namespace BBBZ.Controllers
 
             if (model.TheMenuType != null)
             {
-                model.AllMenus = Extenisons.GetAllMenuItems(
+                model.AllMenus = db.GetAllMenuItems(
                     db.Menus.Where(x => x.MenuType != null && x.MenuType.ID == model.TheMenuType.ID).ToList(),
                     (int)id);
                 model.selectedMenuTypeID = model.TheMenuType.ID;
@@ -144,7 +149,7 @@ namespace BBBZ.Controllers
             else
             {
                 model.selectedMenuTypeID = null;
-                model.AllMenus = Extenisons.GetAllMenuItems(null, (int)id);
+                model.AllMenus = db.GetAllMenuItems(null, (int)id);
             }
 
             return View(model);
@@ -207,14 +212,10 @@ namespace BBBZ.Controllers
         public ActionResult Delete(int? id)
         {
             if (id == null)
-            {
                 return BadRequest();
-            }
             Menu menu = db.Menus.Find(id);
             if (menu == null)
-            {
                 return HttpNotFound();
-            }
             return View(menu);
         }
 
@@ -237,6 +238,5 @@ namespace BBBZ.Controllers
                 DeleteWithChildren(c);
             db.Menus.Remove(mn);
         }
-
     }
 }

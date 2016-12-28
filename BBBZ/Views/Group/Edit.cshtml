@@ -35,25 +35,11 @@
                 @Html.ValidationMessageFor(model => model.Description, null, new { @class = "has-error" })
             </div>
         </div>
-        
-        <div class="form-group">
-            <label class="control-label col-md-2"> Parent</label>
-            <div class="col-md-6">
-                @if (Model.Parent == null)
-                {
-                    <i class="control-label"> no parent</i>
-                }
-                else
-                {
-                    <i class="control-label"> @Model.Parent.Title </i>
-                }
-            </div>
-        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.helperID,"Parent", new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.helperID, new SelectList(ViewBag.Groups, "ID", "Text", 0),string.Empty, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.helperID, new SelectList(ViewBag.Groups, "ID", "Text", Model.Parent==null?0:Model.Parent.ID), string.Empty, new { @class = "form-control" })
             </div>
         </div>
 

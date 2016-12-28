@@ -91,14 +91,22 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Category, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.CategoryID,new SelectList(Extenisons.GetAllCategories(),"ID","Title",null),string.Empty, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.CategoryID,new SelectList(ViewBag.AllCategories,"ID","Title",null),string.Empty, new { @class = "form-control" })
             </div>
         </div>
         
         <div class="form-group">
             @Html.LabelFor(model => model.Access, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.AccessID, new SelectList(Extenisons.GetAllViewLevels(), "ID", "Title", string.Empty), string.Empty, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.AccessID, new SelectList(ViewBag.AllViewLevels, "ID", "Title", string.Empty), string.Empty, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Template, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.Template,
+                    Enum.GetNames(typeof(BBBZ.Models.ContentsTemplate)).Select(e => new SelectListItem { Text = e }),new { @class = "form-control" })
             </div>
         </div>
 

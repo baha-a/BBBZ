@@ -161,7 +161,7 @@ namespace BBBZ.Controllers
             ViewBag.newUserGroup = GroupSetting.NewUserGroupId;
             ViewBag.guestGroup = GroupSetting.GuestGroupId;
 
-            return View(Extenisons.GetAllGroups());
+            return View(GetAllGroups());
         }
 
         [HttpPost]

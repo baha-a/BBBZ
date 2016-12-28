@@ -20,6 +20,22 @@
         @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
         @Html.HiddenFor(model => model.ID)
 
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CreatedByUsername, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DisplayFor(model => model.CreatedByUsername)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DisplayFor(model => model.Date)
+            </div>
+        </div>
+
+
         <div class="form-group">
             @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
@@ -29,10 +45,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Url, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Image, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.EditorFor(model => model.Url, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Url, null, new { @class = "has-error" })
+                @Html.EditorFor(model => model.Image, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Image, null, new { @class = "has-error" })
             </div>
         </div>
 
@@ -69,37 +85,23 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CreatedByUsername, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.DisplayFor(model => model.CreatedByUsername)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Date, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.DisplayFor(model => model.Date)
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.NewParentID_helper, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.NewParentID_helper, new SelectList(Extenisons.GetAllCategories((int)Model.ID), "ID", "Title", (Model.Parent == null) ? 0 : Model.Parent.ID), string.Empty, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.NewParentID_helper, new SelectList(ViewBag.AllCategories, "ID", "Title", (Model.Parent == null) ? 0 : Model.Parent.ID), string.Empty, new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Language, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.Language, new SelectList(Extenisons.GetAllLanguages(), "Code", "Title", Model.Language), string.Empty, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Language, new SelectList(ViewBag.AllLanguages, "Code", "Title", Model.Language), string.Empty, new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.NewAccessID_helper, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.NewAccessID_helper, new SelectList(Extenisons.GetAllViewLevels(), "ID", "Title", (Model.Access == null)? 0:Model.Access.ID), new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.NewAccessID_helper, new SelectList(ViewBag.AllViewLevels, "ID", "Title", (Model.Access == null)? 0:Model.Access.ID), new { @class = "form-control" })
             </div>
         </div>
 
@@ -108,6 +110,14 @@
             <div class="col-md-6">
                 @Html.EditorFor(model => model.Published, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Published, null, new { @class = "has-error" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Template, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.Template,
+                    Enum.GetNames(typeof(BBBZ.Models.CategorysTemplate)).Select(e => new SelectListItem { Text = e }), new { @class = "form-control" })
             </div>
         </div>
 

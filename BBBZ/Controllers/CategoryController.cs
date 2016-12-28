@@ -16,21 +16,25 @@ namespace BBBZ.Controllers
         {
             IsAllowed(MyPermission.See_Categories);
 
-            return View(Extenisons.GetAllCategories());
+            return View(GetAllCategories());
         }
 
         public ActionResult Details(int? id)
         {
+            IsAllowed(MyPermission.See_Categories);
 
             if (id == null)
-            {
                 return BadRequest();
-            }
-            Category category = db.Categories.Include(x=>x.Contents).Include(x=>x.Parent).Include(x => x.Access).SingleOrDefault(x => x.ID == id);
+
+            Category category = 
+                db.Categories
+                .Include(x=>x.Contents)
+                .Include(x=>x.Parent)
+                .Include(x => x.Access)
+                .SingleOrDefault(x => x.ID == id);
+
             if (category == null)
-            {
                 return HttpNotFound();
-            }
             category.SubCategories = db.Categories.Include(x => x.Parent).Where(x => x.Parent != null && x.Parent.ID == id).ToList();
             return View(category);
         }
@@ -38,6 +42,10 @@ namespace BBBZ.Controllers
         public ActionResult Create()
         {
             IsAllowed(MyPermission.Create_Categories);
+
+            ViewBag.AllCategories = GetAllCategories();
+            ViewBag.AllLanguages = db.GetAllLanguages();
+            ViewBag.AllViewLevels = GetAllViewLevels();
 
             return View();
         }
@@ -47,7 +55,7 @@ namespace BBBZ.Controllers
         public ActionResult Create(Category category)
         {
             IsAllowed(MyPermission.Create_Categories);
-
+            
             if (ModelState.IsValid)
             {
                 category.Date = DateTime.Now;
@@ -61,6 +69,11 @@ namespace BBBZ.Controllers
                 return RedirectToAction("Index");
             }
 
+
+            ViewBag.AllCategories = GetAllCategories();
+            ViewBag.AllLanguages = db.GetAllLanguages();
+            ViewBag.AllViewLevels = GetAllViewLevels();
+            
             return View(category);
         }
 
@@ -69,15 +82,23 @@ namespace BBBZ.Controllers
             IsAllowed(MyPermission.Edit_Categories);
 
             if (id == null)
-            {
                 return BadRequest();
-            }
-            Category category = db.Categories.Include(x => x.Parent).Include(x => x.Access).SingleOrDefault(x => x.ID == id);
+
+            Category category =
+                db.Categories
+                .Include(x => x.Parent)
+                .Include(x => x.Access)
+                .SingleOrDefault(x => x.ID == id);
+            
             if (category == null)
-            {
                 return HttpNotFound();
-            }
+
             category.NewParentID_helper = category.Parent != null ? (int?)category.Parent.ID : null;
+
+            ViewBag.AllCategories = GetAllCategories(category.ID);
+            ViewBag.AllLanguages = db.GetAllLanguages();
+            ViewBag.AllViewLevels = GetAllViewLevels();
+            
             return View(category);
         }
 
@@ -93,7 +114,7 @@ namespace BBBZ.Controllers
 
                 category.Title = cat.Title;
                 category.Description = cat.Description;
-                category.Url = cat.Url;
+                category.Image = cat.Image;
                 category.Published = cat.Published;
                 category.MetaData = cat.MetaData;
                 category.MetaKey = cat.MetaKey;
@@ -107,6 +128,11 @@ namespace BBBZ.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            ViewBag.AllCategories = GetAllCategories(cat.ID);
+            ViewBag.AllLanguages = db.GetAllLanguages();
+            ViewBag.AllViewLevels = GetAllViewLevels();
+
             return View(cat);
         }
 
@@ -115,14 +141,10 @@ namespace BBBZ.Controllers
             IsAllowed(MyPermission.Delete_Categories);
 
             if (id == null)
-            {
                 return BadRequest();
-            }
             Category category = db.Categories.Include(x => x.Access).SingleOrDefault(x => x.ID == id);
             if (category == null)
-            {
                 return HttpNotFound();
-            }
             category.SubCategories = db.Categories.Include(x => x.Parent).Where(x => x.Parent != null && x.Parent.ID == id).ToList();
 
             return View(category);
@@ -144,9 +166,17 @@ namespace BBBZ.Controllers
         {
             if (cat == null)
                 return;
-            var children = db.Categories.Include(x => x.Contents).Include(x => x.Parent).Where(x => x.Parent != null && x.Parent.ID == cat.ID).ToList();
+
+            var children =
+                db.Categories
+                .Include(x => x.Contents)
+                .Include(x => x.Parent)
+                .Where(x => x.Parent != null && x.Parent.ID == cat.ID)
+                .ToList();
+
             foreach (var c in children)
                 DeleteWithChildren(c);
+
             db.Categories.Remove(cat);
         }
     }

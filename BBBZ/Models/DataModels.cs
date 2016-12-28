@@ -16,7 +16,6 @@ namespace BBBZ.Models
         public string Description { get; set; }
         
         public Group Parent { get; set; }
-        public List<Group> Children { get; set; }
 
         public List<UserGroup> Users { get; set; }
         public List<ViewLevel> Access { get; set; }
@@ -79,7 +78,6 @@ namespace BBBZ.Models
 
     #endregion
 
-
     public class Language
     {
         public int ID { get; set; }
@@ -141,8 +139,9 @@ namespace BBBZ.Models
     public partial class Category
     {
         public int ID { get; set; }
+        [Required]
         public string Title { get; set; }
-        public string Url { get; set; }
+        public string Image { get; set; }
         public string Description { get; set; }
         public string MetaDesc { get; set; }
         public string MetaKey { get; set; }
@@ -157,6 +156,8 @@ namespace BBBZ.Models
         public List<Content> Contents { get; set; }
 
         public ViewLevel Access { get; set; }
+
+        public CategorysTemplate Template { get; set; }
     }
 
     public partial class Content
@@ -184,6 +185,8 @@ namespace BBBZ.Models
         public ViewLevel Access { get; set; }
 
         public string Language { get; set; }
+
+        public ContentsTemplate Template { get; set; }
     }
 
     public class CustomFieldValue

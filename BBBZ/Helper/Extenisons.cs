@@ -11,16 +11,6 @@ using System.Web.Mvc;
 public static class Extenisons
 {
     #region general helper
-
-    public static ApplicationDbContext db { private get; set; }
-
-    public static int ParentsLength(Category c)
-    {
-        int lngth = -1;
-        for (Category mover = c ; mover != null ; mover = mover.Parent)
-            lngth++;
-        return lngth;
-    }
     public static string Dashis(int count)
     {
         string ans = "";
@@ -29,13 +19,9 @@ public static class Extenisons
         return ans;
     }
 
-    public static List<BBBZ.Models.Language> GetAllLanguages()
+    public static List<Language> GetAllLanguages(this ApplicationDbContext db)
     {
         return db.Languages.ToList();
-    }
-    public static List<BBBZ.Models.ViewLevel> GetAllViewLevels()
-    {
-        return db.ViewLevels.ToList();
     }
     public static List<string> GetAllMenuTypes()
     {
@@ -46,30 +32,26 @@ public static class Extenisons
             "Link"
         });
     }
-    public static List<Content> GetAllContents()
+    public static List<CustomField> GetAllCustomFields(this ApplicationDbContext db)
     {
-        return db.Contents.ToList();
+        return db.CustomFields.ToList();
+    }
+
+    public static string getString(List<int> x)
+    {
+        string str ="";
+        x.ForEach(z => str += z + "\r\n");
+        return str;
     }
     #endregion
 
-
     #region CategoryHelper
-    public static List<CategoryView> GetAllCategories(int without = -1)
+    public static int ParentsLength(Category c)
     {
-        return GetParentCatgory(without).FillWithChildren(without).ConvertToViewModel();
-    }
-    public static List<Category> GetParentCatgory(int without = -1)
-    {
-        return db.Categories.Where(x => x.Parent == null && x.ID != without).ToList();
-    }
-    public static List<Category> FillWithChildren(this List<Category> gs, int without = -1)
-    {
-        foreach (var g in gs)
-        {
-            g.SubCategories = db.Categories.Where(x => x.Parent != null && x.Parent.ID == g.ID && x.ID != without).ToList();
-            FillWithChildren(g.SubCategories, without);
-        }
-        return gs;
+        int lngth = -1;
+        for (Category mover = c ; mover != null ; mover = mover.Parent)
+            lngth++;
+        return lngth;
     }
     public static List<CategoryView> ConvertToViewModel(this List<Category> gs, int level = 0)
     {
@@ -83,26 +65,8 @@ public static class Extenisons
     }
     #endregion
 
-    
 
     #region GroupHelper
-    public static List<SelectableGroup> GetAllGroups(int without = -1)
-    {
-        return GetParentGroup(without).FillWithChildren(without).ConvertToViewModel();
-    }
-    public static List<Group> GetParentGroup(int without =-1)
-    {
-        return db.Groups.Where(x => x.Parent == null && x.ID != without).ToList();
-    }
-    public static List<Group> FillWithChildren(this List<Group> gs, int without = -1)
-    {
-        foreach (var g in gs)
-        {
-            g.Children = db.Groups.Where(x => x.Parent != null && x.Parent.ID == g.ID && x.ID != without).ToList();
-            FillWithChildren(g.Children, without);
-        }
-        return gs;
-    }
     public static List<SelectableGroup> ConvertToViewModel(this List<Group> gs, int level = 0)
     {
         List<SelectableGroup> a = new List<SelectableGroup>();
@@ -113,7 +77,15 @@ public static class Extenisons
         }
         return a;
     }
+
+    public static string getString(this List<Group> x)
+    {
+        string str = "";
+        x.ForEach(z => str += z.Title + "\r\n");
+        return str;
+    }
     #endregion
+
 
     #region Permission helper
 
@@ -239,15 +211,15 @@ public static class Extenisons
 
 
     #region MenuItemHelper
-    public static List<MenuViewModel> GetAllMenuItems(List<Menu> ms = null, int without =-1)
+    public static List<MenuViewModel> GetAllMenuItems(this ApplicationDbContext db,List<Menu> ms = null, int without =-1)
     {
-        return ((ms != null) ? ms : GetAllMenuItemParents()).FillWithChildren(without).ConvertToViewModel();
+        return ((ms != null) ? ms : db.GetAllMenuItemParents()).FillWithChildren(db,without).ConvertToViewModel();
     }
-    public static List<Menu> GetAllMenuItemParents(int without =-1)
+    public static List<Menu> GetAllMenuItemParents(this ApplicationDbContext db,int without =-1)
     {
         return db.Menus.Where(x => x.Parent == null && x.ID != without).ToList();
     }
-    public static List<Menu> FillWithChildren(this List<Menu> gs, int without = -1)
+    public static List<Menu> FillWithChildren(this List<Menu> gs,ApplicationDbContext db, int without = -1)
     {
         foreach (var g in gs)
         {
@@ -255,7 +227,7 @@ public static class Extenisons
                 .Include(x => x.Parent)
                 .Where(x => x.Parent != null && x.Parent.ID == g.ID && g.ID != without)
                 .ToList();
-            FillWithChildren(g.Children, without);
+            FillWithChildren(g.Children,db, without);
         }
         return gs;
     }
@@ -311,25 +283,4 @@ public static class Extenisons
         return new MvcHtmlString(input.ToString());
     }
     #endregion
-
-
-
-    public static List<Menu> GetChildernWithCheck(this List<Menu> gs, List<int> levels)
-    {
-        foreach (var g in gs)
-        {
-            g.Children = db.Menus
-                .Include(x => x.Parent)
-                .Include(x => x.Access)
-                .Where(x => x.Parent != null && x.Parent.ID == g.ID && x.Published && x.Access != null && levels.Contains(x.Access.ID))
-                .ToList();
-            GetChildernWithCheck(g.Children, levels);
-        }
-        return gs;
-    }
-
-    public static List<CustomField> GetAllCustomFields()
-    {
-        return db.CustomFields.ToList();
-    }
 }

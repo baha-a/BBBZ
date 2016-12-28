@@ -40,7 +40,7 @@ namespace BBBZ.Controllers
 
         public ActionResult Create()
         {
-            return View(new UserManagerDataView() { Locked = false, TheUser = null, AllGroups = Extenisons.GetAllGroups() });
+            return View(new UserManagerDataView() { Locked = false, TheUser = null, AllGroups = GetAllGroups() });
         }
 
         [HttpPost]
@@ -88,7 +88,7 @@ namespace BBBZ.Controllers
             var u = db.Users.SingleOrDefault(x => x.UserName == username);
             var g = db.UserGroups.Where(y => y.username == u.UserName).Select(y => y.Groups).ToList();
 
-            var gs = Extenisons.GetAllGroups();
+            var gs = GetAllGroups();
             gs.ForEach(x => x.Selected = g.SingleOrDefault(z => z.ID == x.ID) != null);
 
             return View(new UserManagerDataView()

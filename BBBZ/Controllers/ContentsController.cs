@@ -32,6 +32,10 @@ namespace BBBZ.Controllers
         public ActionResult Create()
         {
             IsAllowed(MyPermission.Create_Contents);
+            
+            ViewBag.AllCategories = GetAllCategories();
+            ViewBag.AllViewLevels = GetAllViewLevels();
+
             return View();
         }
 
@@ -56,6 +60,9 @@ namespace BBBZ.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.AllCategories = GetAllCategories();
+            ViewBag.AllViewLevels = GetAllViewLevels();
+
             return View(content);
         }
 
@@ -74,6 +81,8 @@ namespace BBBZ.Controllers
             if (content.Access != null)
                 content.AccessID = content.Access.ID;
 
+            ViewBag.AllCategories = GetAllCategories();
+            ViewBag.AllViewLevels = GetAllViewLevels();
             return View(content);
         }
 
@@ -122,6 +131,10 @@ namespace BBBZ.Controllers
                     return RedirectToAction("Index");
                 }
             }
+
+            ViewBag.AllCategories = GetAllCategories();
+            ViewBag.AllViewLevels = GetAllViewLevels();
+
             return View(content);
         }
 
@@ -164,6 +177,8 @@ namespace BBBZ.Controllers
             var cfv = db.CustomFieldValues.Include(x => x.Content).Include(x => x.CustomField).Where(x => x.Content.ID == id).ToList();
             if (cfv == null)
                 return HttpNotFound();
+
+            ViewBag.AllCustomFields = db.GetAllCustomFields();
 
             return View(cfv);
         }

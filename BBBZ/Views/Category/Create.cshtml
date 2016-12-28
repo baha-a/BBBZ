@@ -29,10 +29,10 @@
         </div>
         
         <div class="form-group">
-            @Html.LabelFor(model => model.Url, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Image, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.EditorFor(model => model.Url, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Url, null, new { @class = "has-error" })
+                @Html.EditorFor(model => model.Image, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Image, null, new { @class = "has-error" })
             </div>
         </div>
 
@@ -71,21 +71,21 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NewParentID_helper, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.NewParentID_helper, new SelectList(Extenisons.GetAllCategories(), "ID", "Title",string.Empty), string.Empty, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.NewParentID_helper, new SelectList(ViewBag.AllCategories, "ID", "Title", null), string.Empty, new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Language, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.Language, new SelectList(Extenisons.GetAllLanguages(), "Code", "Title"), string.Empty, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Language, new SelectList(ViewBag.AllLanguages, "Code", "Title"), string.Empty, new { @class = "form-control" })
             </div>
         </div>
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.NewAccessID_helper, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.NewAccessID_helper, new SelectList(Extenisons.GetAllViewLevels(), "ID", "Title",string.Empty),string.Empty, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.NewAccessID_helper, new SelectList(ViewBag.AllViewLevels, "ID", "Title", string.Empty), string.Empty, new { @class = "form-control" })
             </div>
         </div>
 
@@ -95,6 +95,16 @@
                 @Html.CheckBoxFor(model => model.Published, new { @checked = "checked"})
             </div>
         </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Template, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.Template,
+                Enum.GetNames(typeof(BBBZ.Models.CategorysTemplate)).Select(e => new SelectListItem { Text = e }),new { @class = "form-control" })
+            </div>
+        </div>
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
