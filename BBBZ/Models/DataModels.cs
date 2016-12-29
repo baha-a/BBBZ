@@ -80,16 +80,17 @@ namespace BBBZ.Models
 
     public class Language
     {
-        public int ID { get; set; }
-        [Required]
+        [Key]
         [RegularExpression("[A-Za-z]{2}")]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Code { get; set; }
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }
+
         public string MetaDesc { get; set; }
         public string MetaKey { get; set; }
-        public string MetaData { get; set; }
+        
         public string SiteName { get; set; }
     }
     
@@ -121,7 +122,9 @@ namespace BBBZ.Models
         public bool Published { get; set; }
         public bool OpenInSameWindow { get; set; }
 
-        public string Langauge { get; set; }
+        [ForeignKey("Language")]
+        public Language TheLanguage { get; set; }
+        public string Language { get; set; }
 
         public Menu Parent { get; set; }
 
@@ -145,8 +148,11 @@ namespace BBBZ.Models
         public string Description { get; set; }
         public string MetaDesc { get; set; }
         public string MetaKey { get; set; }
-        public string MetaData { get; set; }
+
+        [ForeignKey("Language")]
+        public Language TheLanguage { get; set; }
         public string Language { get; set; }
+
         [Display(Name="Creator")]
         public string CreatedByUsername { get; set; }
         public DateTime Date { get; set; }
@@ -173,7 +179,7 @@ namespace BBBZ.Models
         
         public string MetaDesc { get; set; }
         public string MetaKey { get; set; }
-        public string MetaData { get; set; }
+        
 
         [Display(Name = "Creator")]
         public string CreatedByUsername { get; set; }
@@ -184,6 +190,8 @@ namespace BBBZ.Models
 
         public ViewLevel Access { get; set; }
 
+        [ForeignKey("Language")]
+        public Language TheLanguage { get; set; }
         public string Language { get; set; }
 
         public ContentsTemplate Template { get; set; }

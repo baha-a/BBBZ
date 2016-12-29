@@ -44,17 +44,16 @@ namespace BBBZ.Models
                 .WithMany()
                 .WillCascadeOnDelete(true);
 
-            
+
             modelBuilder.Entity<CustomFieldValue>()
                 .HasRequired(x => x.CustomField)
                 .WithMany()
-                .WillCascadeOnDelete(true); 
-            
+                .WillCascadeOnDelete(true);
+
             modelBuilder.Entity<CustomFieldValue>()
                  .HasRequired(x => x.Content)
                  .WithMany()
                  .WillCascadeOnDelete(true);
-
 
             base.OnModelCreating(modelBuilder);
         }

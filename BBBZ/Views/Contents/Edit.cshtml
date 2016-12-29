@@ -68,21 +68,6 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MetaData, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.MetaData, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MetaData, null, new { @class = "has-error" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Published, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.Published, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Published, null, new { @class = "has-error" })
-            </div>
-        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Category, new { @class = "control-label col-md-2" })
@@ -90,7 +75,14 @@
                 @Html.DropDownListFor(model => model.CategoryID, new SelectList(ViewBag.AllCategories, "ID", "Title",string.Empty),string.Empty, new { @class = "form-control" })
             </div>
         </div>
-        
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Language, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.Language, new SelectList(ViewBag.AllLanguages, "Code", "Title"), string.Empty, new { @class = "form-control" })
+            </div>
+        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.Access, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
@@ -103,6 +95,14 @@
             <div class="col-md-6">
                 @Html.DropDownListFor(model => model.Template,
                     Enum.GetNames(typeof(BBBZ.Models.ContentsTemplate)).Select(e => new SelectListItem { Text = e }), new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Published, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Published, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Published, null, new { @class = "has-error" })
             </div>
         </div>
 

@@ -35,6 +35,7 @@ namespace BBBZ.Controllers
             
             ViewBag.AllCategories = GetAllCategories();
             ViewBag.AllViewLevels = GetAllViewLevels();
+            ViewBag.AllLanguages = db.GetAllLanguages();
 
             return View();
         }
@@ -62,6 +63,7 @@ namespace BBBZ.Controllers
 
             ViewBag.AllCategories = GetAllCategories();
             ViewBag.AllViewLevels = GetAllViewLevels();
+            ViewBag.AllLanguages = db.GetAllLanguages();
 
             return View(content);
         }
@@ -83,6 +85,8 @@ namespace BBBZ.Controllers
 
             ViewBag.AllCategories = GetAllCategories();
             ViewBag.AllViewLevels = GetAllViewLevels();
+            ViewBag.AllLanguages = db.GetAllLanguages();
+
             return View(content);
         }
 
@@ -104,7 +108,6 @@ namespace BBBZ.Controllers
                     content.Descrption = con.Descrption;
 
                     content.Language = con.Language;
-                    content.MetaData = con.MetaData;
                     content.MetaDesc = con.MetaDesc;
                     content.MetaKey = con.MetaKey;
                     content.Published = con.Published;
@@ -134,6 +137,7 @@ namespace BBBZ.Controllers
 
             ViewBag.AllCategories = GetAllCategories();
             ViewBag.AllViewLevels = GetAllViewLevels();
+            ViewBag.AllLanguages = db.GetAllLanguages();
 
             return View(content);
         }

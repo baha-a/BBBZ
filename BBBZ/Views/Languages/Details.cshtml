@@ -52,14 +52,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MetaData)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MetaData)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.SiteName)
         </dt>
 
@@ -70,6 +62,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }, new { @class="btn btn-sm btn-success"}) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Code }, new { @class="btn btn-sm btn-success"}) |
     @Html.ActionLink("Back", "Index", null, new { @class="btn btn-sm btn-warning"})
 </p>

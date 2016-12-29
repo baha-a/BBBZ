@@ -53,14 +53,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MetaData)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MetaData)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.SiteName)
         </dt>
 
@@ -70,12 +62,12 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm("Delete", "Languages", new { id = Model.Code }, FormMethod.Post))
+    {
         @Html.AntiForgeryToken()
-
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-danger btn-sm" /> |
-            @Html.ActionLink("Back", "Index", null, new { @class="btn btn-sm btn-warning"})
+            @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-sm btn-warning" })
         </div>
     }
 </div>

@@ -308,6 +308,10 @@
     <Compile Include="Migrations\201612281444527_add_tamplate_to_Category_n_Content.Designer.cs">
       <DependentUpon>201612281444527_add_tamplate_to_Category_n_Content.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612290607025_fix_language_primary_key.cs" />
+    <Compile Include="Migrations\201612290607025_fix_language_primary_key.Designer.cs">
+      <DependentUpon>201612290607025_fix_language_primary_key.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EnumModel.cs" />
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
@@ -749,6 +753,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612281444527_add_tamplate_to_Category_n_Content.resx">
       <DependentUpon>201612281444527_add_tamplate_to_Category_n_Content.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612290607025_fix_language_primary_key.resx">
+      <DependentUpon>201612290607025_fix_language_primary_key.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

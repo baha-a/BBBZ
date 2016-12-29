@@ -116,13 +116,19 @@ namespace BBBZ.Controllers
                 category.Description = cat.Description;
                 category.Image = cat.Image;
                 category.Published = cat.Published;
-                category.MetaData = cat.MetaData;
                 category.MetaKey = cat.MetaKey;
                 category.MetaDesc = cat.MetaDesc;
                 category.Language = cat.Language;
 
-                category.Parent = db.Categories.SingleOrDefault(x => x.ID == cat.NewParentID_helper);
-                category.Access = db.ViewLevels.SingleOrDefault(x => x.ID == cat.NewAccessID_helper);
+                if (cat.NewParentID_helper == null)
+                    category.Parent = null;
+                else
+                    category.Parent = db.Categories.SingleOrDefault(x => x.ID == cat.NewParentID_helper);
+
+                if (cat.NewAccessID_helper == null)
+                    category.Access = null;
+                else
+                    category.Access = db.ViewLevels.SingleOrDefault(x => x.ID == cat.NewAccessID_helper);
                 
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();

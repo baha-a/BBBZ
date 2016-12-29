@@ -185,6 +185,7 @@ namespace BBBZ.Models
         public List<Content> AllContents{ get; set; }
         public List<CategoryView> AlllCategories { get; set; }
         public List<ViewLevel> AllViewLevels { get; set; }
+        public List<Language> AllLanguages { get; set; }
 
         [Display(Name = "Parent Menu")]
         public int? selectedMenuTypeID { get; set; }

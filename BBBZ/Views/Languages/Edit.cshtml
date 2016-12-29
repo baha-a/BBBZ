@@ -18,15 +18,7 @@
 			@Html.ActionLink("Back", "Index", null, new { @class="btn btn-xs btn-warning"})
 		</div>
         @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
-        @Html.HiddenFor(model => model.ID)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Code, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.Code, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Code, null, new { @class = "has-error" })
-            </div>
-        </div>
+        @Html.HiddenFor(model => model.Code)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
@@ -44,7 +36,6 @@
             </div>
         </div>
 
-
         <div class="form-group">
             @Html.LabelFor(model => model.MetaDesc, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
@@ -60,15 +51,6 @@
                 @Html.ValidationMessageFor(model => model.MetaKey, null, new { @class = "has-error" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MetaData, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.MetaData, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MetaKey, null, new { @class = "has-error" })
-            </div>
-        </div>
-
 
         <div class="form-group">
             @Html.LabelFor(model => model.SiteName, new { @class = "control-label col-md-2" })

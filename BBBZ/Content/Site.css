@@ -471,7 +471,7 @@ However, delay the fade out process for 2.5 seconds */
     display: block;
     width: 100%;
     height: 40px;
-    padding: 10px 15px;
+    padding-left:15px;
     font-size: 15px;
     line-height: 1.42857143;
     color: #2c3e50;

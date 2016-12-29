@@ -61,24 +61,16 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.MetaData, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.MetaData, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MetaData, null, new { @class = "has-error" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.NewParentID_helper, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.NewParentID_helper, new SelectList(ViewBag.AllCategories, "ID", "Title", null), string.Empty, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.NewParentID_helper, new SelectList(ViewBag.AllCategories, "ID", "Title", string.Empty), string.Empty, new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Language, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.Language, new SelectList(ViewBag.AllLanguages, "Code", "Title"), string.Empty, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Language, new SelectList(ViewBag.AllLanguages, "Code", "Title", string.Empty), string.Empty, new { @class = "form-control" })
             </div>
         </div>
         
@@ -90,21 +82,19 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Template, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.Template,
+                Enum.GetNames(typeof(BBBZ.Models.CategorysTemplate)).Select(e => new SelectListItem { Text = e }), new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Published, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
                 @Html.CheckBoxFor(model => model.Published, new { @checked = "checked"})
             </div>
         </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Template, new { @class = "control-label col-md-2" })
-            <div class="col-md-6">
-                @Html.DropDownListFor(model => model.Template,
-                Enum.GetNames(typeof(BBBZ.Models.CategorysTemplate)).Select(e => new SelectListItem { Text = e }),new { @class = "form-control" })
-            </div>
-        </div>
-
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

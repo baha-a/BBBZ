@@ -61,6 +61,7 @@ namespace BBBZ.Controllers
             model.AlllCategories = GetAllCategories();
             model.AllContents = GetAllContents();
             model.AllViewLevels = GetAllViewLevels();
+            model.AllLanguages = db.GetAllLanguages();
 
             if (selectedMenuTypeID != null)
             {
@@ -87,7 +88,7 @@ namespace BBBZ.Controllers
                     Note = menu.TheMenu.Note,
                     Published = menu.TheMenu.Published,
                     OpenInSameWindow = menu.TheMenu.OpenInSameWindow,
-                    Langauge = menu.TheMenu.Langauge,
+                    Language = menu.TheMenu.Language,
 
                     CategoryID = menu.selectedCategoryID,
                     ContentID = menu.selectedContentID,
@@ -107,14 +108,24 @@ namespace BBBZ.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(menu);
+            MenuItemViewModel model = new MenuItemViewModel();
+            model.ItemType = menu.ItemType;
+            model.selectedMenuTypeID = menu.selectedMenuTypeID;
+            model.AllMenuTypes = db.MenuTypes.ToList();
+            model.AlllCategories = GetAllCategories();
+            model.AllContents = GetAllContents();
+            model.AllViewLevels = GetAllViewLevels();
+            model.AllLanguages = db.GetAllLanguages();
+
+            return View(model);
         }
 
         public ActionResult Edit(int? id, int? selectedMenuTypeID, string itemtype = "")
         {
             if (id == null)
                 return BadRequest();
-            Menu menu = db.Menus.Include(x=>x.Access).Include(x => x.Parent).Include(x => x.MenuType).SingleOrDefault(x => x.ID == id);
+            Menu menu = db.Menus.Include(x=>x.Access).Include(x => x.Parent).Include(x => x.MenuType)
+                .SingleOrDefault(x => x.ID == id);
             if (menu == null)
                 return HttpNotFound();
 
@@ -132,6 +143,7 @@ namespace BBBZ.Controllers
             model.AlllCategories = GetAllCategories();
             model.AllContents = GetAllContents();
             model.AllViewLevels = GetAllViewLevels();
+            model.AllLanguages = db.GetAllLanguages();
 
             if (selectedMenuTypeID != null && model.TheMenuType != null && model.TheMenuType.ID != selectedMenuTypeID)
             {
@@ -178,14 +190,15 @@ namespace BBBZ.Controllers
                         m.Note = menu.TheMenu.Note;
                         m.Published = menu.TheMenu.Published;
                         m.OpenInSameWindow = menu.TheMenu.OpenInSameWindow;
-                        m.Langauge = menu.TheMenu.Langauge;
+                        m.Language = menu.TheMenu.Language;
 
                         m.CategoryID = menu.selectedCategoryID;
                         m.ContentID = menu.selectedContentID;
                         m.Url = menu.TheMenu.Url;
 
-                        if (menu.selectedAccessID != null)
-                            m.Access = db.ViewLevels.SingleOrDefault(x => x.ID == menu.selectedAccessID);
+                        if (menu.selectedAccessID == null)
+                            m.Access = null;
+                        else m.Access = db.ViewLevels.SingleOrDefault(x => x.ID == menu.selectedAccessID);
 
                         if (menu.selectedParentID == null)
                             m.Parent = null;
@@ -206,7 +219,16 @@ namespace BBBZ.Controllers
                     }
                 }
             }
-            return View(menu);
+
+            MenuItemViewModel model = new MenuItemViewModel();
+            model.ItemType = menu.ItemType;
+            model.selectedMenuTypeID = menu.selectedMenuTypeID;
+            model.AllMenuTypes = db.MenuTypes.ToList();
+            model.AlllCategories = GetAllCategories();
+            model.AllContents = GetAllContents();
+            model.AllViewLevels = GetAllViewLevels();
+            model.AllLanguages = db.GetAllLanguages();
+            return View(model);
         }
 
         public ActionResult Delete(int? id)

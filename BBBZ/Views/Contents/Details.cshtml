@@ -68,14 +68,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MetaData)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MetaData)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Category)
         </dt>
 
@@ -103,6 +95,14 @@
             {
                 <a href="@Url.Action("Details","ViewLevel", new { id = Model.Access.ID})"> @Html.DisplayFor(model => Model.Access.Title) </a>
             }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Language)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Language)
         </dd>
 
         <dt>

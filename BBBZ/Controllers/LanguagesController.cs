@@ -23,17 +23,13 @@ namespace BBBZ.Controllers
             return View(db.Languages.ToList());
         }
 
-        public ActionResult Details(int? id)
+        public ActionResult Details(string id)
         {
-            if (id == null)
-            {
+            if (string.IsNullOrEmpty(id))
                 return BadRequest();
-            }
-            Language language = db.Languages.Find(id);
+            Language language = db.Languages.SingleOrDefault(x => x.Code == id);
             if (language == null)
-            {
                 return HttpNotFound();
-            }
             return View(language);
         }
 
@@ -56,17 +52,13 @@ namespace BBBZ.Controllers
             return View(language);
         }
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string id)
         {
-            if (id == null)
-            {
+            if (string.IsNullOrEmpty(id))
                 return BadRequest();
-            }
-            Language language = db.Languages.Find(id);
+            Language language = db.Languages.SingleOrDefault(x => x.Code == id);
             if (language == null)
-            {
                 return HttpNotFound();
-            }
             return View(language);
         }
 
@@ -83,25 +75,28 @@ namespace BBBZ.Controllers
             return View(language);
         }
 
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(string id)
         {
-            if (id == null)
-            {
+            if (string.IsNullOrEmpty(id))
                 return BadRequest();
-            }
-            Language language = db.Languages.Find(id);
+            Language language = db.Languages.SingleOrDefault(x => x.Code == id);
             if (language == null)
-            {
                 return HttpNotFound();
-            }
             return View(language);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            Language language = db.Languages.Find(id);
+            if (string.IsNullOrEmpty(id))
+                return BadRequest();
+            Language language = db.Languages.SingleOrDefault(x => x.Code == id);
+
+            db.Categories.Where(x => x.Language == id).ToList().ForEach(x => x.TheLanguage = null);
+            db.Contents.Where(x => x.Language == id).ToList().ForEach(x => x.TheLanguage = null);
+            db.Menus.Where(x => x.Language == id).ToList().ForEach(x => x.TheLanguage = null);
+
             db.Languages.Remove(language);
             db.SaveChanges();
             return RedirectToAction("Index");
