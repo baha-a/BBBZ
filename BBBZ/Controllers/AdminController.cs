@@ -20,6 +20,9 @@ namespace BBBZ.Controllers
         {
             IsAllowed(MyPermission.AdminPanel);
 
+            
+
+
             if (Session["isAdminLayout"] == null)
                 Session["isAdminLayout"] = true;
             else

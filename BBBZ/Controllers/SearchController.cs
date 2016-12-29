@@ -30,7 +30,7 @@ namespace BBBZ.Controllers
 
             string[] queryTerms = null;
             if(string.IsNullOrEmpty(query) == false)
-                queryTerms = query.Split(' ', ',', '+');
+                queryTerms = query.MargeWith(query.Split(' ', ',', '+'));
 
             if (lookingFor.ToLower() == "content")
             {

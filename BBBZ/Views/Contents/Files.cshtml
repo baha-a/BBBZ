@@ -1,0 +1,32 @@
+﻿@model BBBZ.Models.Content
+@{
+    ViewBag.Title =  Model.Title;
+
+    ViewBag.MetaKey = Model.MetaKey;
+    ViewBag.MetaDesc = Model.MetaDesc;
+
+    var filelinks =  Model.CustomFieldValues.Where(x => x.CustomField.Title.ToLower() == "file").Select(x=>x.Value).ToList();
+}
+
+<h2 class="h2"> @Model.Title </h2>
+
+<p> by <a href="@Url.Action("Index","Profile", new { username = Model.CreatedByUsername })">@Model.CreatedByUsername</a> (<a target="_blank" href="@Url.Action("Create", "Message", new { touser = Model.CreatedByUsername })"> send message </a>)</p>
+<p> @Model.CreatedTime</p>
+<hr />
+
+
+<div class="col-sm-2">
+    <img width="120" height="120" src="~/Content/images/loadfile.png" />
+</div>
+<div class="col-sm-10">
+    Files :
+    <ol>
+        @foreach (var file in filelinks)
+        {
+            <li>
+                <a href="@file"> @file </a>
+                <hr />
+            </li>
+        }
+    </ol>
+</div>

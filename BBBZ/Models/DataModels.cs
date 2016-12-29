@@ -12,6 +12,7 @@ namespace BBBZ.Models
     public partial class Group
     {
         public int ID { get; set; }
+        [Required]
         public string Title { get; set; }
         public string Description { get; set; }
         
@@ -37,6 +38,7 @@ namespace BBBZ.Models
             Groups = new List<Group>();
         }
         public int ID { get; set; }
+        [Required]
         public string Title { get; set; }
         public string Description { get; set; }
 
@@ -45,10 +47,11 @@ namespace BBBZ.Models
 
     public class Permission
     {
-        [Key, ForeignKey("Group")]
+        [Key,ForeignKey("Group")]
         public int ID { get; set; }
-
+        
         public virtual Group Group { get; set; }
+
 
         public bool? Users { get; set; }
         public bool? Groups { get; set; }
@@ -133,7 +136,11 @@ namespace BBBZ.Models
         [Required]
         public string Type { get; set; }
         public string Url { get; set; }
+        
+        [Display(Name = "Category")]
         public int? CategoryID { get; set; }
+        
+        [Display(Name = "Content")]
         public int? ContentID { get; set; }
 
         public ViewLevel Access { get; set; }
@@ -239,7 +246,9 @@ namespace BBBZ.Models
         public string Subject { get; set; }
         public string Text { get; set; }
 
+        [Display(Name ="Sender")]
         public string From_username { get; set; }
+        [Display(Name = "Receiver")]
         public string To_username { get; set; }
     }
 

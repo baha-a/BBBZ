@@ -6,6 +6,7 @@ using System.Web;
 using System.Data.Entity;
 using System.IO;
 using System.Web.Mvc;
+using System.Web.Hosting;
 
 
 public static class Extenisons
@@ -43,6 +44,18 @@ public static class Extenisons
         x.ForEach(z => str += z + "\r\n");
         return str;
     }
+
+
+    public static string[] MargeWith(this string x,string[] list)
+    {
+        string[] res = new string[list.Length + 1];
+        res[0] = x;
+        for (int i = 0 ; i < list.Length ; i++)
+            res[i+1] = list[i];
+
+        return res;
+    }
+
     #endregion
 
     #region CategoryHelper
@@ -62,6 +75,21 @@ public static class Extenisons
             a.AddRange(ConvertToViewModel(i.SubCategories, level + 1));
         }
         return a;
+    }
+
+    public static bool UploadCategoryImage(this HttpPostedFileBase Uploader, Category cat)
+    {
+        if (cat != null && Uploader != null)
+        {
+            string extension = Path.GetExtension(Uploader.FileName);
+            if (extension == ".jpg" || extension == ".png")
+            {
+                cat.Image = "/CateogryImages/" + cat.ID + extension;
+                Uploader.SaveAs(HostingEnvironment.MapPath("~/CateogryImages/").CheckFolder() + cat.ID + extension);
+                return true;
+            }
+        }
+        return false;
     }
     #endregion
 
@@ -217,7 +245,7 @@ public static class Extenisons
     }
     public static List<Menu> GetAllMenuItemParents(this ApplicationDbContext db,int without =-1)
     {
-        return db.Menus.Where(x => x.Parent == null && x.ID != without).ToList();
+        return db.Menus.Include(x => x.Access).Where(x => x.Parent == null && x.ID != without).ToList();
     }
     public static List<Menu> FillWithChildren(this List<Menu> gs,ApplicationDbContext db, int without = -1)
     {
@@ -225,6 +253,7 @@ public static class Extenisons
         {
             g.Children = db.Menus
                 .Include(x => x.Parent)
+                .Include(x => x.Access)  
                 .Where(x => x.Parent != null && x.Parent.ID == g.ID && g.ID != without)
                 .ToList();
             FillWithChildren(g.Children,db, without);

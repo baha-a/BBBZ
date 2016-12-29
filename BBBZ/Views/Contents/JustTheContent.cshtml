@@ -1,0 +1,15 @@
+﻿@model BBBZ.Models.Content
+@{
+    ViewBag.Title = Model.Title;
+
+    ViewBag.MetaKey = Model.MetaKey;
+    ViewBag.MetaDesc = Model.MetaDesc;
+}
+
+<h2 class="h2"> @Model.Title </h2>
+
+<hr />
+
+@Html.Raw(Model.FullText)
+
+<hr />

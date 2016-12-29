@@ -30,6 +30,9 @@
         <th>
             Menu
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Menu.Access)
+        </th>
         <th></th>
     </tr>
 
@@ -63,11 +66,19 @@
         <td>
             @if (item.Menu.MenuType == null)
             {
-                <i> no menu </i>
+                <i> -- </i>
             }
             else if (string.IsNullOrEmpty(item.Menu.MenuType.Title) == false)
             {
                 @Html.ActionLink(item.Menu.MenuType.Title, "Details", "Menus", new { id = item.Menu.MenuType.ID }, null)
+            }
+        </td>
+        <td>
+            @if(item.Menu.Access != null)
+            {
+                <a href="@Url.Action("Details","ViewLevel", new { id= item.Menu.Access.ID})">
+                    @Html.DisplayFor(modelItem => item.Menu.Access.Title)
+                </a>
             }
         </td>
         <td>

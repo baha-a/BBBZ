@@ -30,6 +30,7 @@ namespace BBBZ.Models
             Children = new List<Menu>();
             OpenInSameWindow = true;
             Published = true;
+            Access = new ViewLevel();
         }
 
         [NotMapped]
@@ -59,6 +60,7 @@ namespace BBBZ.Models
             SubCategories = new List<Category>();
             Contents = new List<Content>();
             Published = true;
+            Access = new ViewLevel();
         }
 
         [NotMapped]

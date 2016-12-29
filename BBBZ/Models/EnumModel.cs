@@ -8,32 +8,41 @@ namespace BBBZ.Models
     public enum CategorysTemplate
     {
         NotSet = 0,
+        
+        Default = 1,
+        LessonOneByOne = 4,
+        AsLinks = 2,
 
-        Course,
-        ArticleList,
-
-        LessonOneByOne,
-        LessonRandom,
+        News,
 
         QuestionBank,
 
-        Custom
+
+
+        // add new item at last of the list, and don't change the numbers or names
     }
 
     public enum ContentsTemplate
     {
         NotSet = 0,
 
-        Article,
+        Article = 1,
+        JustTheContent = 2,
 
-        Lesson,
-        OptionalQuiz,
-        MandatoryQuiz,
+        Lesson = 3,
 
-        Exam,
+        Files = 7,
+        Video = 8,
 
-        File,
 
-        Custom
+
+        OptionalQuiz = 4,
+        MandatoryQuiz = 5,
+
+        Exam = 6,
+
+
+
+        // add new item at last of the list, and don't change the numbers or names
     }
 }

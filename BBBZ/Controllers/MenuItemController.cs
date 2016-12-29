@@ -25,6 +25,7 @@ namespace BBBZ.Controllers
                 ViewBag.ID = id;
                 return View(db.Menus
                     .Include(x => x.MenuType)
+                    .Include(x => x.Access)
                     .Where(x => x.MenuType != null && x.MenuType.ID == id)
                     .ToList()
                     .FillWithChildren(db)
@@ -32,6 +33,7 @@ namespace BBBZ.Controllers
             }
             return View(db.Menus
                 .Include(x => x.MenuType)
+                .Include(x => x.Access)
                 .Where(x => x.Parent == null)
                 .ToList()
                 .FillWithChildren(db)
@@ -133,7 +135,7 @@ namespace BBBZ.Controllers
             model.ItemType = string.IsNullOrEmpty(itemtype) ? menu.Type : itemtype;
             model.AllMenuTypes = db.MenuTypes.ToList();
             model.TheMenu = menu;
-            model.selectedAccessID = menu.Access == null ? null : (int?)menu.Access.ID;
+            model.selectedAccessID = menu.Access == null ? 0 : menu.Access.ID;
             model.selectedParentID = menu.Parent == null ? null : (int?)menu.Parent.ID;
             model.TheMenuType = menu.MenuType;
 
@@ -182,6 +184,7 @@ namespace BBBZ.Controllers
                         .Include(x => x.MenuType)
                         .Include(x => x.Parent)
                         .SingleOrDefault(x => x.ID == menu.id);
+
                     if (m != null)
                     {
                         m.Type = menu.ItemType;
@@ -196,9 +199,8 @@ namespace BBBZ.Controllers
                         m.ContentID = menu.selectedContentID;
                         m.Url = menu.TheMenu.Url;
 
-                        if (menu.selectedAccessID == null)
-                            m.Access = null;
-                        else m.Access = db.ViewLevels.SingleOrDefault(x => x.ID == menu.selectedAccessID);
+                        if (m.Access == null ||  menu.selectedAccessID != m.Access.ID)
+                            m.Access = db.ViewLevels.SingleOrDefault(x => x.ID == menu.selectedAccessID);
 
                         if (menu.selectedParentID == null)
                             m.Parent = null;
@@ -222,6 +224,7 @@ namespace BBBZ.Controllers
 
             MenuItemViewModel model = new MenuItemViewModel();
             model.ItemType = menu.ItemType;
+            model.selectedAccessID = menu.selectedAccessID;
             model.selectedMenuTypeID = menu.selectedMenuTypeID;
             model.AllMenuTypes = db.MenuTypes.ToList();
             model.AlllCategories = GetAllCategories();

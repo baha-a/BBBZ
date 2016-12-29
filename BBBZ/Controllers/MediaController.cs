@@ -140,25 +140,5 @@ namespace BBBZ.Controllers
 
             return RedirectToAction("Index", "Profile", new { username = Username });
         }
-        
-        [HttpPost]
-        public JsonResult UploadCategoryImage(HttpPostedFileBase Uploader,int id)
-        {
-            if (Uploader != null)
-            {
-                var pro = db.Categories.SingleOrDefault(x => x.ID == id);
-                if (pro != null)
-                {
-                    string extension = Path.GetExtension(Uploader.FileName);
-                    if (extension == ".jpg" || extension == ".png")
-                    {
-                        pro.Image = "/Cateogries/" + id + extension;
-                        Uploader.SaveAs(Server.MapPath("~/Cateogries/").CheckFolder() + id + extension);
-                        db.SaveChanges();
-                    }
-                }
-            }
-            return Json("ok");
-        }
 	}
 }

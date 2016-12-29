@@ -312,6 +312,18 @@
     <Compile Include="Migrations\201612290607025_fix_language_primary_key.Designer.cs">
       <DependentUpon>201612290607025_fix_language_primary_key.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612291305106_make_Access_required_in_some_table.cs" />
+    <Compile Include="Migrations\201612291305106_make_Access_required_in_some_table.Designer.cs">
+      <DependentUpon>201612291305106_make_Access_required_in_some_table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612291754089_require_title_for_ViewLevel.cs" />
+    <Compile Include="Migrations\201612291754089_require_title_for_ViewLevel.Designer.cs">
+      <DependentUpon>201612291754089_require_title_for_ViewLevel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612291758455_remove_require_Access.cs" />
+    <Compile Include="Migrations\201612291758455_remove_require_Access.Designer.cs">
+      <DependentUpon>201612291758455_remove_require_Access.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EnumModel.cs" />
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
@@ -370,6 +382,7 @@
     <Content Include="Content\admin\icon_video.gif" />
     <Content Include="Content\admin\modal.css" />
     <Content Include="Content\admin\template.css" />
+    <Content Include="Content\images\loadfile.png" />
     <Content Include="Content\images\robot.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\bootstrap-rtl.css" />
@@ -642,6 +655,14 @@
     <Content Include="Views\Shared\_SideMenuPartial.cshtml" />
     <Content Include="Views\Search\SearchUsers.cshtml" />
     <Content Include="Views\Search\SearchContents.cshtml" />
+    <Content Include="Views\Shared\_Error.cshtml" />
+    <Content Include="Views\Contents\Article.cshtml" />
+    <Content Include="Views\Contents\JustTheContent.cshtml" />
+    <Content Include="Views\Contents\Lesson.cshtml" />
+    <Content Include="Views\Contents\Files.cshtml" />
+    <Content Include="Views\Contents\Video.cshtml" />
+    <Content Include="Views\Category\Default.cshtml" />
+    <Content Include="Views\Category\LessonOneByOne.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\" />
@@ -756,6 +777,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612290607025_fix_language_primary_key.resx">
       <DependentUpon>201612290607025_fix_language_primary_key.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612291305106_make_Access_required_in_some_table.resx">
+      <DependentUpon>201612291305106_make_Access_required_in_some_table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612291754089_require_title_for_ViewLevel.resx">
+      <DependentUpon>201612291754089_require_title_for_ViewLevel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612291758455_remove_require_Access.resx">
+      <DependentUpon>201612291758455_remove_require_Access.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

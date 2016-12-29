@@ -6,7 +6,7 @@
 
 <h2> Custom Fields for Content: @ViewBag.ContentTitle </h2>
 
-@Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-sm btn-warning" })
+@Html.ActionLink("See the List", "Index", null, new { @class = "btn btn-sm btn-warning" })
 <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" /> 
 <br /><br />
 
@@ -66,7 +66,7 @@
             <div class="col-md-2">
                 Value
             </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <textarea name="value" id="value"></textarea>
                 </div>
             </div>
@@ -78,7 +78,9 @@
 
     <script>
         tinymce.init({
+            forced_root_block : false,
             selector: 'textarea',
+            menubar: false,
             plugins: ['advlist autolink lists link image charmap print preview hr anchor pagebreak',
                 'searchreplace wordcount visualblocks visualchars code fullscreen',
                 'insertdatetime media nonbreaking save table contextmenu directionality',

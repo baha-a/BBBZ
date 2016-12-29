@@ -16,7 +16,9 @@
         <h4>Message</h4>
         <hr />
 		<div>
-			@Html.ActionLink("Back", "Index", null, new { @class="btn btn-xs btn-warning"})
+            
+			@Html.ActionLink("Show Messages", "Index", null, new { @class="btn btn-xs btn-warning"})
+            <hr />
 		</div>
         @Html.ValidationSummary(false, null, new { @class = "alert alert-danger" })
 
@@ -39,7 +41,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Text, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.EditorFor(model => model.Text, new { @class = "form-control" })
+                @Html.TextAreaFor(model => model.Text, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Text, null, new { @class = "has-error" })
             </div>
         </div>

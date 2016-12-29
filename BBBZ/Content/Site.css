@@ -606,3 +606,22 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
     background:#ffffff;
     color:#000000;
 }
+
+.boxedimage {
+    border: 2px solid black;
+    border-radius:6px 6px;
+    width: 360px;
+    height: 360px;
+}
+
+.boxedimage-sm {
+    border: 1px solid black;
+    width: 160px;
+    height: 160px;
+}
+
+.boxedimage-xs {
+    border: 1px solid black;
+    width: 80px;
+    height: 80px;
+}

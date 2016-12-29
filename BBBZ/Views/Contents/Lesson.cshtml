@@ -1,0 +1,33 @@
+﻿@model BBBZ.Models.Content
+@{
+    ViewBag.Title = Model.Title;
+
+    ViewBag.MetaKey = Model.MetaKey;
+    ViewBag.MetaDesc = Model.MetaDesc;
+}
+
+<h2> @Model.Title </h2>
+
+<p>
+     by
+     <a href="@Url.Action("Index","Profile", new { username = Model.CreatedByUsername })">
+        @Model.CreatedByUsername
+     </a>
+    (<a target="_blank" href="@Url.Action("Create", "Message", new { touser = Model.CreatedByUsername })"> send message </a>)
+</p>
+
+
+<hr />
+<br />
+<p>
+    @Html.Raw(Model.FullText)
+</p>
+<hr />
+
+
+<div class="col-sm-1"> <a class="btn btn-info"    href="@Url.Action("Lesson", "Contents", new { type = "prev", id = Model.ID })"> < Previous </a> </div>
+<div class="col-sm-4"></div>
+<div class="col-sm-1"> <a class="btn btn-default" href="@Url.Action("Lesson", "Contents", new { type = "home", id = Model.ID })"> Home       </a> </div>
+<div class="col-sm-4"></div>
+<div class="col-sm-1"> <a class="btn btn-success" href="@Url.Action("Lesson", "Contents", new { type = "next", id = Model.ID })">  Next  >   </a> </div>
+<div class="col-sm-1"></div>

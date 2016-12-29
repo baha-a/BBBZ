@@ -12,14 +12,45 @@ namespace BBBZ.Controllers
 {
     public class ContentsController : BaseController
     {
+        public ActionResult Show(int? id)
+        {
+            if (id == null)
+                return BadRequest();
+
+            Content content = 
+                db.Contents
+                .Include(x => x.Access)
+                .SingleOrDefault(x => x.ID == id);
+
+            if (content == null)
+                return HttpNotFound();
+
+            if (MyPermission.See_Contents == true || (content.Access != null && MyViewLevelIDs.Contains(content.Access.ID)))
+            {
+                content.CustomFieldValues =
+                    db.CustomFieldValues.Include(x => x.Content).Include(x => x.CustomField)
+                    .Where(x => x.Content.ID == id).ToList();
+
+                if (content.Template == ContentsTemplate.NotSet)
+                    return View("Details",content);
+                else
+                    return View(content.Template.ToString(), content);
+            }
+
+            return Unauthorized();
+        }
+
         public ActionResult Index()
         {
             IsAllowed(MyPermission.See_Contents);
-            return View(db.Contents.Include(x=>x.Access).Include(x=>x.Category).ToList());
+
+            return View(db.Contents.Include(x => x.Access).Include(x => x.TheLanguage).Include(x => x.Category).ToList());
         }
 
         public ActionResult Details(int? id)
         {
+            IsAllowed(MyPermission.See_Contents);
+
             if (id == null)
                 return BadRequest();
             Content content = db.Contents.Include(x => x.Access).Include(x => x.Category).SingleOrDefault(x => x.ID == id);
@@ -53,8 +84,7 @@ namespace BBBZ.Controllers
                 if (content.CategoryID != null)
                     content.Category = db.Categories.SingleOrDefault(x => x.ID == content.CategoryID);
 
-                if (content.AccessID != null)
-                    content.Access = db.ViewLevels.SingleOrDefault(x => x.ID == content.AccessID);
+                content.Access = db.ViewLevels.SingleOrDefault(x => x.ID == content.AccessID);
 
                 db.Contents.Add(content);
                 db.SaveChanges();
@@ -74,12 +104,14 @@ namespace BBBZ.Controllers
             if (id == null)
                 return BadRequest();
 
-            Content content = db.Contents.Include(x => x.Category).SingleOrDefault(x => x.ID == id);
+            Content content = db.Contents.Include(x=>x.Access).Include(x => x.Category).SingleOrDefault(x => x.ID == id);
+
             if (content == null)
                 return HttpNotFound();
 
             if (content.Category != null)
                 content.CategoryID = content.Category.ID;
+
             if (content.Access != null)
                 content.AccessID = content.Access.ID;
 
@@ -112,6 +144,8 @@ namespace BBBZ.Controllers
                     content.MetaKey = con.MetaKey;
                     content.Published = con.Published;
 
+                    content.Template = con.Template;
+
                     if (con.CategoryID != null)
                     {
                         if (content.Category == null || content.Category.ID != con.CategoryID)
@@ -126,10 +160,8 @@ namespace BBBZ.Controllers
                         if (content.Access == null || content.Access.ID != con.AccessID)
                             content.Access = db.ViewLevels.SingleOrDefault(x => x.ID == con.AccessID);
                     }
-                    else
-                        if (content.Access != null)
-                            content.Access = null;
 
+                    db.Entry(content).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }

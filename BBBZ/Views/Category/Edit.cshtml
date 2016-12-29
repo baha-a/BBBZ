@@ -6,7 +6,7 @@
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Category", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -46,8 +46,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Image, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.EditorFor(model => model.Image, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Image, null, new { @class = "has-error" })
+                <img src="@(Model.Image)" alt="@(Model.Description)" class="boxedimage-sm" />
+                <input type="file" name="Uploader" id="Uploader" accept="image/*" />
             </div>
         </div>
 
@@ -92,7 +92,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NewAccessID_helper, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.NewAccessID_helper, new SelectList(ViewBag.AllViewLevels, "ID", "Title", (Model.Access == null)? string.Empty : Model.Access.ID.ToString()),string.Empty, new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.NewAccessID_helper, new SelectList(ViewBag.AllViewLevels, "ID", "Title", Model.NewAccessID_helper), new { @class = "form-control" })
             </div>
         </div>
 

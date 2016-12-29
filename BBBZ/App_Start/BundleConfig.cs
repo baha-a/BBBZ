@@ -66,7 +66,6 @@ namespace BBBZ
                         "~/Content/admin/ace-elements.min.js",
                         "~/Content/admin/ace.min.js"
                         ));
-
         }
     }
 }

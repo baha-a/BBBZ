@@ -24,10 +24,10 @@
             @Html.DisplayNameFor(model => model.theCategory.Language)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.theCategory.CreatedByUsername)
+            @Html.DisplayNameFor(model => model.theCategory.Access)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.theCategory.Access)
+            @Html.DisplayNameFor(model => model.theCategory.Template)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.theCategory.Published)
@@ -44,23 +44,27 @@
         <td>
             <a href="@Url.Action("Details", new { id = item.ID })"> @Html.DisplayFor(modelItem => item.Title) </a>
         </td>
+
         <td>
-            @Html.DisplayFor(modelItem => item.theCategory.Language)
+            @if (item.theCategory.TheLanguage!=null)
+            { 
+                @Html.DisplayFor(modelItem => item.theCategory.TheLanguage.Title)
+            }
+            else
+            {
+                <i> all </i>
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.theCategory.CreatedByUsername)
-        </td>
-        <td>
-            @if (item.theCategory.Access != null)
+            @if(item.theCategory.Access != null)
             {
                 <a href="@Url.Action("Details", "ViewLevel", new { id = item.theCategory.Access.ID })">
                     @Html.DisplayFor(modelItem => item.theCategory.Access.Title)
                  </a>
             }
-            else
-            {
-                <i> none </i>
-            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.theCategory.Template)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.theCategory.Published)

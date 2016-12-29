@@ -12,6 +12,39 @@ namespace BBBZ.Controllers
 {
     public class CategoryController : BaseController
     {
+        public ActionResult Show(int? id)
+        {
+            if (id == null)
+                return BadRequest();
+
+            Category category = 
+                db.Categories
+                .Include(x => x.Access)
+                .Include(x => x.Contents)
+                .Include(x => x.Parent)
+                .SingleOrDefault(x => x.ID == id);
+
+            if (category == null)
+                return HttpNotFound();
+
+            if (category.Published && 
+                (MyPermission.See_Categories == true || (category.Access != null && MyViewLevelIDs.Contains(category.Access.ID))))
+            {
+                category.SubCategories =
+                    db.Categories.Include(x => x.Parent).Include(x=>x.Access)
+                    .Where(x => x.Parent != null && x.Parent.ID == category.ID &&
+                        x.Published && x.Access != null && MyViewLevelIDs.Contains(x.Access.ID))
+                    .ToList();
+
+                if (category.Template == CategorysTemplate.NotSet)
+                    return View("Details", category);
+                else
+                    return View(category.Template.ToString(), category);
+            }
+
+            return Unauthorized();
+        }
+
         public ActionResult Index()
         {
             IsAllowed(MyPermission.See_Categories);
@@ -52,7 +85,7 @@ namespace BBBZ.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Category category)
+        public ActionResult Create(Category category,HttpPostedFileBase Uploader)
         {
             IsAllowed(MyPermission.Create_Categories);
             
@@ -66,6 +99,10 @@ namespace BBBZ.Controllers
 
                 db.Categories.Add(category);
                 db.SaveChanges();
+
+                Uploader.UploadCategoryImage(category);
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
@@ -93,7 +130,11 @@ namespace BBBZ.Controllers
             if (category == null)
                 return HttpNotFound();
 
-            category.NewParentID_helper = category.Parent != null ? (int?)category.Parent.ID : null;
+            if (category.Parent != null)
+                category.NewParentID_helper = category.Parent.ID;
+
+            if (category.Access != null)
+                category.NewAccessID_helper = category.Access.ID;
 
             ViewBag.AllCategories = GetAllCategories(category.ID);
             ViewBag.AllLanguages = db.GetAllLanguages();
@@ -104,34 +145,36 @@ namespace BBBZ.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Category cat)
+        public ActionResult Edit(Category cat,HttpPostedFileBase Uploader)
         {
             IsAllowed(MyPermission.Edit_Categories);
-
+            
             if (ModelState.IsValid)
             {
-                var category = db.Categories.Include(x=>x.Parent).SingleOrDefault(c => c.ID == cat.ID);
+                var category = db.Categories.Include(x=>x.Access).Include(x=>x.Parent).SingleOrDefault(c => c.ID == cat.ID);
 
                 category.Title = cat.Title;
                 category.Description = cat.Description;
-                category.Image = cat.Image;
                 category.Published = cat.Published;
                 category.MetaKey = cat.MetaKey;
                 category.MetaDesc = cat.MetaDesc;
                 category.Language = cat.Language;
+                category.Template = cat.Template;
 
                 if (cat.NewParentID_helper == null)
                     category.Parent = null;
                 else
                     category.Parent = db.Categories.SingleOrDefault(x => x.ID == cat.NewParentID_helper);
 
-                if (cat.NewAccessID_helper == null)
-                    category.Access = null;
-                else
+                if (category.Access == null || cat.NewAccessID_helper != category.Access.ID)
                     category.Access = db.ViewLevels.SingleOrDefault(x => x.ID == cat.NewAccessID_helper);
                 
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
+
+                Uploader.UploadCategoryImage(category);
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 

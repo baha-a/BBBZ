@@ -2,7 +2,9 @@
 
 @{
     ViewBag.Title = "Details";
-    
+
+    ViewBag.MetaKey = Model.MetaKey;
+    ViewBag.MetaDesc = Model.MetaDesc;
 }
 
 <h2>Details</h2>
@@ -87,11 +89,7 @@
         </dt>
 
         <dd>
-            @if (Model.Access == null)
-            {
-                <i> no access level </i>
-            }
-            else
+            @if(Model.Access != null)
             {
                 <a href="@Url.Action("Details","ViewLevel", new { id = Model.Access.ID})"> @Html.DisplayFor(model => Model.Access.Title) </a>
             }
@@ -103,6 +101,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.Language)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Template)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Template)
         </dd>
 
         <dt>

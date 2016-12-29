@@ -11,16 +11,6 @@ using System.Data.Entity;
 
 public abstract class BaseController: Controller
 {
-    ///
-    /// To-Do Later:
-    ///    recheck the ACL on menus and contents and viewlevels
-    ///    
-    ///    make templets for category and contents and whatever
-    ///
-    ///
-
-
-
     protected ApplicationDbContext db;
     private readonly IList<string> _supportedLocales;
     private readonly string _defaultLang;
@@ -243,7 +233,7 @@ public abstract class BaseController: Controller
         if (MyPermission.See_Categories == true)
             tmp = GetAllParentCatgory(without);
         else
-            tmp = db.Categories.Include(x => x.Access).Where(x => x.ID != without && x.Access != null && MyViewLevelIDs.Contains(x.Access.ID)).ToList();
+            tmp = db.Categories.Include(x=>x.TheLanguage).Include(x => x.Access).Where(x => x.ID != without && x.Access != null && MyViewLevelIDs.Contains(x.Access.ID)).ToList();
         return FillWithChildren(tmp, without).ConvertToViewModel();
     }
     public List<Category> GetAllParentCatgory(int without = -1)
@@ -251,6 +241,7 @@ public abstract class BaseController: Controller
         return db.Categories
             .Include(x => x.Access)
             .Include(x=>x.Parent)
+            .Include(x => x.TheLanguage)
             .Where(x => x.Parent == null && x.ID != without)
             .ToList();
     }
@@ -262,8 +253,9 @@ public abstract class BaseController: Controller
                 db.Categories
                 .Include(x=>x.Access)
                 .Include(x => x.Parent)
+                .Include(x => x.TheLanguage)
                 .Where(x => x.Parent != null && x.Parent.ID == g.ID && x.ID != without 
-                    //&& (MyPermission.See_Categories == true ? true : x.Access != null && MyViewLevelIDs.Contains(x.Access.ID))
+                    //&& (MyPermission.See_Categories == true ? true : MyViewLevelIDs.Contains(x.Access.ID))
                     )
                 .ToList();
             FillWithChildren(g.SubCategories, without);

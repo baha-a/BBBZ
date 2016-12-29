@@ -1,0 +1,27 @@
+﻿@model BBBZ.Models.Content
+@{
+    ViewBag.Title =  Model.Title;
+
+    ViewBag.MetaKey = Model.MetaKey;
+    ViewBag.MetaDesc = Model.MetaDesc;
+
+    var filelink =  Model.CustomFieldValues.SingleOrDefault(x => x.CustomField.Title.ToLower() == "file").Value;
+    var w = Model.CustomFieldValues.SingleOrDefault(x => x.CustomField.Title.ToLower() == "width");
+    var width =  w != null ? w.Value : "860";
+    w =  Model.CustomFieldValues.SingleOrDefault(x => x.CustomField.Title.ToLower() == "height");
+    var height = w!=null? w.Value : "480";
+}
+
+<h2 class="h2"> @Model.Title </h2>
+
+<p> by <a href="@Url.Action("Index","Profile", new { username = Model.CreatedByUsername })">@Model.CreatedByUsername</a> (<a target="_blank" href="@Url.Action("Create", "Message", new { touser = Model.CreatedByUsername })"> send message </a>)</p>
+<p> @Model.CreatedTime</p>
+<hr />
+
+
+<div class="col-sm-10">
+    <video width="@width" height="@height" controls>
+        <source src="@filelink" type="video/mp4">
+        Your browser does not support the video.
+    </video> 
+</div>
