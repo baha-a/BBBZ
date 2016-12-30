@@ -138,6 +138,17 @@
                 @Html.Raw(field.Value)
             </dd>
         }
+
+
+
+        <dt>
+            Visit
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Log.Count) times
+            ( <a href="@Url.Action("Visit", "Contents", new { id = Model.ID})"> show all </a> )
+        </dd>
     </dl>
 </div>
 <p>

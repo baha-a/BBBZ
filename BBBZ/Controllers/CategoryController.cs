@@ -22,7 +22,8 @@ namespace BBBZ.Controllers
                 .Include(x => x.Access)
                 .Include(x => x.Contents)
                 .Include(x => x.Parent)
-                .SingleOrDefault(x => x.ID == id);
+                .Include(x => x.TheLanguage)
+                .SingleOrDefault(x => (x.TheLanguage == null || x.TheLanguage.Code == Language) && x.ID == id);
 
             if (category == null)
                 return HttpNotFound();
@@ -31,8 +32,13 @@ namespace BBBZ.Controllers
                 (MyPermission.See_Categories == true || (category.Access != null && MyViewLevelIDs.Contains(category.Access.ID))))
             {
                 category.SubCategories =
-                    db.Categories.Include(x => x.Parent).Include(x=>x.Access)
-                    .Where(x => x.Parent != null && x.Parent.ID == category.ID &&
+                    db.Categories
+                    .Include(x => x.Parent)
+                    .Include(x=>x.Access)
+                    .Include(x => x.TheLanguage)
+                    .Where(x =>
+                        (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
+                        x.Parent != null && x.Parent.ID == category.ID &&
                         x.Published && x.Access != null && MyViewLevelIDs.Contains(x.Access.ID))
                     .ToList();
 

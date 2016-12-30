@@ -324,6 +324,10 @@
     <Compile Include="Migrations\201612291758455_remove_require_Access.Designer.cs">
       <DependentUpon>201612291758455_remove_require_Access.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612300913452_add_contentvisitlog.cs" />
+    <Compile Include="Migrations\201612300913452_add_contentvisitlog.Designer.cs">
+      <DependentUpon>201612300913452_add_contentvisitlog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EnumModel.cs" />
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
@@ -663,6 +667,9 @@
     <Content Include="Views\Contents\Video.cshtml" />
     <Content Include="Views\Category\Default.cshtml" />
     <Content Include="Views\Category\LessonOneByOne.cshtml" />
+    <Content Include="Views\Category\News.cshtml" />
+    <Content Include="Views\Category\AsLinks.cshtml" />
+    <Content Include="Views\Contents\Visit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\" />
@@ -786,6 +793,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612291758455_remove_require_Access.resx">
       <DependentUpon>201612291758455_remove_require_Access.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612300913452_add_contentvisitlog.resx">
+      <DependentUpon>201612300913452_add_contentvisitlog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

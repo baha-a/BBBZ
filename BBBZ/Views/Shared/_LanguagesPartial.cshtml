@@ -10,9 +10,10 @@
 
     var enabledLangsList = LocalizationHelper.GetSupportedLocales();
 
-    var targetPath = string.Format("{0}/{1}{2}",
+    var targetPath = string.Format("{0}/{1}/{2}",
         ViewContext.RouteData.Values["controller"].ToString(),
         ViewContext.RouteData.Values["action"].ToString(),
+        ViewContext.RouteData.Values["id"] + "",
         Request.Url.Query);
     var hostRoot = string.Format("{0}://{1}", Request.Url.Scheme, Request.Url.Authority);
     var targetUrlMask = string.Format("{0}/{{0}}/{1}", hostRoot, targetPath);

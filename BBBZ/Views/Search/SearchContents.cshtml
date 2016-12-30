@@ -33,9 +33,13 @@
             {
                 foreach (var p in Model)
                 {
-                    <p>
-                        @p.Title - @p.IntroText - @p.FullText
-                    </p>
+                    <div class="searchresultline">
+                        <a target="_blank" href="@Url.Action("Show", "Contents", new { id= @p.ID})">@p.Title</a>
+                        <div class="searchresult">
+                            @p.IntroText
+                        </div>
+                        <hr />
+                    </div>
                 }
             }
         </div>

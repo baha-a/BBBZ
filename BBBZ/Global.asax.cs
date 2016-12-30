@@ -26,14 +26,26 @@ namespace BBBZ
         {
             var error = Server.GetLastError();
 
-            try { System.IO.File.AppendAllText(Server.MapPath("~\\server_log.txt"), ((error is HttpException) ? ((HttpException)error).GetHttpCode() : -1) + "\r\n" + error.Message + "\r\n-------------------------------\r\n"); } catch { }
-            if (Request.Url.AbsolutePath.Contains("/Error/") == false)
-                Session["PreviousUrl"] = Request.Url.AbsolutePath;
-            Session["errorCode"] = (error is HttpException) ? ((HttpException)error).GetHttpCode() : 500;
-            Session["errorMessage"] = (error == null) ? "error has occure" : error.Message; 
-            Server.ClearError();
-            Response.Redirect("~/Error");
-
+            try 
+            {
+                System.IO.File.AppendAllText(
+                    Server.MapPath("~\\server_log.txt"), ((error is HttpException) ?((HttpException)error).GetHttpCode() : -1) +
+                    "\r\n" + error.Message + "\r\n-------------------------------\r\n"); 
+            } catch { }
+            try
+            {
+                if (Request.Url.AbsolutePath.Contains("/Error/") == false)
+                    Session["PreviousUrl"] = Request.Url.AbsolutePath;
+                Session["errorCode"] = (error is HttpException) ? ((HttpException)error).GetHttpCode() : 500;
+                Session["errorMessage"] = (error == null) ? "error has occure" : error.Message;
+            }
+            catch { }
+            try
+            {
+                Server.ClearError();
+                Response.Redirect("~/Error");
+            }
+            catch { }
         }
     }
 }

@@ -20,7 +20,8 @@ namespace BBBZ.Controllers
             Content content = 
                 db.Contents
                 .Include(x => x.Access)
-                .SingleOrDefault(x => x.ID == id);
+                .Include(x => x.TheLanguage)
+                .SingleOrDefault(x => (x.TheLanguage == null || x.TheLanguage.Code == Language) && x.ID == id);
 
             if (content == null)
                 return HttpNotFound();
@@ -30,6 +31,16 @@ namespace BBBZ.Controllers
                 content.CustomFieldValues =
                     db.CustomFieldValues.Include(x => x.Content).Include(x => x.CustomField)
                     .Where(x => x.Content.ID == id).ToList();
+
+                var log = new ContentVisitLog()
+                {
+                    Content = content,
+                    Username = Username,
+                    Date = DateTime.Now
+                };
+
+                db.ContentVisitLogs.Add(log);
+                db.SaveChanges();
 
                 if (content.Template == ContentsTemplate.NotSet)
                     return View("Details",content);
@@ -44,7 +55,7 @@ namespace BBBZ.Controllers
         {
             IsAllowed(MyPermission.See_Contents);
 
-            return View(db.Contents.Include(x => x.Access).Include(x => x.TheLanguage).Include(x => x.Category).ToList());
+            return View(GetAllContents());
         }
 
         public ActionResult Details(int? id)
@@ -53,12 +64,29 @@ namespace BBBZ.Controllers
 
             if (id == null)
                 return BadRequest();
-            Content content = db.Contents.Include(x => x.Access).Include(x => x.Category).SingleOrDefault(x => x.ID == id);
+            Content content = db.Contents.Include(x => x.Access).Include(x => x.Log).Include(x => x.Category).SingleOrDefault(x => x.ID == id);
             if (content == null)
                 return HttpNotFound();
-            content.CustomFieldValues = db.CustomFieldValues.Include(x => x.Content).Include(x => x.CustomField).Where(x => x.Content.ID == content.ID).ToList();
+            content.CustomFieldValues = 
+                db.CustomFieldValues.Include(x => x.Content).Include(x => x.CustomField)
+                    .Where(x => x.Content.ID == content.ID).ToList();
+
             return View(content);
         }
+        public ActionResult Visit(int? id)
+        {
+            IsAllowed(MyPermission.See_Contents);
+
+            if (id == null)
+                return BadRequest();
+
+            Content content = db.Contents.Include(x => x.Access).Include(x => x.Log).SingleOrDefault(x => x.ID == id);
+            if (content == null)
+                return HttpNotFound();
+
+            return View(content);
+        }
+
 
         public ActionResult Create()
         {

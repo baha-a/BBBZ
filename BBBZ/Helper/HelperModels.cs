@@ -13,6 +13,7 @@ namespace BBBZ.Models
     {
         public Content()
         {
+            Log = new List<ContentVisitLog>();
             CustomFieldValues = new List<CustomFieldValue>();
             Published = true;
         }

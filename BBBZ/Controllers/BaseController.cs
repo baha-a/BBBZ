@@ -12,8 +12,7 @@ using System.Data.Entity;
 public abstract class BaseController: Controller
 {
     protected ApplicationDbContext db;
-    private readonly IList<string> _supportedLocales;
-    private readonly string _defaultLang;
+
     private void SetLang(string lang)
     {
         Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(lang);
@@ -22,9 +21,7 @@ public abstract class BaseController: Controller
         Language = lang;
     }
 
-
-    public string Language { get; private set; }
-    
+    public string Language { get; private set; }    
     public string Username { get; private set; }
     public List<Group> MyGroups { get; private set; }
     public List<int> MyViewLevelIDs { get; private set; }
@@ -36,17 +33,25 @@ public abstract class BaseController: Controller
             return new List<Content>();
 
         if (MyPermission.See_Contents == true)
-            return db.Contents.ToList();
-        return db.Contents.Include(x => x.Access).Where(x => x.Access != null && MyViewLevelIDs.Contains(x.Access.ID)).ToList();
+            return db.Contents
+                .Include(x => x.Access)
+                .Include(x => x.Category)
+                .Include(x => x.TheLanguage).ToList();
+
+        return db.Contents
+            .Include(x => x.Access)
+            .Include(x => x.Category)
+            .Include(x => x.TheLanguage)
+            .Where(x =>
+                (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
+                x.Access != null && MyViewLevelIDs.Contains(x.Access.ID)).ToList();
     }
     
 
     public BaseController()
     {
-        _supportedLocales = LocalizationHelper.GetSupportedLocales();
-        _defaultLang = _supportedLocales[0];
-
         db = new ApplicationDbContext();
+        LocalizationHelper.SetSupportedLocales(db.GetAllLanguages());
     }
 
     protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -54,14 +59,10 @@ public abstract class BaseController: Controller
         if (Session["isAdminLayout"] == null)
             Session["isAdminLayout"] = false;
 
-        string lang = (string)filterContext.RouteData.Values["lang"] ?? _defaultLang;// Get locale from route values
+        string lang = (string)filterContext.RouteData.Values["lang"];// Get locale from route values
+        SetLang(lang.ToLower());
 
-        lang = lang.ToLower();
-        if (!_supportedLocales.Contains(lang)) // If we haven't found appropriate culture - set default locale then
-            lang = _defaultLang;
-
-        SetLang(lang);
-
+        Language = lang;
         Username = User.Identity.Name;
         MyGroups = FetchGroupsFor(Username);
         MyViewLevelIDs = FetchViewLevelFor(MyGroups);
@@ -104,7 +105,9 @@ public abstract class BaseController: Controller
         var itms = db.Menus
                     .Include(x => x.MenuType)
                     .Include(x => x.Access)
+                    .Include(x => x.TheLanguage)
                     .Where(x =>
+                        (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
                         x.Access != null &&
                         levels.Contains(x.Access.ID) &&
                         x.Published &&
@@ -122,7 +125,9 @@ public abstract class BaseController: Controller
             g.Children = db.Menus
                             .Include(x => x.Parent)
                             .Include(x => x.Access)
+                            .Include(x => x.TheLanguage)
                             .Where(x =>
+                                (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
                                 x.Access != null &&
                                 levels.Contains(x.Access.ID) &&
                                 x.Published &&
@@ -233,7 +238,16 @@ public abstract class BaseController: Controller
         if (MyPermission.See_Categories == true)
             tmp = GetAllParentCatgory(without);
         else
-            tmp = db.Categories.Include(x=>x.TheLanguage).Include(x => x.Access).Where(x => x.ID != without && x.Access != null && MyViewLevelIDs.Contains(x.Access.ID)).ToList();
+            tmp = db.Categories
+                .Include(x => x.Access)
+                .Include(x => x.TheLanguage)
+                .Where(x =>
+                    (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
+                    x.ID != without &&
+                    x.Access != null &&
+                    MyViewLevelIDs.Contains(x.Access.ID))
+                    .ToList();
+
         return FillWithChildren(tmp, without).ConvertToViewModel();
     }
     public List<Category> GetAllParentCatgory(int without = -1)
@@ -242,7 +256,9 @@ public abstract class BaseController: Controller
             .Include(x => x.Access)
             .Include(x=>x.Parent)
             .Include(x => x.TheLanguage)
-            .Where(x => x.Parent == null && x.ID != without)
+            .Where(x =>
+                (x.TheLanguage == null || x.TheLanguage.Code == Language) &&                
+                x.Parent == null && x.ID != without)
             .ToList();
     }
     public List<Category> FillWithChildren(List<Category> gs,  int without = -1)
@@ -254,7 +270,9 @@ public abstract class BaseController: Controller
                 .Include(x=>x.Access)
                 .Include(x => x.Parent)
                 .Include(x => x.TheLanguage)
-                .Where(x => x.Parent != null && x.Parent.ID == g.ID && x.ID != without 
+                .Where(x =>
+                    (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
+                    x.Parent != null && x.Parent.ID == g.ID && x.ID != without 
                     //&& (MyPermission.See_Categories == true ? true : MyViewLevelIDs.Contains(x.Access.ID))
                     )
                 .ToList();

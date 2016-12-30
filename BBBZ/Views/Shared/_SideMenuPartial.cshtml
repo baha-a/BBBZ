@@ -38,14 +38,17 @@
 }
 @foreach (var item in Model)
 {
-    <div class="@(first ? "SideMenuFirst" : "") SideMenu">
-        <h4>
-            @item.MenuType.Title
-        </h4>
+    if (item.MenuItems != null && item.MenuItems.Count > 0)
+    { 
+        <div class="@(first ? "SideMenuFirst" : "") SideMenu">
+            <h4>
+                @item.MenuType.Title
+            </h4>
 
-        <ul>
-            @drawTopMenu(item.MenuItems)
-        </ul>
-    </div>
-    first = false;
+            <ul>
+                @drawTopMenu(item.MenuItems)
+            </ul>
+        </div>
+        first = false;
+    }
 }

@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace BBBZ.Controllers
 {
-    public class ErrorController : Controller
+    public class ErrorController : BaseController
     {
         public ActionResult Index(int? id)
         {

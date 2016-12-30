@@ -31,12 +31,24 @@
             }
             else
             {
-                foreach (var p in Model)
+                <div class="container">
+                @foreach (var p in Model)
                 {
-                    <p>
-                        @p.username - @p.Name @p.LastName
-                    </p>
+                    <div class="row searchresultline">
+                        <a target="_blank" href="@Url.Action("Index", "Profile", new { username = p.username})">
+                            <div class="searchresultline">
+                                <div class="col-xs-4 col-md-1">
+                                    <img alt="@p.username's profile photo" src="@p.Image" class="boxedimage-xs" />
+                                </div>
+                                <div class="col-xs-8 col-md-8">
+                                    @p.Name @p.LastName
+                                    <div class="searchresult"> @p.username </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 }
+                </div>
             }
         </div>
     </div>

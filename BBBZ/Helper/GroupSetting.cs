@@ -13,10 +13,10 @@ public class GroupSetting
     public static int? GuestGroupId
     {
         get { return _guestGroupId; }
-        set 
+        set
         {
             _guestGroupId = value;
-            WriteNewSetting(_newUserGroupId, _guestGroupId); 
+            WriteNewSetting(_newUserGroupId, _guestGroupId);
         }
     }
 
@@ -24,10 +24,10 @@ public class GroupSetting
     public static int? NewUserGroupId
     {
         get { return _newUserGroupId; }
-        set 
+        set
         {
             _newUserGroupId = value;
-            WriteNewSetting(_newUserGroupId, _guestGroupId); 
+            WriteNewSetting(_newUserGroupId, _guestGroupId);
         }
     }
 

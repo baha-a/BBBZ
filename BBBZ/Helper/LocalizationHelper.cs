@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BBBZ.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,30 +17,23 @@ public static class LocalizationHelper
 
     public static string GetDisplayName(string lang)
     {
-        switch (lang)
-        {
-            case "en":
-                return "English";
-            case "ar":
-                return "عربي (غير مكتملة بعد)";
-        }
+        var l = _supportedLocalesList.SingleOrDefault(x => x.Code.ToLower() == lang.ToLower());
+        if(l!= null)
+            return l.Title;
         return "";
     }
 
-    private readonly static IList<string> _supportedLocalesList = new List<string> { "en", "ar" };
-
+    private static IList<Language> _supportedLocalesList;
+    public static void SetSupportedLocales(IList<Language> lng)
+    {
+        _supportedLocalesList = lng;
+    }
     public static IList<string> GetSupportedLocales()
     {
-        return _supportedLocalesList;
+        return _supportedLocalesList.Select(x=>x.Code).ToList();
     }
 
-    /// <summary>
     /// Get request url corrected according to logic of routing with locale 
-    /// </summary>
-    /// <param name="initialUri"></param>
-    /// <param name="controllersNames"></param>
-    /// <param name="userLangs"></param>
-    /// <returns></returns>
     public static string GetLocalisedUrl(Uri initialUri, IList<string> controllersNames, IList<string> userLangs)
     {
         var res = string.Empty;

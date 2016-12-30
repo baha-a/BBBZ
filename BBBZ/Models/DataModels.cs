@@ -193,6 +193,7 @@ namespace BBBZ.Models
         public bool Published { get; set; }
         public Category Category { get; set; }
 
+        
         public List<CustomFieldValue> CustomFieldValues { get; set; }
 
         public ViewLevel Access { get; set; }
@@ -202,6 +203,8 @@ namespace BBBZ.Models
         public string Language { get; set; }
 
         public ContentsTemplate Template { get; set; }
+
+        public List<ContentVisitLog> Log { get; set; }
     }
 
     public class CustomFieldValue
@@ -220,6 +223,15 @@ namespace BBBZ.Models
         [Required]
         public string Title { get; set; }
         public List<CustomFieldValue> Values { get; set; }
+    }
+
+    public class ContentVisitLog
+    {
+        public int ID { get; set; }
+        public string Username { get; set; }
+        public DateTime Date { get; set; }
+
+        public virtual Content Content { get; set; }
     }
 
 
@@ -288,8 +300,6 @@ namespace BBBZ.Models
         [RegularExpression("[A-Za-z]{2}")]
         public string Language { get; set; }
     }
-
-
 
 
 

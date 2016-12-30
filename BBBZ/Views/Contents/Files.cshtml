@@ -11,7 +11,7 @@
 <h2 class="h2"> @Model.Title </h2>
 
 <p> by <a href="@Url.Action("Index","Profile", new { username = Model.CreatedByUsername })">@Model.CreatedByUsername</a> (<a target="_blank" href="@Url.Action("Create", "Message", new { touser = Model.CreatedByUsername })"> send message </a>)</p>
-<p> @Model.CreatedTime</p>
+<p> <span class="time">@Model.CreatedTime</span></p>
 <hr />
 
 

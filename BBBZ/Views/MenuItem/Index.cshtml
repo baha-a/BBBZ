@@ -22,6 +22,9 @@
             @Html.DisplayNameFor(model => model.Menu.Type)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Menu.Language)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Menu.Published)
         </th>
         <th>
@@ -49,6 +52,16 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Menu.Type)
+        </td>
+        <td>
+            @if (item.Menu.TheLanguage != null)
+            { 
+                @Html.DisplayFor(modelItem => item.Menu.TheLanguage.Title)
+            }
+            else
+            {
+                <i> all </i>
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Menu.Published)
