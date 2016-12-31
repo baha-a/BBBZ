@@ -27,26 +27,6 @@ public abstract class BaseController: Controller
     public List<int> MyViewLevelIDs { get; private set; }
     public Permission MyPermission { get; private set; }
 
-    public List<Content> GetAllContents()
-    {
-        if (MyPermission == null || MyViewLevelIDs == null)
-            return new List<Content>();
-
-        if (MyPermission.See_Contents == true)
-            return db.Contents
-                .Include(x => x.Access)
-                .Include(x => x.Category)
-                .Include(x => x.TheLanguage).ToList();
-
-        return db.Contents
-            .Include(x => x.Access)
-            .Include(x => x.Category)
-            .Include(x => x.TheLanguage)
-            .Where(x =>
-                (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
-                x.Access != null && MyViewLevelIDs.Contains(x.Access.ID)).ToList();
-    }
-    
 
     public BaseController()
     {
@@ -64,6 +44,14 @@ public abstract class BaseController: Controller
 
         Language = lang;
         Username = User.Identity.Name;
+
+        if (string.IsNullOrEmpty(Username) == false)
+        {
+            var u = db.Users.SingleOrDefault(x => x.UserName == Username);
+            if (u != null && u.Locked)
+                throw new HttpException(401, "your account had been locked");
+        }
+
         MyGroups = FetchGroupsFor(Username);
         MyViewLevelIDs = FetchViewLevelFor(MyGroups);
         MyPermission = FetchPermissionFor(MyGroups);
@@ -282,6 +270,34 @@ public abstract class BaseController: Controller
     }
     #endregion
 
+    #region Contents helper
+    public List<Content> GetAllContents()
+    {
+        if (MyPermission == null || MyViewLevelIDs == null)
+            return new List<Content>();
+
+        if (MyPermission.See_Contents == true)
+            return db.Contents
+                .Include(x => x.Access)
+                .Include(x => x.Category)
+                .Include(x => x.TheLanguage).ToList();
+
+        return db.Contents
+            .Include(x => x.Access)
+            .Include(x => x.Category)
+            .Include(x => x.TheLanguage)
+            .Where(x =>
+                (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
+                x.Access != null && MyViewLevelIDs.Contains(x.Access.ID)).ToList();
+    }
+
+    public List<Content> MarkTheVisited(List<Content> cons)
+    {
+        if (string.IsNullOrEmpty(Username) == false)
+            cons.ForEach(x => x.Visited = db.ContentVisitLogs.Include(z=>z.Content).FirstOrDefault(z => z.Username == Username && z.Content.ID == x.ID) != null);
+        return cons;
+    }
+    #endregion
 
     #region Group helper
     public List<SelectableGroup> GetAllGroups(int without = -1)
@@ -330,7 +346,7 @@ public abstract class BaseController: Controller
     protected override void Dispose(bool disposing)
     {
         if (disposing)
-            db.Dispose(); // this may create error on debugging -only- , so I Comment it for a while
+            db.Dispose(); 
 
         base.Dispose(disposing);
     }

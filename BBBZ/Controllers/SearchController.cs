@@ -37,8 +37,7 @@ namespace BBBZ.Controllers
                 if (string.IsNullOrEmpty(query))
                     return View("SearchContents", null);
 
-                var res = 
-                    db.Contents
+                var tmp = db.Contents
                         .Include(x => x.Access)
                         .Include(x => x.Category)
                         .Where(x => x.Published && x.Access != null && MyViewLevelIDs.Contains(x.Access.ID))
@@ -49,8 +48,13 @@ namespace BBBZ.Controllers
                             x => x.MetaDesc,
                             x => x.MetaKey)
                         .Containing(queryTerms)
-                        .OrderByDescending(x=>x.CreatedTime)
-                        .Skip(pageSize * (page - 1))
+                        .OrderByDescending(x=>x.CreatedTime);
+                
+                ViewBag.ItemCount = tmp.Count();
+                ViewBag.PageCount =(int) Math.Ceiling(ViewBag.ItemCount * 1.0 / pageSize);
+
+                var res = 
+                        tmp.Skip(pageSize * (page - 1))
                         .Take(pageSize)
                         .ToList();
 
@@ -61,15 +65,19 @@ namespace BBBZ.Controllers
                 if (string.IsNullOrEmpty(query))
                     return View("SearchUser", null);
 
-                var res = 
-                    db.Profiles.Search(
+                var tmp = db.Profiles.Search(
                         x => x.username,
                         x => x.Name,
                         x => x.LastName,
                         x => x.Email)
                     .Containing(queryTerms)
-                    .OrderBy(x => x.Name)
-                    .Skip(pageSize * (page - 1))
+                    .OrderBy(x => x.Name);
+
+                ViewBag.ItemCount = tmp.Count();
+                ViewBag.PageCount = Math.Ceiling(ViewBag.ItemCount * 1.0 / pageSize);
+
+                var res =
+                    tmp.Skip(pageSize * (page - 1))
                     .Take(pageSize)
                     .ToList();
 

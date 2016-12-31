@@ -92,7 +92,8 @@ namespace BBBZ.Controllers
                     db.Profiles.Add(new Profile() {
                         username = model.UserName, 
                         RegisterDate = DateTime.Now,
-                        LastVisitDate = DateTime.Now 
+                        LastVisitDate = DateTime.Now ,
+                        Image = "/Content/images/user.jpg"
                     });
 
                     db.UserGroups.Add(new UserGroup() {

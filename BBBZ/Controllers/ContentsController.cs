@@ -21,6 +21,7 @@ namespace BBBZ.Controllers
                 db.Contents
                 .Include(x => x.Access)
                 .Include(x => x.TheLanguage)
+                .Include(x => x.Category)
                 .SingleOrDefault(x => (x.TheLanguage == null || x.TheLanguage.Code == Language) && x.ID == id);
 
             if (content == null)
@@ -28,19 +29,53 @@ namespace BBBZ.Controllers
 
             if (MyPermission.See_Contents == true || (content.Access != null && MyViewLevelIDs.Contains(content.Access.ID)))
             {
+                if (content.Category != null && 
+                    (content.Category.Template == CategorysTemplate.LessonOneByOne || content.Category.Template == CategorysTemplate.Default || 
+                    content.Category.Template == CategorysTemplate.AsLinks))
+                {
+                    var lessons = MarkTheVisited(getAllLessonOfTheCourse(content));
+                    ViewBag.Last = false;
+                    ViewBag.First = false;
+                    ViewBag.IsOk = true;
+                    ViewBag.IsComplete = true;
+
+                    for (int i = 0 ; i < lessons.Count ; i++)
+                    {
+                        if (lessons[i].ID == id)
+                        {
+                            if (i == 0)
+                                ViewBag.First = true;
+                            if (i == lessons.Count - 1)
+                                ViewBag.Last = true;
+
+                            if (content.Category.Template == CategorysTemplate.LessonOneByOne)
+                                if (ViewBag.First == false && lessons[i - 1].Visited == false)
+                                    ViewBag.IsOk = false;
+
+                            break;
+                        }
+
+                        if (ViewBag.IsComplete == true && lessons[i].Visited == false)
+                            ViewBag.IsComplete = false;
+                    }
+                }
+
+                if (ViewBag.IsOk == true)
+                {
+                    var log = new ContentVisitLog()
+                    {
+                        Content = content,
+                        Username = Username,
+                        Date = DateTime.Now
+                    };
+
+                    db.ContentVisitLogs.Add(log);
+                    db.SaveChanges();
+                }
+
                 content.CustomFieldValues =
                     db.CustomFieldValues.Include(x => x.Content).Include(x => x.CustomField)
                     .Where(x => x.Content.ID == id).ToList();
-
-                var log = new ContentVisitLog()
-                {
-                    Content = content,
-                    Username = Username,
-                    Date = DateTime.Now
-                };
-
-                db.ContentVisitLogs.Add(log);
-                db.SaveChanges();
 
                 if (content.Template == ContentsTemplate.NotSet)
                     return View("Details",content);
@@ -51,6 +86,53 @@ namespace BBBZ.Controllers
             return Unauthorized();
         }
 
+        public ActionResult Lesson(int? id, string type)
+        {
+            if (id == null || string.IsNullOrEmpty(type))
+                return BadRequest();
+
+            var con = db.Contents.Include(x=>x.Category).SingleOrDefault(x => x.ID == id);
+            if (con == null)
+                return HttpNotFound();
+
+            if (type.ToLower() == "home")
+                return RedirectToAction("Show","Category",new{id = con.Category.ID});
+
+            if (type.ToLower() == "complete")
+                return View("Complete");
+            if (type.ToLower() == "incomplete")
+                return View("InComplete");
+
+            var lessons = getAllLessonOfTheCourse(con);
+            if (type.ToLower() == "next")
+            {
+                for (int i = 0 ; i < lessons.Count ; i++)
+                    if (lessons[i].ID == con.ID)
+                        if (i + 1 < lessons.Count)
+                            id = lessons[i + 1].ID;
+            }
+            else if (type.ToLower() == "prev")
+            {
+                for (int i = 0 ; i < lessons.Count ; i++)
+                    if (lessons[i].ID == con.ID)
+                        if (i - 1 >= 0)
+                            id = lessons[i - 1].ID;
+            }
+
+            return RedirectToAction("Show", "Contents", new { id = id });
+        }
+
+        private List<Content> getAllLessonOfTheCourse(Content con)
+        {
+            return db.Contents.Include(x => x.Category).Include(x => x.Access).Include(x => x.TheLanguage).Include(x => x.Log)
+                        //.Include(x => x.CustomFieldValues)
+                        .Where(x =>
+                            (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
+                            (MyPermission.See_Contents == true || (x.Access != null && MyViewLevelIDs.Contains(x.Access.ID))) &&
+                            x.Category != null && x.Category.ID == con.Category.ID).ToList();
+        }
+
+ 
         public ActionResult Index()
         {
             IsAllowed(MyPermission.See_Contents);

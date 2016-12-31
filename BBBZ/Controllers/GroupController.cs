@@ -207,7 +207,6 @@ namespace BBBZ.Controllers
                 p.Menus = per.Menus;
                 p.Languages = per.Languages;
 
-                p.Newss = per.Newss;
                 p.Questions = per.Questions;
 
                 p.Media = per.Media;

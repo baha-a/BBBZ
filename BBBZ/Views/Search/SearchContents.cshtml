@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<BBBZ.Models.Content>
 @{
     ViewBag.Title = "Search Result for " + ViewBag.Query;
-    
 }
 
 <h2>Search Result for <i>@ViewBag.Query</i></h2>
@@ -47,12 +46,20 @@
     <hr />
     <div class="row">
         <div class="col-md-1">
+           @(ViewBag.ItemCount) items
         </div>
         <div class="col-md-9">
-            <input type="submit" name="page" value="1" class="btn btn-info btn-xs" />
-            <input type="submit" name="page" value="2" class="btn btn-info btn-xs" />
-            <input type="submit" name="page" value="3" class="btn btn-info btn-xs" />
-            <input type="submit" name="page" value="4" class="btn btn-info btn-xs" />
+            @for (int i = 1 ; i <= ViewBag.PageCount ; i++)
+            {
+                if(i == ViewBag.page)
+                {
+                    <input type="button" name="page" value="@i" class="btn btn-default btn-xs" />   
+                }
+                else
+                { 
+                    <input type="submit" name="page" value="@i" class="btn btn-info btn-xs" />   
+                }
+            }
         </div>
     </div>
 </form>

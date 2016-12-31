@@ -135,8 +135,6 @@ public static class Extenisons
             per.Languages = g.Languages;
 
 
-        if (per.Newss == null || (first && per.Newss == false && g.Newss == true))
-            per.Newss = g.Newss;
 
         if (per.Questions == null || (first && per.Questions == false && g.Questions == true))
             per.Questions = g.Questions;
@@ -193,7 +191,6 @@ public static class Extenisons
             per.ViewLevels == null ||
             per.Languages == null ||
 
-            per.Newss == null ||
             per.Questions == null ||
 
             per.Media == null ||
@@ -218,7 +215,6 @@ public static class Extenisons
             per.ViewLevels == true &&
             per.Languages == true &&
 
-            per.Newss == true &&
             per.Questions == true &&
 
             per.Media == true &&

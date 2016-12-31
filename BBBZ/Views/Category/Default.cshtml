@@ -1,7 +1,7 @@
 ﻿@model BBBZ.Models.Category
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Title;
     ViewBag.MetaKey = Model.MetaKey;
     ViewBag.MetaDesc = Model.MetaDesc;
 }
@@ -74,15 +74,15 @@
             <div class="col-md-10">
                 <ol>
                     @foreach (var con in Model.Contents)
-{
-    <li>
-        <a href="@Url.Action("Show", "Contents", new { id = @con.ID })">
-            <div class="alert alert-info">
-                @con.Title
-            </div>
-        </a>
-    </li>
-}
+                    {
+                        <li>
+                            <a href="@Url.Action("Show", "Contents", new { id = @con.ID })">
+                                <div class="alert @(con.Visited ? "alert-success" : "alert-info")">
+                                    @con.Title @(con.Visited ? " (readed)" : "")
+                                </div>
+                            </a>
+                        </li>
+                    }
                 </ol>
             </div>
         </div>

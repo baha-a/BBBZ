@@ -1,8 +1,73 @@
 ﻿@model BBBZ.Models.Category
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Category";
     ViewBag.MetaKey = Model.MetaKey;
     ViewBag.MetaDesc = Model.MetaDesc;
 }
 
+<div class="row courseheader">
+    @if (string.IsNullOrEmpty(Model.Image) == false)
+    {
+        <div class="col-md-7 col-sm-12 nopadding">
+            <img class="courseimg" alt="@Model.Description" src="@Model.Image" />
+        </div>
+    }
+    <div class="@(string.IsNullOrEmpty(Model.Image) == false ? "col-md-5 col-sm-12" : "col-md-12")">
+        <h2>@Model.Title.ToUpper()</h2>
+        <p>
+            <span class="time"> @Model.Date </span>
+        </p>
+
+        <br />
+        <p>
+            @Model.Description
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    @if (Model.SubCategories != null && Model.SubCategories.Count > 0)
+    {
+        <div class="row">
+            <h4 class="categorytitles"> Categories (@Model.SubCategories.Count)</h4>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-10">
+                <ul>
+                    @foreach (var cat in Model.SubCategories)
+                    {
+                        <li>
+                            <a href="@Url.Action("Show", "Category", new { id = @cat.ID })"> @cat.Title </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="row">
+    @if (Model.Contents != null && Model.Contents.Count > 0)
+    {
+        <div class="row">
+            <h4 class="categorytitles"> Contents (@Model.Contents.Count)</h4>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-10">
+                <ol>
+                    @foreach (var con in Model.Contents)
+                    {
+                        <li>
+                            <a href="@Url.Action("Show", "Contents", new { id = @con.ID })"> @con.Title @(con.Visited ? " (readed)" : "")  </a>
+                        </li>
+                    }
+                </ol>
+            </div>
+        </div>
+    }
+</div>

@@ -14,7 +14,7 @@
                 }
                 else if (m.Type.ToLower() == "category")
                 {
-                    <a href="@Url.Action("Show", "Category", new { id = m.CategoryID })" ta target="@(m.OpenInSameWindow ? "" : "_blank")"> @m.Title</a>
+                    <a href="@Url.Action("Show", "Category", new { id = m.CategoryID })" target="@(m.OpenInSameWindow ? "" : "_blank")"> @m.Title</a>
                 }
                 else if (m.Type.ToLower() == "link")
                 {

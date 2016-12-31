@@ -566,7 +566,7 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
     text-decoration: none;
     color: #333333;
-    background-color: #ffaaaa;
+    background-color: #f5f5f5;
 }
 
 
@@ -584,14 +584,16 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 }
 
 .SideMenuFirst{
-    margin-top: 100px;
+    margin-top: 30px;
 }
 
 .SideMenu ul li{
-    list-style:inside; 
+    list-style:inside;
+    list-style-type: none;
 }
 .SideMenu ul{
     padding-left:15px;
+    list-style-type: none;
 }
 
 
@@ -631,6 +633,11 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 .imagemidsize {
     width: 360px;
     height: 360px;
+}
+
+.imagemidsize-xs {
+    width: 80px;
+    height: 80px;
 }
 
 

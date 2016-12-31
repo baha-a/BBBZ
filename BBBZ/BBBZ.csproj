@@ -181,7 +181,6 @@
     <Compile Include="Controllers\MenuItemController.cs" />
     <Compile Include="Controllers\MenusController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
-    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -328,6 +327,10 @@
     <Compile Include="Migrations\201612300913452_add_contentvisitlog.Designer.cs">
       <DependentUpon>201612300913452_add_contentvisitlog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612310015309_delete_news_table.cs" />
+    <Compile Include="Migrations\201612310015309_delete_news_table.Designer.cs">
+      <DependentUpon>201612310015309_delete_news_table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EnumModel.cs" />
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
@@ -386,6 +389,7 @@
     <Content Include="Content\admin\icon_video.gif" />
     <Content Include="Content\admin\modal.css" />
     <Content Include="Content\admin\template.css" />
+    <Content Include="Content\images\user.jpg" />
     <Content Include="Content\images\loadfile.png" />
     <Content Include="Content\images\robot.png" />
     <Content Include="Content\jquery-ui.css" />
@@ -645,11 +649,6 @@
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
-    <Content Include="Views\News\Create.cshtml" />
-    <Content Include="Views\News\Delete.cshtml" />
-    <Content Include="Views\News\Details.cshtml" />
-    <Content Include="Views\News\Edit.cshtml" />
-    <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\Media\Index.cshtml" />
     <Content Include="Views\Group\Setting.cshtml" />
     <Content Include="Views\Group\Permission.cshtml" />
@@ -670,6 +669,8 @@
     <Content Include="Views\Category\News.cshtml" />
     <Content Include="Views\Category\AsLinks.cshtml" />
     <Content Include="Views\Contents\Visit.cshtml" />
+    <Content Include="Views\Contents\Complete.cshtml" />
+    <Content Include="Views\Contents\InComplete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\" />
@@ -796,6 +797,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612300913452_add_contentvisitlog.resx">
       <DependentUpon>201612300913452_add_contentvisitlog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612310015309_delete_news_table.resx">
+      <DependentUpon>201612310015309_delete_news_table.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

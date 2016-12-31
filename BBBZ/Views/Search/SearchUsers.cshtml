@@ -37,11 +37,18 @@
                     <div class="row searchresultline">
                         <a target="_blank" href="@Url.Action("Index", "Profile", new { username = p.username})">
                             <div class="searchresultline">
-                                <div class="col-xs-4 col-md-1">
-                                    <img alt="@p.username's profile photo" src="@p.Image" class="boxedimage-xs" />
+                                <div class="col-xs-4 col-md-2">
+                                    @if (string.IsNullOrEmpty(p.Image) == false)
+                                    { 
+                                        <img alt="@p.username's profile photo" src="@p.Image" class="boxedimage-xs" />
+                                    }
+                                    else
+                                    {
+                                        <i> no image </i>
+                                    }
                                 </div>
                                 <div class="col-xs-8 col-md-8">
-                                    @p.Name @p.LastName
+                                     @p.Name @p.LastName
                                     <div class="searchresult"> @p.username </div>
                                 </div>
                             </div>
@@ -54,12 +61,21 @@
     </div>
     <hr />
     <div class="row">
-        <div class="col-md-1"></div>
+        <div class="col-md-1">
+            @(ViewBag.ItemCount) items
+        </div>
         <div class="col-md-9">
-            <input type="submit" name="page" value="1" class="btn btn-info btn-xs" />
-            <input type="submit" name="page" value="2" class="btn btn-info btn-xs" />
-            <input type="submit" name="page" value="3" class="btn btn-info btn-xs" />
-            <input type="submit" name="page" value="4" class="btn btn-info btn-xs" />
+            @for (int i = 1 ; i <= ViewBag.PageCount ; i++)
+            {
+                if (i == ViewBag.page)
+                {
+                    <input type="button" name="page" value="@i" class="btn btn-default btn-xs" />
+                }
+                else
+                {
+                    <input type="submit" name="page" value="@i" class="btn btn-info btn-xs" />
+                }
+            }
         </div>
     </div>
 </form>

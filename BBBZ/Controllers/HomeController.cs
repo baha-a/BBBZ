@@ -15,7 +15,6 @@ namespace BBBZ.Controllers
         {
             return View(new HomeViewModel(){
                 PublicData = db.PublicData.Where(x => x.Language == Language).ToList(),
-                News = db.News.Where(x => x.Language == Language).ToList()
             });
         }
 

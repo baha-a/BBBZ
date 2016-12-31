@@ -20,14 +20,42 @@
 <hr />
 <br />
 <p>
-    @Html.Raw(Model.FullText)
+    @if(ViewBag.IsOk == true)
+    { 
+        @Html.Raw(Model.FullText)
+    }
+    else
+    {
+        <span class="alert alert-danger"> you must read previous lesson first !!!</span>
+    }
 </p>
 <hr />
 
 
-<div class="col-sm-1"> <a class="btn btn-info"    href="@Url.Action("Lesson", "Contents", new { type = "prev", id = Model.ID })"> < Previous </a> </div>
+<div class="col-sm-1"> 
+    @if (ViewBag.First == false)
+    { 
+        <a class="btn btn-info"    href="@Url.Action("Lesson", "Contents", new { type = "prev", id = Model.ID })"> < Previous </a> 
+    }
+</div>
 <div class="col-sm-4"></div>
 <div class="col-sm-1"> <a class="btn btn-default" href="@Url.Action("Lesson", "Contents", new { type = "home", id = Model.ID })"> Home       </a> </div>
 <div class="col-sm-4"></div>
-<div class="col-sm-1"> <a class="btn btn-success" href="@Url.Action("Lesson", "Contents", new { type = "next", id = Model.ID })">  Next  >   </a> </div>
+<div class="col-sm-1">
+    @if (ViewBag.Last == false)
+    {
+        <a class="btn btn-success" href="@Url.Action("Lesson", "Contents", new { type = "next", id = Model.ID })">  Next  >   </a> 
+    }
+    else
+    {
+        if(ViewBag.IsComplete == true)
+        {
+            <a class="btn btn-success" href="@Url.Action("Lesson", "Contents", new { type = "complete", id = Model.ID })">  Complete   </a> 
+        }
+        else
+        {
+            <a class="btn btn-success" href="@Url.Action("Lesson", "Contents", new { type = "incomplete", id = Model.ID })">  Finish </a> 
+        }
+    }
+</div>
 <div class="col-sm-1"></div>

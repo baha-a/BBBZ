@@ -23,6 +23,9 @@ namespace BBBZ.Models
 
         [NotMapped]
         public int? AccessID { get; set; }
+
+        [NotMapped]
+        public bool Visited { get; set; }
     }
     public partial class Menu
     {
@@ -245,6 +248,5 @@ namespace BBBZ.Models
     public class HomeViewModel
     {
         public List<PublicData> PublicData { get; set; }
-        public List<News> News { get; set; }
     }
 }

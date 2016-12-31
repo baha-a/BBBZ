@@ -45,7 +45,12 @@ namespace BBBZ.Controllers
                 if (category.Template == CategorysTemplate.NotSet)
                     return View("Details", category);
                 else
+                {
+                        
+                    MarkTheVisited(category.Contents);
+
                     return View(category.Template.ToString(), category);
+                }
             }
 
             return Unauthorized();

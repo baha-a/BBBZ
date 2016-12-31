@@ -28,7 +28,6 @@ namespace BBBZ.Models
         public DbSet<ContentVisitLog> ContentVisitLogs { get; set; }
 
 
-        public DbSet<News> News { get; set; }
         public DbSet<PublicData> PublicData { get; set; }
 
 
