@@ -9,6 +9,14 @@ namespace BBBZ.Models
 {
     #region Partial Class
 
+    public partial class Request
+    {
+        [NotMapped]
+        public IEnumerable<Group> Available{ get; set; }
+        [NotMapped]
+        public ViewLevel Access { get; set; }
+    }
+
     public partial class Content
     {
         public Content()
@@ -242,11 +250,5 @@ namespace BBBZ.Models
         public int ID { get; set; }
         public string Title { get; set; }
         public Category theCategory { get; set; }
-    }
-
-
-    public class HomeViewModel
-    {
-        public List<PublicData> PublicData { get; set; }
     }
 }

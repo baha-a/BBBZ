@@ -1,0 +1,66 @@
+﻿@model IEnumerable<BBBZ.Models.Request>
+@{
+    ViewBag.Title = "Requests";
+}
+
+<h2>Requests</h2>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().AccessId)
+        </th>
+
+        <th>Accept</th>
+        <th>Delete</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @if (string.IsNullOrEmpty(item.Username) == false)
+                {
+                    @Html.ActionLink(item.Username, "Index", "Profile", new { username = item.Username }, null)
+                }
+            </td>
+            <td>
+                @if(item.Access != null)
+                { 
+                    @Html.ActionLink(item.Access.Title, "Details", "ViewLevel", new { id = item.Access.ID}, null)
+                }
+            </td>
+
+            <td>
+                @using (Html.BeginForm("Accept", "Group",new { accept = true, id = item.ID },FormMethod.Post ))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.DropDownList("groupid", new SelectList(item.Available, "ID", "Title"), new { @class ="form-control col-md-4"})
+                    <input type="submit" value="Accept" class="btn btn-success" />
+                }
+            </td>
+            <td>
+                @using (Html.BeginForm("Accept", "Group", new { accept = false, id = item.ID }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Delete" class="btn btn-danger"/>
+                }
+            </td>
+        </tr>
+    }
+
+</table>

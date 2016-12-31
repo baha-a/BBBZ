@@ -263,23 +263,15 @@ namespace BBBZ.Models
         public string To_username { get; set; }
     }
 
-
-
-
-
-
-
-
-    public class PublicData
+    public partial class Request
     {
         public int ID { get; set; }
         [Required]
-        public string Title { get; set; }
+        public string Username { get; set; }
         [Required]
-        public string Text { get; set; }
-        [Required]
-        [RegularExpression("[A-Za-z]{2}")]
-        public string Language { get; set; }
+        [Display(Name="Want Access")]
+        public int AccessId { get; set; }
+        public DateTime Date { get; set; }
     }
 
     //public class Question

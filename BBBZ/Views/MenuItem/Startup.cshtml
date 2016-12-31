@@ -1,0 +1,16 @@
+﻿@model List<BBBZ.Models.MenuViewModel>
+@{
+    ViewBag.Title = "Startup Setting";
+    
+}
+<h2>Startup menu item</h2>
+
+@using (Html.BeginForm("SetStartup", "MenuItem", FormMethod.Post))
+{
+    <div class="col-md-6">
+        @Html.DropDownList("id", new SelectList(Model, "ID", "Title", ViewBag.StartupMenuItem), new { @class = "form-control" })
+    </div>
+    <div class="col-md-2">
+        <input type="submit" value="Save" class="btn btn-success" />
+     </div>
+}

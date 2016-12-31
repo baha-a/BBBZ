@@ -263,5 +263,22 @@ namespace BBBZ.Controllers
                 DeleteWithChildren(c);
             db.Menus.Remove(mn);
         }
+
+
+
+        public ActionResult Startup()
+        {
+            ViewBag.StartupMenuItem = SettingManager.StartupMenuItem;
+            return View(db.GetAllMenuItems());
+        }
+
+        [HttpPost]
+        public ActionResult SetStartup(int? id)
+        {
+            if (id == null)
+                return BadRequest();
+            SettingManager.StartupMenuItem = id;
+            return RedirectToAction("Startup");
+        }
     }
 }

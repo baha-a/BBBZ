@@ -17,7 +17,7 @@ namespace BBBZ.Models
 
         QuestionBank,
 
-
+        ArticleList = 11,
 
         // add new item at last of the list, and don't change the numbers or names
     }

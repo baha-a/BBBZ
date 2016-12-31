@@ -27,6 +27,15 @@
 </div>
 
 <div class="row">
+    @if (Model.Parent != null)
+    {
+        <a href="@Url.Action("Show", "Category", new { id = Model.Parent.ID })">
+            < @Model.Parent.Title
+        </a>
+    }
+</div>
+
+<div class="row">
     @if (Model.SubCategories != null && Model.SubCategories.Count > 0)
     {
         <div class="row">

@@ -1,5 +1,4 @@
 ﻿@model BBBZ.Models.Category
-
 @{
     ViewBag.Title = Model.Title;
     ViewBag.MetaKey = Model.MetaKey;
@@ -10,7 +9,7 @@
     @if (string.IsNullOrEmpty(Model.Image) == false)
     {
         <div class="col-md-7 col-sm-12 nopadding">
-            <img class="courseimg" alt="@Model.Description" src="@Model.Image"  />
+            <img class="courseimg" alt="@Model.Description" src="@Model.Image" />
         </div>
     }
     <div class="@(string.IsNullOrEmpty(Model.Image) == false ? "col-md-5 col-sm-12" : "col-md-12")">
@@ -24,6 +23,33 @@
             @Model.Description
         </p>
     </div>
+</div>
+
+
+@if (ViewBag.Wait == true)
+{ 
+    <div class="row">
+        <div class="alert alert-success">
+            Enrollment Request has been send
+        </div>
+    </div>
+}
+else if (ViewBag.Wait == false)
+{
+    <div class="row">
+        <div class="alert alert-danger">
+            can't send the Request
+        </div>
+    </div>
+}
+
+<div class="row">
+    @if (Model.Parent != null)
+    {
+        <a class="btn btn-default" href="@Url.Action("Show", "Category", new { id = Model.Parent.ID })">
+            < @Model.Parent.Title
+        </a>
+    }
 </div>
 
 <div class="row">
@@ -42,7 +68,41 @@
                         <a href="@Url.Action("Show", "Category", new { id = @cat.ID })">
                             <div class="card">
                                 @if (string.IsNullOrEmpty(cat.Image) == false)
-                                { 
+                                {
+                                    <img alt="@cat.Description" src="@cat.Image" class="img" />
+                                }
+                                else
+                                {
+                                    <div class="img"></div>
+                                }
+                                <div class="cardcontainer">
+                                    <h4><b>@cat.Title</b></h4>
+                                    <span class="time"> @cat.Description </span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+
+            </div>
+        </div>
+    }
+    @if(ViewBag.NotEnrolledWith != null && ViewBag.NotEnrolledWith.Count > 0)
+    { 
+        <div class="row">
+            <h4 class="categorytitles"> You can enroll with (@ViewBag.NotEnrolledWith.Count): </h4>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-10">
+                @foreach (var cat in ViewBag.NotEnrolledWith)
+                {
+                    <div class="col-sm-4 col-xs-6" style="margin-bottom:30px;">
+                        <a href="@Url.Action("Enroll", "Category", new { id = @cat.ID })">
+                            <div class="card">
+                                @if (string.IsNullOrEmpty(cat.Image) == false)
+                                {
                                     <img alt="@cat.Description" src="@cat.Image" class="img" />
                                 }
                                 else

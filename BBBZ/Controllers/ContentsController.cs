@@ -22,10 +22,13 @@ namespace BBBZ.Controllers
                 .Include(x => x.Access)
                 .Include(x => x.TheLanguage)
                 .Include(x => x.Category)
-                .SingleOrDefault(x => (x.TheLanguage == null || x.TheLanguage.Code == Language) && x.ID == id);
+                .SingleOrDefault(x => x.ID == id && x.Published);
 
             if (content == null)
                 return HttpNotFound();
+            
+            if (content.Template == ContentsTemplate.NotSet)
+                return RedirectToAction("Details", "Contents", new { id = id});
 
             if (MyPermission.See_Contents == true || (content.Access != null && MyViewLevelIDs.Contains(content.Access.ID)))
             {
@@ -77,10 +80,7 @@ namespace BBBZ.Controllers
                     db.CustomFieldValues.Include(x => x.Content).Include(x => x.CustomField)
                     .Where(x => x.Content.ID == id).ToList();
 
-                if (content.Template == ContentsTemplate.NotSet)
-                    return View("Details",content);
-                else
-                    return View(content.Template.ToString(), content);
+                return View(content.Template.ToString(), content);
             }
 
             return Unauthorized();

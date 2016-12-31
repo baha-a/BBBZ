@@ -1,5 +1,6 @@
 ﻿@{
     BBBZ.Models.Permission _perm =(BBBZ.Models.Permission)ViewBag.Permission;
+    BBBZ.Models.SharedLayoutViewModel model = ((BBBZ.Models.SharedLayoutViewModel)ViewBag.LayoutViewModel);
 }
 <!DOCTYPE html>
 
@@ -14,8 +15,12 @@
 </head>
 <body>
     <div class="container-fluid container-main">
+        @if (model != null)
+{
+    @Html.Partial("_NavBarPartial", model.TopMenuItems)
+}
         <div id="js-cpanel">
-
+ 
             <!-- SIDE BAR ---------------------------------------------------------------------------------------->
             <div id="sidebar" class="sidebar">
                 <ul class="nav nav-list">
@@ -35,7 +40,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("", "MenuItem")">
+                                    <a href="@Url.Action("Index", "MenuItem")">
                                         <i class="js-icon-double-angle-right"></i>
                                         Manage Menu Items
                                     </a>
@@ -46,6 +51,14 @@
                                         Add Menu Item
                                     </a>
                                 </li>
+
+                                <li>
+                                    <a href="@Url.Action("Startup", "MenuItem")">
+                                        <i class="js-icon-double-angle-right"></i>
+                                        Startup Menu Item
+                                    </a>
+                                </li>
+
                             </ul>
                         </li>
                     }
@@ -164,6 +177,12 @@
                                     <a href="@Url.Action("Create","Group")">
                                         <i class="js-icon-double-angle-right"></i>
                                         Add Groups
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Requests","Group")">
+                                        <i class="js-icon-double-angle-right"></i>
+                                        Requests
                                     </a>
                                 </li>
                                 <li>

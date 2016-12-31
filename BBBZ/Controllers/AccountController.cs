@@ -98,7 +98,7 @@ namespace BBBZ.Controllers
 
                     db.UserGroups.Add(new UserGroup() {
                         username = model.UserName,
-                        Groups = db.Groups.SingleOrDefault(x => x.ID == GroupSetting.NewUserGroupId) 
+                        Groups = db.Groups.SingleOrDefault(x => x.ID == SettingManager.NewUserGroupId) 
                     });
 
                     db.SaveChanges();

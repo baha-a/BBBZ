@@ -18,16 +18,6 @@ namespace BBBZ.Controllers
             IsAllowed(MyPermission.Groups); 
         }
 
-        public List<Group> FillWithChildren(List<Group> gs,int without=-1)
-        {
-            foreach (var g in gs)
-            {
-                g.Children = db.Groups.Where(x => x.Parent != null && x.Parent.ID == g.ID && x.ID != without).ToList();
-                FillWithChildren(g.Children,without);
-            }
-            return gs;
-        }
-
 
         public ActionResult Index()
         {
@@ -158,8 +148,8 @@ namespace BBBZ.Controllers
 
         public ActionResult Setting()
         {
-            ViewBag.newUserGroup = GroupSetting.NewUserGroupId;
-            ViewBag.guestGroup = GroupSetting.GuestGroupId;
+            ViewBag.newUserGroup = SettingManager.NewUserGroupId;
+            ViewBag.guestGroup = SettingManager.GuestGroupId;
 
             return View(GetAllGroups());
         }
@@ -168,8 +158,8 @@ namespace BBBZ.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Setting(int? newUserGroup, int? guestGroup)
         {
-            GroupSetting.GuestGroupId = guestGroup;
-            GroupSetting.NewUserGroupId = newUserGroup;
+            SettingManager.GuestGroupId = guestGroup;
+            SettingManager.NewUserGroupId = newUserGroup;
             return RedirectToAction("Setting");
         }
 
@@ -227,6 +217,58 @@ namespace BBBZ.Controllers
                 return RedirectToAction("Index");
             }
             return View(per);
+        }
+
+
+
+
+        public ActionResult Requests()
+        {
+            IsAllowed(MyPermission.Groups);
+
+            var req = db.Requests.ToList();
+            req.ForEach(z =>
+                {
+                    z.Access = db.ViewLevels.SingleOrDefault(x => x.ID == z.AccessId);
+
+                    z.Available = db.Groups.Include(x => x.Access)
+                        .Where(x => x.Access.Select(q => q.ID).Contains(z.AccessId) == true)
+                        .ToList();
+                });
+            return View(req);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Accept(int? id, bool? accept,int? groupid)
+        {
+            IsAllowed(MyPermission.Groups);
+
+            if (id == null || accept == null)
+                return BadRequest();
+
+            var req = db.Requests.SingleOrDefault(x => x.ID == id);
+
+            if (accept == true)
+            {
+                if (groupid == null)
+                    return BadRequest();
+
+                var g = db.Groups.SingleOrDefault(x => x.ID == groupid);
+                if (g == null)
+                    return HttpNotFound();
+
+                db.UserGroups.Add(new UserGroup()
+                {
+                    username = req.Username,
+                    Groups = g,
+                });
+            }
+
+            db.Requests.Remove(req);
+            db.SaveChanges();
+
+            return RedirectToAction("Requests");
         }
     }
 }

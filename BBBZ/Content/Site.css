@@ -603,12 +603,13 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 .searchtextbox {
     border: none;
     height: 40px;
-    background:#e2e2e2;
-    color:#ffffff;
+    background:#ffffff;
+}
+.searchtextbox:hover{
+    border: 1px solid black;
 }
 .searchtextbox:focus{
-    background:#ffffff;
-    color:#000000;
+    border: 2px solid black;
 }
 
 .boxedimage {
@@ -690,4 +691,13 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 
 .searchresultline{
     margin-bottom:10px;
+}
+
+.row{
+    margin-left: 0px;
+}
+
+.navbar-right {
+    float: right !important;
+    margin-right: -35px;
 }

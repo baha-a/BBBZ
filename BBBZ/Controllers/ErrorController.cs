@@ -9,11 +9,6 @@ namespace BBBZ.Controllers
 {
     public class ErrorController : BaseController
     {
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            //base.OnActionExecuting(filterContext);
-        }
-
         public ActionResult Index(int? id)
         {
             ViewBag.PreviousUrl = Session["PreviousUrl"];

@@ -15,9 +15,12 @@ public abstract class BaseController: Controller
 
     private void SetLang(string lang)
     {
-        Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(lang);
-        Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(lang);
-
+        try
+        {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(lang);
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(lang);
+        }
+        catch { }
         Language = lang;
     }
 
@@ -137,7 +140,7 @@ public abstract class BaseController: Controller
 
         if (string.IsNullOrEmpty(username))
             myGroups = db.Groups
-                .Where(x => x.ID == GroupSetting.GuestGroupId)
+                .Where(x => x.ID == SettingManager.GuestGroupId)
                 .Include(x => x.Parent)
                 .Include(x => x.Access)
                 .ToList();
@@ -176,7 +179,9 @@ public abstract class BaseController: Controller
     {
         if (g == null)
             return;
+
         levels.AddRange(g.Access);
+
         if (g.Parent != null)
         getAllMyViewLevel(levels,
             db.Groups

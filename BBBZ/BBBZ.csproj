@@ -185,7 +185,7 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ViewLevelController.cs" />
-    <Compile Include="Helper\GroupSetting.cs" />
+    <Compile Include="Helper\SettingManager.cs" />
     <Compile Include="Migrations\201611070812076_add_duration_to_News.cs" />
     <Compile Include="Migrations\201611070812076_add_duration_to_News.Designer.cs">
       <DependentUpon>201611070812076_add_duration_to_News.cs</DependentUpon>
@@ -330,6 +330,10 @@
     <Compile Include="Migrations\201612310015309_delete_news_table.cs" />
     <Compile Include="Migrations\201612310015309_delete_news_table.Designer.cs">
       <DependentUpon>201612310015309_delete_news_table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612311417018_add_request_table.cs" />
+    <Compile Include="Migrations\201612311417018_add_request_table.Designer.cs">
+      <DependentUpon>201612311417018_add_request_table.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\EnumModel.cs" />
     <Compile Include="Resources\R.ar.designer.cs">
@@ -665,12 +669,14 @@
     <Content Include="Views\Contents\Files.cshtml" />
     <Content Include="Views\Contents\Video.cshtml" />
     <Content Include="Views\Category\Default.cshtml" />
-    <Content Include="Views\Category\LessonOneByOne.cshtml" />
     <Content Include="Views\Category\News.cshtml" />
     <Content Include="Views\Category\AsLinks.cshtml" />
     <Content Include="Views\Contents\Visit.cshtml" />
     <Content Include="Views\Contents\Complete.cshtml" />
     <Content Include="Views\Contents\InComplete.cshtml" />
+    <Content Include="Views\Group\Requests.cshtml" />
+    <Content Include="Views\MenuItem\Startup.cshtml" />
+    <Content Include="Views\Category\ArticleList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Files\" />
@@ -800,6 +806,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612310015309_delete_news_table.resx">
       <DependentUpon>201612310015309_delete_news_table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612311417018_add_request_table.resx">
+      <DependentUpon>201612311417018_add_request_table.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

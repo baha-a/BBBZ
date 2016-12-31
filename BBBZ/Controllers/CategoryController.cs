@@ -20,40 +20,103 @@ namespace BBBZ.Controllers
             Category category = 
                 db.Categories
                 .Include(x => x.Access)
-                .Include(x => x.Contents)
+                //.Include(x => x.Contents)
                 .Include(x => x.Parent)
                 .Include(x => x.TheLanguage)
-                .SingleOrDefault(x => (x.TheLanguage == null || x.TheLanguage.Code == Language) && x.ID == id);
+                .SingleOrDefault(x => x.ID == id && x.Published);
 
             if (category == null)
                 return HttpNotFound();
 
-            if (category.Published && 
-                (MyPermission.See_Categories == true || (category.Access != null && MyViewLevelIDs.Contains(category.Access.ID))))
+            if (category.Template == CategorysTemplate.NotSet)
+                return RedirectToAction("Details", "Category", new { id = id });
+
+            if (MyPermission.See_Categories == true || (category.Access != null && MyViewLevelIDs.Contains(category.Access.ID)))
             {
-                category.SubCategories =
-                    db.Categories
-                    .Include(x => x.Parent)
-                    .Include(x=>x.Access)
-                    .Include(x => x.TheLanguage)
-                    .Where(x =>
-                        (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
-                        x.Parent != null && x.Parent.ID == category.ID &&
-                        x.Published && x.Access != null && MyViewLevelIDs.Contains(x.Access.ID))
-                    .ToList();
 
-                if (category.Template == CategorysTemplate.NotSet)
-                    return View("Details", category);
-                else
+                if (category.Template == CategorysTemplate.ArticleList)
                 {
-                        
-                    MarkTheVisited(category.Contents);
-
-                    return View(category.Template.ToString(), category);
+                    category.Contents = 
+                        db.Contents.Include(x=>x.TheLanguage).Include(x=>x.Access).Include(x=>x.Category)
+                        .Where(x=> 
+                                x.Published &&
+                                x.Category != null && x.Category.ID == id &&
+                                (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
+                                    x.Access != null && MyViewLevelIDs.Contains(x.Access.ID))
+                                    .ToList();
+                    return View("ArticleList",category);
                 }
+
+                category.SubCategories =
+                     db.Categories
+                        .Include(x => x.Parent)
+                        .Include(x => x.Access)
+                        .Include(x => x.TheLanguage)
+                        .Where(x =>
+                            x.Published &&
+                            (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
+                            x.Parent != null && x.Parent.ID == category.ID &&
+                            x.Access != null && MyViewLevelIDs.Contains(x.Access.ID))
+                        .ToList();
+
+
+                ViewBag.NotEnrolledWith = 
+                     db.Categories
+                        .Include(x => x.Parent)
+                        .Include(x => x.Access)
+                        .Include(x => x.TheLanguage)
+                        .Where(x =>
+                            x.Published &&
+                            (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
+                            x.Parent != null && x.Parent.ID == category.ID &&
+                            (x.Access == null || MyViewLevelIDs.Contains(x.Access.ID) == false))
+                        .ToList();
+
+                category.Contents = MarkTheVisited(
+                    db.Contents.Include(x=>x.TheLanguage).Include(x=>x.Access).Include(x=>x.Category)
+                        .Where(x=> 
+                                x.Published &&
+                                x.Category != null && x.Category.ID == id &&
+                                (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
+                                    x.Access != null && MyViewLevelIDs.Contains(x.Access.ID))
+                                .ToList());
+
+                if(category.Template == CategorysTemplate.LessonOneByOne)
+                    return View(CategorysTemplate.Default.ToString(), category);
+                
+                return View(category.Template.ToString(), category);
             }
 
             return Unauthorized();
+        }
+
+        public ActionResult Enroll(int? id)
+        {
+            if (id == null)
+                return BadRequest();
+
+            Category category = 
+                db.Categories
+                .Include(x => x.Access)
+                .Include(x => x.Parent)
+                .Include(x => x.TheLanguage)
+                .SingleOrDefault(x => x.ID == id && x.Published);
+
+            if (category == null)
+                return HttpNotFound();
+
+            ViewBag.Wait = false;
+            if (string.IsNullOrEmpty(Username)==false && category.Access != null)
+            {
+                if (db.Requests.SingleOrDefault(x => x.AccessId == category.Access.ID && x.Username == Username) == null)
+                {
+                    db.Requests.Add(new Request() { Username = Username, Date = DateTime.Now, AccessId = category.Access.ID });
+                    db.SaveChanges();
+                }
+                ViewBag.Wait = true;
+            }
+
+            return View(CategorysTemplate.Default.ToString(), category);
         }
 
         public ActionResult Index()

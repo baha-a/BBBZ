@@ -1,0 +1,34 @@
+﻿@model BBBZ.Models.Category
+
+@{
+    ViewBag.Title = Model.Title;
+    ViewBag.MetaKey = Model.MetaKey;
+    ViewBag.MetaDesc = Model.MetaDesc;
+}
+<br />
+<div class="row">
+    @if (Model.Contents != null && Model.Contents.Count > 0)
+    {
+        <div class="row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-10">
+                    @foreach (var con in Model.Contents)
+                    {
+                        <div class="jumbotron">
+                            <h2> @con.Title </h2>
+                            <p>
+                                @con.IntroText
+                            </p>
+                            <p>
+                                @Html.Raw(con.FullText)
+                            </p>
+                            <small class="pull-right"> <a href="@Url.Action("Show", "Contents", new { id = con.ID})">more</a> </small>
+                        </div>
+                    }
+            </div>
+            <div class="col-md-1">
+            </div>
+        </div>
+    }
+</div>

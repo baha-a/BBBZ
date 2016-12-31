@@ -27,9 +27,7 @@ namespace BBBZ.Models
         public DbSet<CustomField> CustomFields { get; set; }
         public DbSet<ContentVisitLog> ContentVisitLogs { get; set; }
 
-
-        public DbSet<PublicData> PublicData { get; set; }
-
+        public DbSet<Request> Requests { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection")

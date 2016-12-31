@@ -13,17 +13,24 @@ namespace BBBZ.Controllers
     {
         public ActionResult Index()
         {
-            return View(new HomeViewModel(){
-                PublicData = db.PublicData.Where(x => x.Language == Language).ToList(),
-            });
-        }
+            if (SettingManager.StartupMenuItem != null)
+            {
+                var m = db.Menus.SingleOrDefault(x => x.ID == SettingManager.StartupMenuItem);
+                if (m != null)
+                {
+                    if (m.Type.ToLower() == "singlepage")
+                        return RedirectToAction("Show", "Contents", new { id = m.ContentID });
+                    else if (m.Type.ToLower() == "category")
+                        return RedirectToAction("Show", "Category", new { id = m.CategoryID });
+                    else if (m.Type.ToLower() == "link")
+                        return Redirect(m.Url);
+                }
+            }
 
-        public ActionResult Contact()
-        {
             return View();
         }
 
-        public ActionResult Show()
+        public ActionResult Contact()
         {
             return View();
         }
