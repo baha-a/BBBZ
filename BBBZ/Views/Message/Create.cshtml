@@ -8,7 +8,7 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Message", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -45,6 +45,15 @@
                 @Html.ValidationMessageFor(model => model.Text, null, new { @class = "has-error" })
             </div>
         </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Attachment, new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.UploadFile("Uploader")
+            </div>
+        </div>
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

@@ -86,7 +86,7 @@ namespace BBBZ.Controllers
             return Unauthorized();
         }
 
-        public ActionResult Lesson(int? id, string type)
+            public ActionResult Lesson(int? id, string type)
         {
             if (id == null || string.IsNullOrEmpty(type))
                 return BadRequest();

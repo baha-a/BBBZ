@@ -93,6 +93,16 @@ public static class Extenisons
     }
     #endregion
 
+    public static string UploadMessageAttachment(this HttpPostedFileBase Uploader, Message msg)
+    {
+        if (msg != null && Uploader != null)
+        {
+                string path = "/MessageAttachment/" + msg.From_username + "_" + msg.To_username + "/" ;
+                Uploader.SaveAs(HostingEnvironment.MapPath(path).CheckFolder() + Path.GetFileName(Uploader.FileName));
+                return path + Path.GetFileName(Uploader.FileName);
+        }
+        return "";
+    }
 
     #region GroupHelper
     public static List<SelectableGroup> ConvertToViewModel(this List<Group> gs, int level = 0)

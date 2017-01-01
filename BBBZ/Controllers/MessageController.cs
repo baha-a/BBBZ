@@ -46,7 +46,7 @@ namespace BBBZ.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Message message)
+        public ActionResult Create(Message message, HttpPostedFileBase Uploader)
         {
             if (ModelState.IsValid)
             {
@@ -59,6 +59,10 @@ namespace BBBZ.Controllers
                 message.From_username = User.Identity.Name;
                 db.Messages.Add(message);
                 db.SaveChanges();
+
+                message.Attachment = Uploader.UploadMessageAttachment(message);
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 

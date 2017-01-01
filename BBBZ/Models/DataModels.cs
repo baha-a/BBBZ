@@ -257,8 +257,11 @@ namespace BBBZ.Models
         public string Subject { get; set; }
         public string Text { get; set; }
 
+        public string Attachment { get; set; }
+
         [Display(Name ="Sender")]
         public string From_username { get; set; }
+        [Required]
         [Display(Name = "Receiver")]
         public string To_username { get; set; }
     }

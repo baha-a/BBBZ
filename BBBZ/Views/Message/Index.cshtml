@@ -32,9 +32,6 @@ else
         <th>
             @Html.DisplayNameFor(model => model.Inbox.First().Subject)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Inbox.First().Text)
-        </th>
         <th></th>
     </tr>
 
@@ -54,9 +51,6 @@ else
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Subject)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Text)
             </td>
             <td>
                 @Html.ActionLink("Details", "Details", new { id=item.ID })
@@ -89,9 +83,6 @@ else
         <th>
             @Html.DisplayNameFor(model => model.Inbox.First().Subject)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Inbox.First().Text)
-        </th>
         <th></th>
     </tr>
 
@@ -112,9 +103,6 @@ else
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Subject)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Text)
             </td>
             <td>
                 @Html.ActionLink("Details", "Details", new { id = item.ID })

@@ -335,6 +335,10 @@
     <Compile Include="Migrations\201612311417018_add_request_table.Designer.cs">
       <DependentUpon>201612311417018_add_request_table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701010847545_add_message_attachment.cs" />
+    <Compile Include="Migrations\201701010847545_add_message_attachment.Designer.cs">
+      <DependentUpon>201701010847545_add_message_attachment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EnumModel.cs" />
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
@@ -809,6 +813,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612311417018_add_request_table.resx">
       <DependentUpon>201612311417018_add_request_table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701010847545_add_message_attachment.resx">
+      <DependentUpon>201701010847545_add_message_attachment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
