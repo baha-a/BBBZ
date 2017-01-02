@@ -235,10 +235,10 @@ public abstract class BaseController: Controller
                 .Include(x => x.Access)
                 .Include(x => x.TheLanguage)
                 .Where(x =>
+                    x.Parent == null &&
                     (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
                     x.ID != without &&
-                    x.Access != null &&
-                    MyViewLevelIDs.Contains(x.Access.ID))
+                    x.Access != null && MyViewLevelIDs.Contains(x.Access.ID))
                     .ToList();
 
         return FillWithChildren(tmp, without).ConvertToViewModel();
@@ -266,7 +266,7 @@ public abstract class BaseController: Controller
                 .Where(x =>
                     (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
                     x.Parent != null && x.Parent.ID == g.ID && x.ID != without 
-                    //&& (MyPermission.See_Categories == true ? true : MyViewLevelIDs.Contains(x.Access.ID))
+                    //&& x.Access != null && MyViewLevelIDs.Contains(x.Access.ID))
                     )
                 .ToList();
             FillWithChildren(g.SubCategories, without);

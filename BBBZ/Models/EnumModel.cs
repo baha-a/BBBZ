@@ -13,9 +13,9 @@ namespace BBBZ.Models
         LessonOneByOne = 4,
         AsLinks = 2,
 
-        News,
+        News=6,
 
-        QuestionBank,
+        QuestionBank=7,
 
         ArticleList = 11,
 
@@ -35,11 +35,9 @@ namespace BBBZ.Models
         Video = 8,
 
 
-
-        OptionalQuiz = 4,
-        MandatoryQuiz = 5,
-
         Exam = 6,
+
+        Question = 9,
 
 
 

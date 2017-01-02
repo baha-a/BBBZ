@@ -129,67 +129,33 @@ public static class Extenisons
 
     public static Permission CalculatePermissions(this Permission per, Permission g, bool first = false)
     {
-        if (per.Users == null || (first && per.Users == false && g.Users == true))
-            per.Users = g.Users;
+        per.Users               = Check(per.Users               , g.Users               , first);
+        per.Groups              = Check(per.Groups              , g.Groups              , first);
+        per.ViewLevels          = Check(per.ViewLevels          , g.ViewLevels          , first);
+        per.Menus               = Check(per.Menus               , g.Menus               , first);
+        per.Languages           = Check(per.Languages           , g.Languages           , first);
 
-        if (per.Groups == null || (first && per.Groups == false && g.Groups == true))
-            per.Groups = g.Groups;
+        per.See_Categories      = Check(per.See_Categories      , g.See_Categories      , first);
+        per.Create_Categories   = Check(per.Create_Categories   , g.Create_Categories   , first);
+        per.Edit_Categories     = Check(per.Edit_Categories     , g.Edit_Categories     , first);
+        per.Delete_Categories   = Check(per.Delete_Categories   , g.Delete_Categories   , first);
 
-        if (per.ViewLevels == null || (first && per.ViewLevels == false && g.ViewLevels == true))
-            per.ViewLevels = g.ViewLevels;
+        per.See_Contents        = Check(per.See_Contents        , g.See_Contents        , first);
+        per.Create_Contents     = Check(per.Create_Contents     , g.Create_Contents     , first);
+        per.Edit_Contents       = Check(per.Edit_Contents       , g.Edit_Contents       , first);
+        per.Delete_Contents     = Check(per.Delete_Contents     , g.Delete_Contents     , first);
 
-        if (per.Menus == null || (first && per.Menus == false && g.Menus == true))
-            per.Menus = g.Menus;
-
-        if (per.Languages == null || (first && per.Languages == false && g.Languages == true))
-            per.Languages = g.Languages;
-
-
-
-        if (per.Questions == null || (first && per.Questions == false && g.Questions == true))
-            per.Questions = g.Questions;
-
-
-        if (per.See_Categories == null || (first && per.See_Categories == false && g.See_Categories == true))
-            per.See_Categories = g.See_Categories;
-
-        if (per.Create_Categories == null || (first && per.Create_Categories == false && g.Create_Categories == true))
-            per.Create_Categories = g.Create_Categories;
-
-        if (per.Edit_Categories == null || (first && per.Edit_Categories == false && g.Edit_Categories == true))
-            per.Edit_Categories = g.Edit_Categories;
-
-        if (per.Delete_Categories == null || (first && per.Delete_Categories == false && g.Delete_Categories == true))
-            per.Delete_Categories = g.Delete_Categories;
-
-
-        if (per.See_Contents == null || (first && per.See_Contents == false && g.See_Contents == true))
-            per.See_Contents = g.See_Contents;
-
-        if (per.Create_Contents == null || (first && per.Create_Contents == false && g.Create_Contents == true))
-            per.Create_Contents = g.Create_Contents;
-
-        if (per.Edit_Contents == null || (first && per.Edit_Contents == false && g.Edit_Contents == true))
-            per.Edit_Contents = g.Edit_Contents;
-
-        if (per.Delete_Contents == null || (first && per.Delete_Contents == false && g.Delete_Contents == true))
-            per.Delete_Contents = g.Delete_Contents;
-
-
-
-        if (per.AdminPanel == null || (first && per.AdminPanel == false && g.AdminPanel == true))
-            per.AdminPanel = g.AdminPanel;
-
-        if (per.Media == null || (first && per.Media == false && g.Media == true))
-            per.Media = g.Media;
+        per.AdminPanel          = Check(per.AdminPanel          , g.AdminPanel          , first);
+        per.Media               = Check(per.Media               , g.Media               , first);
 
         return per;
     }
 
-    public static void CheckOne(ref bool? b, bool? d, bool first = false)
+    public static bool? Check(bool? b, bool? d, bool first = false)
     {
         if (b == null || (first && b == false && d == true))
-            b = d;
+            return d;
+        return b;
     }
 
     public static bool HasNull(this Permission per)

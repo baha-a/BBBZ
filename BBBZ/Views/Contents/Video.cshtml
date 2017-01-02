@@ -11,6 +11,9 @@
     w =  Model.CustomFieldValues.SingleOrDefault(x => x.CustomField.Title.ToLower() == "height");
     var height = w!=null? w.Value : "480";
 }
+<br />
+@Html.Partial("_ControlButtonPartial")
+<hr />
 
 <h2 class="h2"> @Model.Title </h2>
 

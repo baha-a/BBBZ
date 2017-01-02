@@ -1,16 +1,17 @@
 ﻿@model BBBZ.Models.Content
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Title;
 
     ViewBag.MetaKey = Model.MetaKey;
     ViewBag.MetaDesc = Model.MetaDesc;
+    ViewBag.Preview = true;
 }
 
-<h2>Details</h2>
+<h2>Content Details</h2>
 
 <div>
-    <h4>Content</h4>
+    @Html.Partial("_ControlButtonPartial")
 	<hr />
     <dl class="dl-horizontal">
         <dt>
@@ -151,29 +152,3 @@
         </dd>
     </dl>
 </div>
-<p>
-    
-    @if (((BBBZ.Models.Permission)ViewBag.Permission).Create_Contents == true)
-    {
-        @Html.ActionLink("Create New", "Create", new { id = Model.ID }, new { @class = "btn btn-sm btn-success" })
-    }
-    
-    @if (((BBBZ.Models.Permission)ViewBag.Permission).Edit_Contents == true)
-    {
-        @Html.ActionLink("Edit this", "Edit", new { id = Model.ID }, new { @class = "btn btn-sm btn-info" })
-        
-        @Html.ActionLink("Custom", "Custom", new { id = Model.ID }, new { @class = "btn btn-sm btn-info" })
-    }
-
-    @if (((BBBZ.Models.Permission)ViewBag.Permission).Delete_Contents == true)
-    {
-        @Html.ActionLink("Delete this", "Delete", new { id = Model.ID }, new { @class = "btn btn-sm btn-danger" })
-    }
-
-    @if (((BBBZ.Models.Permission)ViewBag.Permission).See_Contents == true)
-    {
-        @Html.ActionLink("See the List", "Index", null, new { @class = "btn btn-sm btn-warning" })
-    }
-    
-    <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" /> 
-</p>

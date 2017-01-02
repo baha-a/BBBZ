@@ -1,0 +1,37 @@
+﻿@{
+    BBBZ.Models.Permission _per = (BBBZ.Models.Permission)ViewBag.Permission;
+}
+
+<p>
+    @if(ViewBag.Preview == true)
+    { 
+        @Html.ActionLink("Preview", "Show", new { id = Model.ID }, new { @class = "btn btn-sm btn-primary" })
+    }
+    
+    @if (_per.Create_Contents == true)
+    {
+        @Html.ActionLink("Create New", "Create", new { id = Model.ID }, new { @class = "btn btn-sm btn-success" })
+    }
+
+    @if (_per.Edit_Contents == true)
+    {
+        @Html.ActionLink("Edit this", "Edit", new { id = Model.ID }, new { @class = "btn btn-sm btn-info" })
+
+        @Html.ActionLink("Custom", "Custom", new { id = Model.ID }, new { @class = "btn btn-sm btn-info" })
+    }
+
+    @if (_per.Delete_Contents == true)
+    {
+        @Html.ActionLink("Delete this", "Delete", new { id = Model.ID }, new { @class = "btn btn-sm btn-danger" })
+    }
+
+    @if (_per.See_Contents == true)
+    {
+        @Html.ActionLink("See the List", "Index", null, new { @class = "btn btn-sm btn-warning" })
+    }
+    
+    @if (ViewBag.Preview == true)
+    {
+        <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" />
+    }
+</p>

@@ -5,6 +5,8 @@
     ViewBag.MetaKey = Model.MetaKey;
     ViewBag.MetaDesc = Model.MetaDesc;
 }
+<br />
+@Html.Partial("_ControlButtonPartial")
 
 <div class="row courseheader">
     @if (string.IsNullOrEmpty(Model.Image) == false)

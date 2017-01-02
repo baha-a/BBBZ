@@ -1,16 +1,18 @@
 ﻿@model BBBZ.Models.Category
 
 @{
-    ViewBag.Title = Model.Title + " Details";
+    ViewBag.Title = Model.Title;
     ViewBag.MetaKey = Model.MetaKey;
     ViewBag.MetaDesc = Model.MetaDesc;
+    ViewBag.Preview = true;
 }
 
-<h2>Details</h2>
+<h2>Category Details</h2>
 
 <div>
-    <h4>Category</h4>
+    @Html.Partial("_ControlButtonPartial")
 	<hr />
+    
     <dl class="dl-horizontal">
 
 
@@ -174,27 +176,3 @@
 
     </dl>
 </div>
-<p>
-    
-    @if (((BBBZ.Models.Permission)ViewBag.Permission).Create_Categories == true)
-    {
-        @Html.ActionLink("Create New", "Create", new { id = Model.ID }, new { @class = "btn btn-sm btn-success" })
-    }
-    
-    @if (((BBBZ.Models.Permission)ViewBag.Permission).Edit_Categories == true)
-    {
-        @Html.ActionLink("Edit this", "Edit", new { id = Model.ID }, new { @class = "btn btn-sm btn-info" })
-    }
-
-    @if (((BBBZ.Models.Permission)ViewBag.Permission).Delete_Categories == true)
-    {
-        @Html.ActionLink("Delete this", "Delete", new { id = Model.ID }, new { @class = "btn btn-sm btn-danger" })
-    }
-    
-    @if (((BBBZ.Models.Permission)ViewBag.Permission).See_Categories == true)
-    {
-        @Html.ActionLink("See The List", "Index", null, new { @class = "btn btn-sm btn-warning" })
-    }
-    
-    <input type="button" value="Back" class="btn btn-sm btn-warning" onclick="history.go(-1);" />
-</p>

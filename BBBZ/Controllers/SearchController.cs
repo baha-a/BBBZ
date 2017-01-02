@@ -45,6 +45,7 @@ namespace BBBZ.Controllers
                             x => x.Title,
                             x => x.IntroText,
                             x => x.FullText,
+                            x => x.Descrption,
                             x => x.MetaDesc,
                             x => x.MetaKey)
                         .Containing(queryTerms)

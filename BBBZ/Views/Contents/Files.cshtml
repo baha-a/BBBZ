@@ -8,6 +8,10 @@
     var filelinks =  Model.CustomFieldValues.Where(x => x.CustomField.Title.ToLower() == "file").Select(x=>x.Value).ToList();
 }
 
+<br />
+@Html.Partial("_ControlButtonPartial")
+<hr />
+
 <h2 class="h2"> @Model.Title </h2>
 
 <p> by <a href="@Url.Action("Index","Profile", new { username = Model.CreatedByUsername })">@Model.CreatedByUsername</a> (<a target="_blank" href="@Url.Action("Create", "Message", new { touser = Model.CreatedByUsername })"> send message </a>)</p>

@@ -118,14 +118,10 @@ namespace BBBZ.Controllers
         public ActionResult Delete(int? id)
         {
             if (id == null)
-            {
                 return BadRequest();
-            }
             ViewLevel viewlevel = db.ViewLevels.Find(id);
             if (viewlevel == null)
-            {
                 return HttpNotFound();
-            }
             viewlevel.Groups = db.Groups.Include(x => x.Access).Where(x => x.Access.FirstOrDefault(y => y.ID == viewlevel.ID) != null).ToList();
             return View(viewlevel);
         }
@@ -134,7 +130,7 @@ namespace BBBZ.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ViewLevel viewlevel = db.ViewLevels.SingleOrDefault(x => x.ID == id);
+            ViewLevel viewlevel = db.ViewLevels.Include(x=>x.Groups).SingleOrDefault(x => x.ID == id);
             db.ViewLevels.Remove(viewlevel);
             db.SaveChanges();
             return RedirectToAction("Index");
