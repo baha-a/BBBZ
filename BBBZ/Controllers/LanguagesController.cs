@@ -64,11 +64,21 @@ namespace BBBZ.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit( Language language)
+        public ActionResult Edit(Language language)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(language).State = EntityState.Modified;
+                var lng = db.Languages.SingleOrDefault(x => x.Code == language.Code);
+                if (lng == null)
+                    return HttpNotFound();
+
+                lng.Description = language.Description;
+                lng.MetaDesc = language.MetaDesc;
+                lng.MetaKey = language.MetaKey;
+                lng.SiteName  = language.SiteName;
+                lng.Title = language.Title;
+
+                db.Entry(lng).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

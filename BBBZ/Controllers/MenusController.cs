@@ -23,22 +23,16 @@ namespace BBBZ.Controllers
             return View(db.MenuTypes.ToList());
         }
 
-        // GET: /Menus/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
-            {
                 return BadRequest();
-            }
             MenuType menutype = db.MenuTypes.Find(id);
             if (menutype == null)
-            {
                 return HttpNotFound();
-            }
             return View(menutype);
         }
 
-        // GET: /Menus/Create
         public ActionResult Create()
         {
             return View();
@@ -58,51 +52,48 @@ namespace BBBZ.Controllers
             return View(menut);
         }
 
-        // GET: /Menus/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
-            {
                 return BadRequest();
-            }
             MenuType menutype = db.MenuTypes.Find(id);
             if (menutype == null)
-            {
                 return HttpNotFound();
-            }
             return View(menutype);
         }
 
-        // POST: /Menus/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(MenuType menut)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(menut).State = EntityState.Modified;
+                var men = db.MenuTypes.SingleOrDefault(x => x.ID == menut.ID);
+                if (men == null)
+                    return HttpNotFound();
+
+                men.Title= menut.Title;
+                men.Description = menut.Description; 
+                men.IsTopMenu = menut.IsTopMenu;
+                men.Published = menut.Published;
+
+                db.Entry(men).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(menut);
         }
 
-        // GET: /Menus/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
-            {
                 return BadRequest();
-            }
             MenuType menutype = db.MenuTypes.Find(id);
             if (menutype == null)
-            {
                 return HttpNotFound();
-            }
             return View(menutype);
         }
 
-        // POST: /Menus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

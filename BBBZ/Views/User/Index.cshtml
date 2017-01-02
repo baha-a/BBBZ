@@ -9,11 +9,12 @@
         @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-sm" })
     </div>
 </p>
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.TheUser.UserName)
         </th>
+
         <th>
             @Html.DisplayNameFor(model => model.Locked)
         </th>

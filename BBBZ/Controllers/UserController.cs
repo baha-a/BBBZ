@@ -54,20 +54,32 @@ namespace BBBZ.Controllers
                 var result = UserManager.Create(user, us.TheUser.Password);
                 if (result.Succeeded)
                 {
-                    db.Profiles.Add(new Profile() { username = user.UserName, RegisterDate = DateTime.Now, LastVisitDate = DateTime.Now });
+                    try
+                    {
+                        db.Profiles.Add(new Profile()
+                        {
+                            username = user.UserName,
+                            RegisterDate = DateTime.Now,
+                            LastVisitDate = DateTime.Now,
+                            Image = "/Content/images/user.jpg"
+                        });
+                        db.SaveChanges();
+                    }
+                    catch { }
 
                     foreach (var g in us.AllGroups)
-                    {
                         if (g.Selected)
                         {
                             var group = db.Groups.SingleOrDefault(x => x.ID == g.ID);
 
                             if (db.UserGroups.SingleOrDefault(x => x.Groups.ID == group.ID && x.username == user.UserName) == null)
+                            {
                                 db.UserGroups.Add(new UserGroup() { username = user.UserName, Groups = group });
+                                db.SaveChanges();
+                            }
                         }
-                    }
 
-                    db.SaveChanges();
+                    
                     return RedirectToAction("Index");
                 }
                 else
@@ -77,7 +89,7 @@ namespace BBBZ.Controllers
                 }
             }
 
-            return View(us);
+            return View(new UserManagerDataView() { Locked = us.Locked, TheUser = us.TheUser, AllGroups = GetAllGroups() });
         }
 
         public ActionResult Edit(string username)
@@ -110,15 +122,14 @@ namespace BBBZ.Controllers
             user.Locked = us.Locked;
 
             db.UserGroups.RemoveRange(db.UserGroups.Where(x=>x.username == user.UserName));
+            db.SaveChanges();
 
             foreach (var g in us.AllGroups)
-            {
                 if (g.Selected)
                 {
                     var group = db.Groups.SingleOrDefault(x => x.ID == g.ID);
                     db.UserGroups.Add(new UserGroup() { username = user.UserName, Groups = group });
                 }
-            }
 
             db.SaveChanges();
             return RedirectToAction("Index");

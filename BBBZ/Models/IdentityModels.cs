@@ -42,6 +42,10 @@ namespace BBBZ.Models
                 .WithMany(t => t.Users)
                 .WillCascadeOnDelete(true);
 
+            modelBuilder.Entity<Permission>()
+                .HasRequired(t => t.Group)
+                .WithOptional(x=>x.Permission)
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<CustomFieldValue>()
                 .HasRequired(x => x.CustomField)

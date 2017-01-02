@@ -222,10 +222,12 @@ namespace BBBZ.Controllers
         public ActionResult Edit(Category cat,HttpPostedFileBase Uploader)
         {
             IsAllowed(MyPermission.Edit_Categories);
-            
+
             if (ModelState.IsValid)
             {
-                var category = db.Categories.Include(x=>x.Access).Include(x=>x.Parent).SingleOrDefault(c => c.ID == cat.ID);
+                var category = db.Categories.Include(x=>x.TheLanguage).Include(x=>x.Access).Include(x=>x.Parent).SingleOrDefault(c => c.ID == cat.ID);
+                if (category == null)
+                    return HttpNotFound();
 
                 category.Title = cat.Title;
                 category.Description = cat.Description;
@@ -235,6 +237,7 @@ namespace BBBZ.Controllers
                 category.Language = cat.Language;
                 category.Template = cat.Template;
 
+
                 if (cat.NewParentID_helper == null)
                     category.Parent = null;
                 else
@@ -242,7 +245,7 @@ namespace BBBZ.Controllers
 
                 if (category.Access == null || cat.NewAccessID_helper != category.Access.ID)
                     category.Access = db.ViewLevels.SingleOrDefault(x => x.ID == cat.NewAccessID_helper);
-                
+
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
 
@@ -265,7 +268,8 @@ namespace BBBZ.Controllers
 
             if (id == null)
                 return BadRequest();
-            Category category = db.Categories.Include(x => x.Access).SingleOrDefault(x => x.ID == id);
+
+            Category category = db.Categories.Include(x => x.Parent).Include(x => x.Access).SingleOrDefault(x => x.ID == id);
             if (category == null)
                 return HttpNotFound();
             category.SubCategories = db.Categories.Include(x => x.Parent).Where(x => x.Parent != null && x.Parent.ID == id).ToList();
@@ -280,8 +284,13 @@ namespace BBBZ.Controllers
             IsAllowed(MyPermission.Delete_Categories);
 
             Category category = db.Categories.Include(x => x.Contents).SingleOrDefault(x => x.ID == id);
+            if (category == null)
+                return HttpNotFound();
+            
             DeleteWithChildren(category);
-            db.SaveChanges();
+            
+                db.SaveChanges();
+            
             return RedirectToAction("Index");
         }
 
@@ -289,6 +298,7 @@ namespace BBBZ.Controllers
         {
             if (cat == null)
                 return;
+            cat.Contents.Clear();
 
             var children =
                 db.Categories
@@ -300,7 +310,10 @@ namespace BBBZ.Controllers
             foreach (var c in children)
                 DeleteWithChildren(c);
 
+            db.Entry(cat).State = EntityState.Deleted;
             db.Categories.Remove(cat);
+
+            cat.DeleteImage();
         }
     }
 }

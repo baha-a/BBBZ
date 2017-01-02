@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using BBBZ.Models;
+using System.Data.Entity;
 
 namespace BBBZ.Controllers
 {
@@ -89,19 +90,29 @@ namespace BBBZ.Controllers
 
                 if (result.Succeeded)
                 {
-                    db.Profiles.Add(new Profile() {
-                        username = model.UserName, 
+                    var profile = new Profile() {
+                        username = user.UserName, 
                         RegisterDate = DateTime.Now,
                         LastVisitDate = DateTime.Now ,
                         Image = "/Content/images/user.jpg"
-                    });
-
-                    db.UserGroups.Add(new UserGroup() {
-                        username = model.UserName,
-                        Groups = db.Groups.SingleOrDefault(x => x.ID == SettingManager.NewUserGroupId) 
-                    });
-
+                    };
+                    db.Entry(profile).State = EntityState.Added;
+                    db.Profiles.Add(profile);
                     db.SaveChanges();
+                    
+                    var group = db.Groups.SingleOrDefault(x => x.ID == SettingManager.NewUserGroupId);
+                    if(group != null)
+                    {
+                        var usergroup = new UserGroup()
+                        {
+                            username = user.UserName,
+                            Groups = group
+                        };
+                        group.Users.Add(usergroup);
+                        db.Entry(usergroup).State = EntityState.Added;
+                        db.SaveChanges();
+                    }
+
                     await SignInAsync(user, isPersistent : false);
                     return RedirectToAction("Index", "Home");
                 }

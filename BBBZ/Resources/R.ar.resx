@@ -126,6 +126,9 @@
   <data name="Contact" xml:space="preserve">
     <value>اتصل بنا</value>
   </data>
+  <data name="Control" xml:space="preserve">
+    <value>التحكم</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>الرئيسية</value>
   </data>

@@ -339,6 +339,14 @@
     <Compile Include="Migrations\201701010847545_add_message_attachment.Designer.cs">
       <DependentUpon>201701010847545_add_message_attachment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701021624447_fix_error.cs" />
+    <Compile Include="Migrations\201701021624447_fix_error.Designer.cs">
+      <DependentUpon>201701021624447_fix_error.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701021848541_fix_permission.cs" />
+    <Compile Include="Migrations\201701021848541_fix_permission.Designer.cs">
+      <DependentUpon>201701021848541_fix_permission.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EnumModel.cs" />
     <Compile Include="Resources\R.ar.designer.cs">
       <AutoGen>True</AutoGen>
@@ -818,6 +826,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701010847545_add_message_attachment.resx">
       <DependentUpon>201701010847545_add_message_attachment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021624447_fix_error.resx">
+      <DependentUpon>201701021624447_fix_error.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021848541_fix_permission.resx">
+      <DependentUpon>201701021848541_fix_permission.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\R.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

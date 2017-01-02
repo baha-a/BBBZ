@@ -23,13 +23,13 @@ namespace BBBZ.Models
         {
             Log = new List<ContentVisitLog>();
             CustomFieldValues = new List<CustomFieldValue>();
-            Published = true;
         }
 
         [NotMapped]
         public int? CategoryID { get; set; }
 
         [NotMapped]
+        [Display(Name = "Access")]
         public int? AccessID { get; set; }
 
         [NotMapped]
@@ -42,7 +42,6 @@ namespace BBBZ.Models
             Children = new List<Menu>();
             OpenInSameWindow = true;
             Published = true;
-            Access = new ViewLevel();
         }
 
         [NotMapped]
@@ -72,11 +71,10 @@ namespace BBBZ.Models
             SubCategories = new List<Category>();
             Contents = new List<Content>();
             Published = true;
-            Access = new ViewLevel();
         }
 
         [NotMapped]
-        [Display(Name="Parent")]
+        [Display(Name = "Parent")]
         public int? NewParentID_helper { get; set; }
 
         [NotMapped]

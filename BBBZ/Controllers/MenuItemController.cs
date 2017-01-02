@@ -249,6 +249,9 @@ namespace BBBZ.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Menu menu = db.Menus.SingleOrDefault(x => x.ID == id);
+            if (menu == null)
+                return HttpNotFound();
+
             DeleteWithChildren(menu);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -258,7 +261,8 @@ namespace BBBZ.Controllers
         {
             if (mn == null)
                 return;
-            var children = db.Menus.Include(x => x.Access).Where(x => x.Parent != null && x.Parent.ID == mn.ID).ToList();
+            var children = db.Menus.Include(x => x.Access).Include(x=>x.Parent)
+                .Where(x => x.Parent != null && x.Parent.ID == mn.ID).ToList();
             foreach (var c in children)
                 DeleteWithChildren(c);
             db.Menus.Remove(mn);

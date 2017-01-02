@@ -17,8 +17,8 @@ namespace BBBZ.Controllers
             string user = User.Identity.Name;
             return View(new MessageViewModel()
             {
-                Inbox = db.Messages.Where(x => x.To_username == user).ToList(),
-                Outbox = db.Messages.Where(x => x.From_username == user).ToList()
+                Inbox = db.Messages.Where(x => x.To_username == user).OrderByDescending(x=>x.Date).ToList(),
+                Outbox = db.Messages.Where(x => x.From_username == user).OrderByDescending(x => x.Date).ToList()
             });
         }
 
@@ -38,6 +38,11 @@ namespace BBBZ.Controllers
 
         public ActionResult Create(string touser = "")
         {
+            if(string.IsNullOrEmpty(Username) == true)
+            {
+                return Unauthorized();
+            }
+
             return View(new Message(){
                 To_username = touser,
                 From_username = Username

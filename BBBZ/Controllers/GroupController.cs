@@ -138,7 +138,7 @@ namespace BBBZ.Controllers
         {
             if (grp == null)
                 return;
-            var children = db.Groups.Include(x=>x.Access).Where(x => x.Parent != null && x.Parent.ID == grp.ID).ToList();
+            var children = db.Groups.Include(x => x.Access).Include(x => x.Parent).Where(x => x.Parent != null && x.Parent.ID == grp.ID).ToList();
             foreach (var c in children)
                 DeleteWithChildren(c);
             db.Groups.Remove(grp);
@@ -196,8 +196,6 @@ namespace BBBZ.Controllers
                 p.ViewLevels = per.ViewLevels;
                 p.Menus = per.Menus;
                 p.Languages = per.Languages;
-
-                p.Questions = per.Questions;
 
                 p.Media = per.Media;
                 p.AdminPanel = per.AdminPanel;

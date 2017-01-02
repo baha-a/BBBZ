@@ -37,6 +37,7 @@ public abstract class BaseController: Controller
         LocalizationHelper.SetSupportedLocales(db.GetAllLanguages());
     }
 
+    protected bool _checkforuserlockedFLAG = true;
     protected override void OnActionExecuting(ActionExecutingContext filterContext)
     {
         if (Session["isAdminLayout"] == null)
@@ -46,9 +47,15 @@ public abstract class BaseController: Controller
         SetLang(lang.ToLower());
 
         Language = lang;
+        ViewBag.SiteTitle = "Virtual School";
+        try
+        {
+            ViewBag.SiteTitle = db.Languages.FirstOrDefault(x => x.Code.ToLower() == Language.ToLower()).SiteName;
+        }
+        catch { }
         Username = User.Identity.Name;
 
-        if (string.IsNullOrEmpty(Username) == false)
+        if (_checkforuserlockedFLAG && string.IsNullOrEmpty(Username) == false)
         {
             var u = db.Users.SingleOrDefault(x => x.UserName == Username);
             if (u != null && u.Locked)
@@ -225,7 +232,7 @@ public abstract class BaseController: Controller
 
 
     #region Category helper
-    public List<CategoryView> GetAllCategories(int without = -1)
+    public List<CategoryView> GetAllCategories(int without = -1, bool fiterlanguage = false)
     {
         List<Category> tmp = null;
         if (MyPermission.See_Categories == true)
@@ -236,25 +243,25 @@ public abstract class BaseController: Controller
                 .Include(x => x.TheLanguage)
                 .Where(x =>
                     x.Parent == null &&
-                    (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
+                    (x.TheLanguage == null || (fiterlanguage == false || x.TheLanguage.Code == Language)) &&
                     x.ID != without &&
                     x.Access != null && MyViewLevelIDs.Contains(x.Access.ID))
                     .ToList();
 
         return FillWithChildren(tmp, without).ConvertToViewModel();
     }
-    public List<Category> GetAllParentCatgory(int without = -1)
+    public List<Category> GetAllParentCatgory(int without = -1, bool fiterlanguage = false)
     {
         return db.Categories
             .Include(x => x.Access)
             .Include(x=>x.Parent)
             .Include(x => x.TheLanguage)
             .Where(x =>
-                (x.TheLanguage == null || x.TheLanguage.Code == Language) &&                
+                (x.TheLanguage == null || (fiterlanguage == false || x.TheLanguage.Code == Language)) &&
                 x.Parent == null && x.ID != without)
             .ToList();
     }
-    public List<Category> FillWithChildren(List<Category> gs,  int without = -1)
+    public List<Category> FillWithChildren(List<Category> gs, int without = -1, bool fiterlanguage = false)
     {
         foreach (var g in gs)
         {
@@ -264,7 +271,7 @@ public abstract class BaseController: Controller
                 .Include(x => x.Parent)
                 .Include(x => x.TheLanguage)
                 .Where(x =>
-                    (x.TheLanguage == null || x.TheLanguage.Code == Language) &&
+                    (x.TheLanguage == null || (fiterlanguage == false || x.TheLanguage.Code == Language)) &&
                     x.Parent != null && x.Parent.ID == g.ID && x.ID != without 
                     //&& x.Access != null && MyViewLevelIDs.Contains(x.Access.ID))
                     )

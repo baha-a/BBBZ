@@ -1,14 +1,14 @@
 ﻿@model BBBZ.Models.Profile
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Name + " " + Model.LastName + " - " + Model.username;
     
 }
 
-<h2>Details</h2>
+<h2>@Model.Name @Model.LastName  (@Model.username) </h2>
 
 <div>
-    <h4>Profile</h4>
+    <a href="@Url.Action("Create", "Message", new { touser = Model.username})" > Send Message to this user</a>
 	<hr />
     <dl class="dl-horizontal">
         <dd>

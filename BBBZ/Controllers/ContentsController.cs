@@ -26,7 +26,11 @@ namespace BBBZ.Controllers
 
             if (content == null)
                 return HttpNotFound();
-            
+
+            content.CustomFieldValues =
+                    db.CustomFieldValues.Include(x => x.Content).Include(x => x.CustomField)
+                    .Where(x => x.Content.ID == id).ToList();
+
             if (content.Template == ContentsTemplate.NotSet)
                 return RedirectToAction("Details", "Contents", new { id = id});
 
@@ -76,17 +80,13 @@ namespace BBBZ.Controllers
                     db.SaveChanges();
                 }
 
-                content.CustomFieldValues =
-                    db.CustomFieldValues.Include(x => x.Content).Include(x => x.CustomField)
-                    .Where(x => x.Content.ID == id).ToList();
-
                 return View(content.Template.ToString(), content);
             }
 
             return Unauthorized();
         }
 
-            public ActionResult Lesson(int? id, string type)
+        public ActionResult Lesson(int? id, string type)
         {
             if (id == null || string.IsNullOrEmpty(type))
                 return BadRequest();
@@ -94,6 +94,7 @@ namespace BBBZ.Controllers
             var con = db.Contents.Include(x=>x.Category).SingleOrDefault(x => x.ID == id);
             if (con == null)
                 return HttpNotFound();
+
 
             if (type.ToLower() == "home")
                 return RedirectToAction("Show","Category",new{id = con.Category.ID});

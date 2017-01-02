@@ -131,6 +131,23 @@ namespace BBBZ.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             ViewLevel viewlevel = db.ViewLevels.Include(x=>x.Groups).SingleOrDefault(x => x.ID == id);
+
+            if (viewlevel == null)
+                return HttpNotFound();
+
+            db.Contents.Include(x => x.Access)
+                .Where(x => x.Access != null && x.Access.ID == id).ToList()
+                .ForEach(x => x.Access = null);
+
+            db.Categories.Include(x => x.Access)
+                .Where(x => x.Access != null && x.Access.ID == id).ToList()
+                .ForEach(x => x.Access = null);
+
+            db.Menus.Include(x => x.Access)
+                .Where(x => x.Access != null && x.Access.ID == id).ToList()
+                .ForEach(x => x.Access = null);
+
+
             db.ViewLevels.Remove(viewlevel);
             db.SaveChanges();
             return RedirectToAction("Index");

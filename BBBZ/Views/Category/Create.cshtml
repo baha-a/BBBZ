@@ -76,6 +76,7 @@
             @Html.LabelFor(model => model.NewAccessID_helper, new { @class = "control-label col-md-2" })
             <div class="col-md-6">
                 @Html.DropDownListFor(model => model.NewAccessID_helper, new SelectList(ViewBag.AllViewLevels, "ID", "Title"),new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NewAccessID_helper, null, new { @class = "has-error" })
             </div>
         </div>
 

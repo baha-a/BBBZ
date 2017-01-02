@@ -1,10 +1,20 @@
 ﻿@model BBBZ.Models.Category
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Title;
     ViewBag.MetaKey = Model.MetaKey;
     ViewBag.MetaDesc = Model.MetaDesc;
 }
 
 <br />
 @Html.Partial("_ControlButtonPartial")
+
+<ul>
+    @foreach (var con in Model.Contents)
+    {
+        <li>
+            <i class="time"> @con.CreatedTime  :  </i> @con.IntroText ....
+            <a href="@Url.Action("Show", "Contents", new { id = @con.ID})"> more </a>
+        </li>
+    }
+</ul>

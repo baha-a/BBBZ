@@ -71,9 +71,6 @@ namespace BBBZ.Models
         public bool? Edit_Contents { get; set; }
 
 
-        public bool? Questions { get; set; }
-
-
         public bool? Media { get; set; }
         public bool? AdminPanel { get; set; }
     }
@@ -159,7 +156,7 @@ namespace BBBZ.Models
         public Language TheLanguage { get; set; }
         public string Language { get; set; }
 
-        [Display(Name="Creator")]
+        [Display(Name = "Creator")]
         public string CreatedByUsername { get; set; }
         public DateTime Date { get; set; }
         public bool Published { get; set; }

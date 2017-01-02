@@ -17,21 +17,18 @@
 }
 else
 { 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Inbox.First().From_username)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Inbox.First().To_username)
-        </th>
-
         <th>
             @Html.DisplayNameFor(model => model.Inbox.First().Date)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Inbox.First().Subject)
         </th>
+        <th></th>
         <th></th>
     </tr>
 
@@ -40,17 +37,17 @@ else
             <td>
                 @if (string.IsNullOrEmpty(item.From_username) ==false)
                 {
-                    @Html.ActionLink(item.From_username, "Create", new { touser = item.From_username },null)
+                    @Html.ActionLink(item.From_username,"Index", "Profile", new { username = item.From_username },null)
                 }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.To_username)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td>
+                @Html.ActionLink("reply", "Create", new { touser = item.From_username }, null)
             </td>
             <td>
                 @Html.ActionLink("Details", "Details", new { id=item.ID })
@@ -68,11 +65,8 @@ else
 }
 else
 {
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Inbox.First().From_username)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Inbox.First().To_username)
         </th>
@@ -84,18 +78,16 @@ else
             @Html.DisplayNameFor(model => model.Inbox.First().Subject)
         </th>
         <th></th>
+        <th></th>
     </tr>
 
     @foreach (var item in Model.Outbox)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.From_username)
-            </td>
-            <td>
                 @if (string.IsNullOrEmpty(item.To_username) == false)
                 {
-                    @Html.ActionLink(item.To_username, "Create", new { touser = item.To_username },null)
+                    @Html.ActionLink(item.To_username,"Index", "Profile", new { username = item.To_username },null)
                 }
             </td>
             <td>
@@ -103,6 +95,9 @@ else
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td>
+                @Html.ActionLink("Send New", "Create", new { touser = item.To_username }, null)
             </td>
             <td>
                 @Html.ActionLink("Details", "Details", new { id = item.ID })

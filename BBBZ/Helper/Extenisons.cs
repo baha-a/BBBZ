@@ -56,7 +56,22 @@ public static class Extenisons
         return res;
     }
 
+
+
+    public static string UploadMessageAttachment(this HttpPostedFileBase Uploader, Message msg)
+    {
+        if (msg != null && Uploader != null)
+        {
+                string path = "/MessageAttachment/" + msg.From_username + "_" + msg.To_username + "/" ;
+                Uploader.SaveAs(HostingEnvironment.MapPath(path).CheckFolder() + Path.GetFileName(Uploader.FileName));
+                return path + Path.GetFileName(Uploader.FileName);
+        }
+        return "";
+    }
+
     #endregion
+
+
 
     #region CategoryHelper
     public static int ParentsLength(Category c)
@@ -91,18 +106,16 @@ public static class Extenisons
         }
         return false;
     }
+
+
+    public static void DeleteImage(this Category cat)
+    {
+        if (cat != null && string.IsNullOrEmpty(cat.Image) == false)
+            try { File.Delete(HostingEnvironment.MapPath(cat.Image)); } catch { }
+    }
     #endregion
 
-    public static string UploadMessageAttachment(this HttpPostedFileBase Uploader, Message msg)
-    {
-        if (msg != null && Uploader != null)
-        {
-                string path = "/MessageAttachment/" + msg.From_username + "_" + msg.To_username + "/" ;
-                Uploader.SaveAs(HostingEnvironment.MapPath(path).CheckFolder() + Path.GetFileName(Uploader.FileName));
-                return path + Path.GetFileName(Uploader.FileName);
-        }
-        return "";
-    }
+
 
     #region GroupHelper
     public static List<SelectableGroup> ConvertToViewModel(this List<Group> gs, int level = 0)
@@ -123,7 +136,6 @@ public static class Extenisons
         return str;
     }
     #endregion
-
 
     #region Permission helper
 
@@ -167,8 +179,6 @@ public static class Extenisons
             per.ViewLevels == null ||
             per.Languages == null ||
 
-            per.Questions == null ||
-
             per.Media == null ||
             per.AdminPanel == null ||
 
@@ -190,8 +200,6 @@ public static class Extenisons
             per.Menus == true &&
             per.ViewLevels == true &&
             per.Languages == true &&
-
-            per.Questions == true &&
 
             per.Media == true &&
             per.AdminPanel == true &&
@@ -245,7 +253,7 @@ public static class Extenisons
     #endregion
 
 
-    #region fileHelper
+    #region MediaeHelper
     public static string AddBackslashFirst(this string x)
     {
         if (string.IsNullOrEmpty(x) == false)

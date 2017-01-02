@@ -587,14 +587,6 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
     margin-top: 30px;
 }
 
-.SideMenu ul li{
-    list-style:inside;
-    list-style-type: none;
-}
-.SideMenu ul{
-    padding-left:15px;
-    list-style-type: none;
-}
 
 
 
@@ -700,4 +692,8 @@ ul.nav li.dropdown:hover > ul.dropdown-menu {
 .navbar-right {
     float: right !important;
     margin-right: -35px;
+}
+
+.table-hover > tbody > tr:hover {
+    background-color: #f7f9ff;
 }
