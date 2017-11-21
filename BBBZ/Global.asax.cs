@@ -19,7 +19,7 @@ namespace BBBZ
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Error += Application_Error;
+            //Error += Application_Error;
         }
 
         protected void Application_Error(object sender, EventArgs e)
