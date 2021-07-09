@@ -9,4 +9,4 @@ features:
 - Multi Languages
 - and more
 
-note: The purpose of this project was to learn ASP.NET MVC
+_Note: The purpose of this project was to learn ASP.NET MVC_
