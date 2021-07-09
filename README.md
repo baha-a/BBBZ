@@ -6,6 +6,7 @@ features:
 - Dynamic view templetes
 - Menus builder
 - Static Content Management
+- Multi Languages
 - and more
 
 note: The purpose of this project was to learn ASP.NET MVC
